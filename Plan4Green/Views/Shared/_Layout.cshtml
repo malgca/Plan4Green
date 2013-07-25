@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href="~/Images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+    </head>
+    <body>
+        <header>
+        </header>
+
+        <div id="body">
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Malusi Gcakasi, s208011471</p>
+        </footer>
+    </body>
+</html>
