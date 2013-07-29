@@ -1,26 +1,42 @@
 ﻿@{
     ViewBag.Title = "Login - Welcome to Plan4Green";
+    
+    Html.RenderPartial("LoginHeaderPartial");
 }
+<section>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
 
-<header>
-    <div class="top-bar">
-        <div class="float-right">
-            <h3 class="top-bar-text">@ViewBag.Title</h3>
-        </div>
-    </div>
-    
-    <div class="welcome-image">
-        <img alt="Plan4Green" src="@Url.Content("~/Images/welcome-logo.png") "/>
-    </div>
-</header>
-
-<body>
-    <div>
-        <ul class="inputs">
+            <fieldset class="login-fieldset">
+                <legend>Login</legend>
+                <ul class="inputs">
+            <!-- Username input boxes.........................................................................................-->
             <li>@Html.Label("Username")</li>
-            <li>@Html.TextBox("loginUsername", null, new { id="loginUsername"})</li>
-            <li><img alt="This field is required" src="@Url.Content("~/Content/theme/base/images/ui-required-01-red.png")" height="20" width="20" margin="0" padding="0"/></li>
+            <li>
+                <div class="required-field-container">
+                    @Html.TextBox("loginUsername", null, new { id="tbLoginUsername", @class="required-field"})
+                    <div class="required-field-identifier" />
+                </div>
+            </li>
         </ul>
-    </div>
-    
-</body>
+                <p>@Html.Label("This field is required", new { id="lblLoginUsername", @class="required-field-hidden"})</p>
+        <!-- Password input boxes.........................................................................................-->
+        <ul class="inputs">
+            <li>@Html.Label("Password")</li>
+            <li>
+                <div class="required-field-container">
+                    @Html.Password("loginPassword", null, new { id="pbLoginPassword", @class="required-field"})
+                    <div class="required-field-identifier" /> 
+                </div>
+            </li>
+        </ul>
+                <p>@Html.Label("This field is required", new { id="lblLoginUsername", @class="required-field-hidden"})</p>
+                
+                <p class="signup">Don't have an account? @Html.ActionLink("Sign Up!", "Signup")</p>
+                
+                <input type="submit" value="Log in" />
+            </fieldset>
+        }
+</section>

@@ -4,7 +4,7 @@ body {
     font-size: 10pt;
     margin: 0px;
     padding: 0px;
-    background-image: url('~/Content/theme/base/images/ui-bg-01-grey.png');
+    background-image: url(Content/theme/base/images/ui-bg-01-grey.png);
     background-repeat: repeat-x;
 }
 
@@ -74,18 +74,77 @@ footer {
 ul.inputs li {
     display: inline;
     list-style: none;
-    margin: 5px;
 }
 
-.required-field {
-    
+ul.inputs li label {
+    width: 7%;
+    display: inline-block;
+}
+
+.required-field-container {
+    width: 80%;
+    margin: 0px 0px 0px 0px;
+    display: inline-block;
+}
+
+    .required-field-container input[type=text], input[type=password] {
+        width: 80%;
+        margin-left: 14%;
+        margin-bottom: 5px;
+    }
+
+.required-field-identifier {
+    width: 81%;
+    margin-left: 14%;
+    height: 5px;
     background-color: #f00;
-    margin: 1px;
+}
+
+.required-field-hidden {
+    margin-left: 25%;
+    visibility:hidden;
+}
+
+.required-field-error {
+    color: #979797;
+    font-style: italic;
+    margin-left: 25%;
+    visibility: visible;
+}
+
+fieldset.login-fieldset {
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+    border-width: medium;
+    border-color: #e2e2e2;
+    margin-left: 10%;
+    width: 35%;
+}
+
+    fieldset.login-fieldset legend {
+        color: #979797;
+        font-style: italic;
+    }
+
+    fieldset.login-fieldset input[type=submit] {
+        float: right;
+        margin-right: 14%;
+    }
+
+p.signup {
+    margin-left: 7%;
 }
 
 /*drawing page layout----------------------------------------------------------------------*/
 .left-border {
     display: inline;
     background-color: #000;
+}
 
+/*Navigation Partial layout----------------------------------------------------------------*/
+nav ul li {
+    display: inline;
+    list-style: none;
+    margin: 5px;
 }
