@@ -4,8 +4,6 @@ body {
     font-size: 10pt;
     margin: 0px;
     padding: 0px;
-    background-image: url(Content/theme/base/images/ui-bg-01-grey.png);
-    background-repeat: repeat-x;
 }
 
 a {
@@ -68,7 +66,6 @@ footer {
     padding-top: 15px;
     width: 100%;
     z-index: 1;
-    display: block;
 }
 
 ul.inputs li {
@@ -105,11 +102,8 @@ ul.inputs li label {
     visibility:hidden;
 }
 
-.required-field-error {
-    color: #979797;
-    font-style: italic;
-    margin-left: 25%;
-    visibility: visible;
+form.signup {
+    width: 35%;
 }
 
 fieldset.login-fieldset {

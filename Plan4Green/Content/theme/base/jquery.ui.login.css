@@ -1,0 +1,6 @@
+﻿.required-field-error {
+    color: #979797;
+    font-style: italic;
+    margin-left: 25%;
+    visibility: visible;
+}

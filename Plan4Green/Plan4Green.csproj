@@ -195,12 +195,46 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Site.css" />
+    <Content Include="Content\theme\base\images\thirdparty\orbit\bullets.jpg" />
+    <Content Include="Content\theme\base\images\thirdparty\orbit\left-arrow.png" />
+    <Content Include="Content\theme\base\images\thirdparty\orbit\loading.gif" />
+    <Content Include="Content\theme\base\images\thirdparty\orbit\mask-black.png" />
+    <Content Include="Content\theme\base\images\thirdparty\orbit\pause-black.png" />
+    <Content Include="Content\theme\base\images\thirdparty\orbit\right-arrow.png" />
+    <Content Include="Content\theme\base\images\thirdparty\orbit\rotator-black.png" />
+    <Content Include="Content\theme\base\images\thirdparty\orbit\timer-black.png" />
     <Content Include="Content\theme\base\images\ui-bg-01-grey.png" />
     <Content Include="Content\theme\base\images\ui-required-01-red.png" />
+    <Content Include="Content\theme\base\thirdparty\orbit-1.2.3.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\favicon.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\signup-slides\captions.jpg" />
+    <Content Include="Images\signup-slides\coffee.jpg" />
+    <Content Include="Images\signup-slides\features.jpg" />
+    <Content Include="Images\signup-slides\overflow.jpg" />
+    <Content Include="Images\signup-slides\slideImage.png" />
     <Content Include="Images\welcome-logo.png" />
+    <Content Include="Content\theme\base\jquery.ui.login.css" />
+    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\thirdparty\jquery-1.5.1.min.js" />
+    <Content Include="Scripts\thirdparty\jquery.orbit-1.2.3.js" />
+    <Content Include="Scripts\thirdparty\jquery.orbit-1.2.3.min.js" />
+    <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -219,7 +253,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\" />
+    <Folder Include="Content\theme\base\minified\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
