@@ -58,13 +58,23 @@ header, footer, hgroup, nav, section {
     z-index: 1;
 }
 
+ul.remember-me {
+    position:relative;
+    text-align: center;
+}
+
+ul.remember-me li {
+    display: inline;
+    list-style: none;
+}
+
 ul.inputs li {
     display: inline;
     list-style: none;
 }
 
 ul.inputs li label {
-    width: 7%;
+    width: 18%;
     display: inline-block;
 }
 
@@ -76,13 +86,13 @@ ul.inputs li label {
 
     .required-field-container input[type=text], input[type=password] {
         width: 80%;
-        margin-left: 14%;
+        margin-left: 8%;
         margin-bottom: 5px;
     }
 
 .required-field-identifier {
     width: 81%;
-    margin-left: 14%;
+    margin-left: 8%;
     height: 5px;
     background-color: #f00;
 }
@@ -123,6 +133,7 @@ fieldset.signup-fieldset {
     }
 
 p.signup {
+    margin-top: 4%;
     margin-left: 7%;
 }
 
@@ -144,7 +155,7 @@ nav ul li {
     margin: 5px;
 }
 
-/*Footer layout*/
+/*Footer layout-------------------------------------------------------------------------------*/
 footer {
     color: #979797;
     display: block;
@@ -154,3 +165,13 @@ footer {
     bottom: 0;
     background-color: #000;
 }
+
+/*Styles native to MVC--------------------------------------------------------------------*/
+.validation-summary-errors {
+    text-align: center;
+    background-color: aliceblue;
+}
+
+    .validation-summary-errors ul li {
+        list-style: none;
+    }

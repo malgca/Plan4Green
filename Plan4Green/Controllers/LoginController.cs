@@ -79,13 +79,13 @@ namespace Plan4Green.Controllers
                 // Try to register the user.
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Organisation = model.Organisation });
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Organisation_ID = model.Organisation });
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("CanvasView", "BSObject");
                 }
                 catch (MembershipCreateUserException exception)
                 {
-                    ModelState.AddModelError("", ErrorCodeToString(exception.StatusCode));
+                    ModelState.AddModelError("", exception.Message);
                 }
             }
 

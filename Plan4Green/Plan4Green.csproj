@@ -215,7 +215,6 @@
     <Content Include="Images\signup-slides\slideImage.png" />
     <Content Include="Images\welcome-logo.png" />
     <Content Include="Content\theme\base\jquery.ui.login.css" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -252,6 +251,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\theme\base\minified\" />
+    <Folder Include="Scripts\plan4Green\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

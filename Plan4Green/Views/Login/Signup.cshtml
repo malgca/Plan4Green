@@ -1,8 +1,10 @@
-﻿@{
-    ViewBag.Title = "Signup - It's Worth It!";
+﻿@model Plan4Green.Models.SignupModel
 
+@{
+    ViewBag.Title = "Signup - It's Worth It!";
     Html.RenderPartial("LoginHeaderPartial");
 }
+
 @Styles.Render("~/Content/theme/base/jquery.ui.login.css", "~/Content/theme/base/thirdparty/orbit-1.2.3.css")
 @Scripts.Render("~/Scripts/thirdparty/jquery-1.5.1.min.js", "~/Scripts/thirdparty/jquery.orbit-1.2.3.min.js")
 
@@ -25,10 +27,10 @@
                 <legend>Signup</legend>
                         <ul class="inputs">
             <!--Organisation input boxes.........................................................................................-->
-            <li>@Html.Label("Organisation")</li>
+            <li>@Html.LabelFor(model => model.Organisation)</li>
             <li>
                 <div class="required-field-container">
-                    @Html.TextBox("signupOrganisation", null, new { id = "tbSignupOrganisation" })
+                    @Html.TextBoxFor(model => model.Organisation, null, new { id = "tbSignupOrganisation" })
                     <div class="required-field-identifier" />
                 </div>
             </li>
@@ -37,10 +39,10 @@
 
         <ul class="inputs">
             <!-- Username input boxes.........................................................................................-->
-            <li>@Html.Label("Username")</li>
+            <li>@Html.LabelFor(model => model.UserName)</li>
             <li>
                 <div class="required-field-container">
-                    @Html.TextBox("signupUsername", null, new { id = "tbSignupUsername", @class = "required-field" })
+                    @Html.TextBoxFor(model => model.UserName, null, new { id = "tbSignupUsername", @class = "required-field" })
                     <div class="required-field-identifier" />
                 </div>
             </li>
@@ -48,15 +50,27 @@
             <p>@Html.Label("This field is required", new { id = "lblSignupUsername", @class = "required-field-hidden" })</p>
         <!-- Password input boxes.........................................................................................-->
         <ul class="inputs">
-            <li>@Html.Label("Password")</li>
+            <li>@Html.LabelFor(model => model.Password)</li>
             <li>
                 <div class="required-field-container">
-                    @Html.Password("signupPassword", null, new { id = "pbSignupPassword", @class = "required-field" })
+                    @Html.PasswordFor(model => model.Password, new { id = "pbSignupPassword", @class = "required-field" })
                     <div class="required-field-identifier" />
                 </div>
             </li>
         </ul>
             <p>@Html.Label("This field is required", new { id = "lblSignupUsername", @class = "required-field-hidden" })</p>
+        <!-- Confirm Password input boxes.........................................................................................-->
+        <ul class="inputs">
+            <li>@Html.LabelFor(model => model.ConfirmPassword)</li>
+            <li>
+                <div class="required-field-container">
+                    @Html.PasswordFor(model => model.ConfirmPassword, new { id = "pbSignupConfirmPassword", @class = "required-field" })
+                    <div class="required-field-identifier" />
+                </div>
+            </li>
+        </ul>
+            <p>@Html.Label("This field is required", new { id = "lblSignupUsername", @class = "required-field-hidden" })</p>
+
 <input type="submit" value="Sign up!" />
         </fieldset>
     }
