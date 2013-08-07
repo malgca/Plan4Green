@@ -181,16 +181,15 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BSObjectController.cs" />
     <Compile Include="Controllers\GraphController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BSObjectModels.cs" />
+    <Compile Include="Models\LoginModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +215,7 @@
     <Content Include="Images\signup-slides\slideImage.png" />
     <Content Include="Images\welcome-logo.png" />
     <Content Include="Content\theme\base\jquery.ui.login.css" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -243,18 +243,15 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\BSObject\CanvasView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\theme\base\minified\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -267,15 +264,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Graph\GraphViewerPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\BSObject\MeasureViewerPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\BSObject\GoalViewerPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\BSObject\PerspectiveViewerPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Login\LoginHeaderPartial.cshtml" />

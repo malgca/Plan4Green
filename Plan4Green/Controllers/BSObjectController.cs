@@ -11,17 +11,7 @@ namespace Plan4Green.Controllers
         //
         // GET: /BSObject/
 
-        public ActionResult PerspectiveViewer()
-        {
-            return View();
-        }
-
-        public ActionResult GoalViewer()
-        {
-            return View();
-        }
-
-        public ActionResult MeasureViewer()
+        public ActionResult CanvasView()
         {
             return View();
         }

@@ -25,11 +25,11 @@ namespace Plan4Green.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<BSObjectContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new BSObjectContext())
                     {
                         if (!context.Database.Exists())
                         {

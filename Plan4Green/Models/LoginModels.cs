@@ -8,49 +8,67 @@ using System.Web.Security;
 
 namespace Plan4Green.Models
 {
-    public class UsersContext : DbContext
+    public class LoginContext : DbContext
     {
-        public UsersContext()
+        public LoginContext()
             : base("DefaultConnection")
         {
         }
 
-        public DbSet<UserProfile> UserProfiles { get; set; }
+        /// <summary>
+        /// User Dataset.
+        /// </summary>
+        public DbSet<User> Users { get; set; }
+
+        /// <summary>
+        /// Organisation Dataset.
+        /// </summary>
+        public DbSet<Organisation> Organisations { get; set; }
     }
 
-    [Table("UserProfile")]
-    public class UserProfile
+    [Table("User")]
+    public class User
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+        public int User_ID { get; set; }
         public string UserName { get; set; }
+        public string UserPassword { get; set; }
+        
+        [Column("Organisation_Name")]
+        [ForeignKey("Organisation_Name")]
+        public string Organisation_ID { get; set; }
+
+        public virtual Organisation Organisation_Name { get; set; }
     }
 
-    public class RegisterExternalLoginModel
+    [Table("Organisation")]
+    public class Organisation
     {
+        [Key]
         [Required]
-        [Display(Name = "User name")]
-        public string UserName { get; set; }
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
+        public string Organisation_Name { get; set; }
 
-        public string ExternalLoginData { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Perspective> Perspectives { get; set; }
     }
-
+    
     public class LocalPasswordModel
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Current Password")]
         public string OldPassword { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "New Password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
+        [Display(Name = "Confirm New Password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
@@ -58,7 +76,7 @@ namespace Plan4Green.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required]
@@ -70,10 +88,14 @@ namespace Plan4Green.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterModel
+    public class SignupModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Organisation")]
+        public string Organisation{ get; set; }
+
+        [Required]
+        [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required]
@@ -83,15 +105,8 @@ namespace Plan4Green.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-    }
-
-    public class ExternalLogin
-    {
-        public string Provider { get; set; }
-        public string ProviderDisplayName { get; set; }
-        public string ProviderUserId { get; set; }
     }
 }

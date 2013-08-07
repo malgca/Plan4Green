@@ -8,7 +8,9 @@
 
 <script type="text/javascript">
      $(window).load(function() {
-         $('#featured').orbit();
+         $('#featured').orbit({
+             bullets: true
+         });
      });
 </script>
 
@@ -19,7 +21,7 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
 
-        <fieldset class="login-fieldset">
+        <fieldset class="signup-fieldset">
                 <legend>Signup</legend>
                         <ul class="inputs">
             <!--Organisation input boxes.........................................................................................-->
@@ -58,12 +60,11 @@
 <input type="submit" value="Sign up!" />
         </fieldset>
     }
-    <!--<div class="slideContainer">
-        <div id="featured">
-            <img src="~/Images/signup-slides/slideImage.png" alt="hello1" />
-            <img src="~/Images/signup-slides/slideImage.png" alt="hello2" />
-            <img src="~/Images/signup-slides/slideImage.png" alt="hello3" />
-            <img src="~/Images/signup-slides/slideImage.png" alt="hello4" />
+    <div id="featured">
+            <img src="~/Images/signup-slides/slideImage.png" alt="hello1"/>
+            <img src="~/Images/signup-slides/slideImage.png" alt="hello2"/>
+            <img src="~/Images/signup-slides/slideImage.png" alt="hello3"/>
+            <img src="~/Images/signup-slides/slideImage.png" alt="hello4"/>
         </div>
-    </div>-->
+
 </section>

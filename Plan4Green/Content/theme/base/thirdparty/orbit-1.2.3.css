@@ -10,24 +10,20 @@
 	width: 550px;
 	height: 100px;
 	background: #000 url(../images/thirdparty/orbit/loading.gif) no-repeat center center;
-	overflow: hidden; }
+	overflow: hidden; 
+}
 #featured img,  
 #featured div,
 #featured a { display: none; }
 
 /* CONTAINER
    ================================================== */
-.slideContainer {
-    float: right;
-    margin-right: 1%;
-    display: inline;
-}
-
 div.orbit-wrapper {
     width: 1px;
     height: 1px;
-    display: inline;
-    position: relative; 
+    display: inline-block;
+    margin-left: 10%;
+    position: absolute; 
 }
 
 div.orbit {
@@ -41,7 +37,8 @@ div.orbit img {
     position: absolute;
     top: 0;
     left: 0;
-    display: none; }
+    display: none; 
+}
 
 div.orbit a {
     border: none;
@@ -49,14 +46,16 @@ div.orbit a {
     top: 0;
     left: 0;
     line-height: 0; 
-    display: none; }
+    display: none; 
+}
 
 .orbit div {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%; }
+    height: 100%; 
+}
 
 /* Note: If your slider only uses content or anchors, you're going to want to put the width and height declarations on the ".orbit>div" and "div.orbit>a" tags in addition to just the .orbit-wrapper */
 
@@ -161,7 +160,9 @@ div.slider-nav span {
 
 div.slider-nav span.right {
     background: url(../images/thirdparty/orbit/right-arrow.png);
-    right: 0; }
+    right: 0; 
+
+}
 
 div.slider-nav span.left {
     background: url(../images/thirdparty/orbit/left-arrow.png);

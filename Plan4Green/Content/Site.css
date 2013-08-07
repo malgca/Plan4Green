@@ -32,16 +32,6 @@ header, footer, hgroup, nav, section {
     float: right;
 }
 
-footer {
-    color: #979797;
-    display: block;
-    width: 100%;
-    position:absolute;
-    text-align:center;
-    bottom: 0px;
-    background-color: #000;
-}
-
 .top-bar {
     background-color: #000;
     position: absolute;
@@ -102,32 +92,43 @@ ul.inputs li label {
     visibility:hidden;
 }
 
-form.signup {
-    width: 35%;
+fieldset.signup-fieldset {
+    width: 90%;
+    margin-left: 10%;
 }
 
 fieldset.login-fieldset {
+    width: 45%;
+    margin-left: 5%;
+}
+fieldset.login-fieldset,
+fieldset.signup-fieldset {
     border-top: none;
     border-left: none;
     border-bottom: none;
     border-width: medium;
     border-color: #e2e2e2;
-    margin-left: 10%;
-    width: 35%;
 }
 
-    fieldset.login-fieldset legend {
+    fieldset.login-fieldset legend,
+    fieldset.signup-fieldset legend {
         color: #979797;
         font-style: italic;
     }
 
-    fieldset.login-fieldset input[type=submit] {
+    fieldset.login-fieldset input[type=submit],
+    fieldset.signup-fieldset input[type=submit] {
         float: right;
-        margin-right: 14%;
+        margin-right: 15%;
     }
 
 p.signup {
     margin-left: 7%;
+}
+
+form.signup {
+    width: 50%;
+    display: inline-block;
 }
 
 /*drawing page layout----------------------------------------------------------------------*/
@@ -141,4 +142,15 @@ nav ul li {
     display: inline;
     list-style: none;
     margin: 5px;
+}
+
+/*Footer layout*/
+footer {
+    color: #979797;
+    display: block;
+    width: 100%;
+    position: absolute;
+    text-align:center;
+    bottom: 0;
+    background-color: #000;
 }

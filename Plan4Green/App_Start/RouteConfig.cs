@@ -16,7 +16,7 @@ namespace Plan4Green
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional }
+                defaults: new { controller = "BSObject", action = "CanvasView", id = UrlParameter.Optional }
             );
         }
     }
