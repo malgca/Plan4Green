@@ -24,6 +24,7 @@ namespace Plan4Green.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            ViewBag.Message = "Welcome to the Green.";
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -40,10 +41,12 @@ namespace Plan4Green.Controllers
         {
             if(ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
+                ViewBag.Message = string.Format("Hi, {0}", model.UserName);
                 return RedirectToLocal(returnUrl);
             }
 
             // If we get this far, something failed and we should redisplay the form.
+            ViewBag.Message = "Welcome to the Green.";
             ModelState.AddModelError("","The user name or password you've entered is incorrect. Please try again.");
             return View(model);
         }
@@ -63,6 +66,7 @@ namespace Plan4Green.Controllers
         [AllowAnonymous]
         public ActionResult Signup()
         {
+            ViewBag.Message = "The Grass is Greener on this Side.";
             return View();
         }
 
@@ -81,6 +85,7 @@ namespace Plan4Green.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Organisation_ID = model.Organisation });
                     WebSecurity.Login(model.UserName, model.Password);
+                    ViewBag.Message = string.Format("Hi, {0}", model.UserName);
                     return RedirectToAction("CanvasView", "BSObject");
                 }
                 catch (MembershipCreateUserException exception)

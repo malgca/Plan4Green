@@ -25,11 +25,11 @@ namespace Plan4Green.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<BSObjectContext>(null);
+                Database.SetInitializer<Plan4GreenDB>(null);
 
                 try
                 {
-                    using (var context = new BSObjectContext())
+                    using (var context = new Plan4GreenDB())
                     {
                         if (!context.Database.Exists())
                         {
@@ -38,7 +38,7 @@ namespace Plan4Green.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("Plan4GreenDB", "User", "User_ID", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

@@ -1,6 +1,13 @@
-﻿@{
+﻿@model Plan4Green.ViewModels.BSObjectViewModel
+
+@{
     ViewBag.Title = "CanvasView";
-    
-    
+    Html.RenderPartial("DrawingPanePartial");
 }
-<h2>CanvasView</h2>
+
+@Scripts.Render("~/Scripts/plan4Green/BSObjects.js", "~/Scripts/plan4Green/main.js")
+
+<section>
+    <canvas id="drawing-canvas">
+    </canvas>
+</section>

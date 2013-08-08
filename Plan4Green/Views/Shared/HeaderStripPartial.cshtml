@@ -1,0 +1,25 @@
+﻿@if (Request.IsAuthenticated) {
+<text>
+    Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
+
+</text>
+}
+
+<section id="header-strip">
+    <nav>
+        <ul>
+            <li>
+                @Html.ActionLink("Home", "Login", "Login")
+            </li>
+            <li>
+                @Html.ActionLink("About", "Login", "Login")
+            </li>
+            <li>
+                @Html.ActionLink("The Balanced Scorecard", "Login", "Login")
+            </li>
+            <li>
+                @Html.ActionLink("Help", "Login", "Login")
+            </li>
+        </ul>
+    </nav>
+</section>

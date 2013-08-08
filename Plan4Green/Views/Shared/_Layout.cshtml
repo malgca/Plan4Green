@@ -8,6 +8,9 @@
         @Styles.Render("~/Content/css")
     </head>
     <body>
+        
+        @{ Html.RenderPartial("HeaderStripPartial"); }
+
         <div id="body">
             <section class="content-wrapper main-content clear-fix">
                 @RenderBody()

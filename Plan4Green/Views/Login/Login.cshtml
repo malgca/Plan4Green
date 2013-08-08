@@ -5,7 +5,7 @@
     
     Html.RenderPartial("LoginHeaderPartial");
 }
-@Styles.Render("~/Content/theme/base/jquery.ui.login.css")
+@Styles.Render("~/Content/theme/base/jquery.ui.login.css", "~/Content/theme/base/jquery.ui.validation.css")
 
 <section>
         @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
