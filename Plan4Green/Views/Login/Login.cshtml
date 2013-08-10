@@ -7,7 +7,7 @@
 }
 @Styles.Render("~/Content/theme/base/jquery.ui.login.css", "~/Content/theme/base/jquery.ui.validation.css")
 
-<section>
+<body>
         @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
         {
             @Html.AntiForgeryToken()
@@ -49,4 +49,4 @@
                 <input type="submit" value="Log in" />
             </fieldset>
         }
-</section>
+</body>

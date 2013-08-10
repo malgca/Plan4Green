@@ -18,6 +18,10 @@ header, footer, hgroup, nav, section {
     float: right;
 }
 
+a {
+    text-decoration: none;
+    color: #0e8297;
+}
 /*login page layout--------------------------------------------------------------------------*/
 .welcome-image {
     text-align: center;
@@ -48,7 +52,7 @@ ul.inputs li label {
 
 .required-field-container {
     width: 80%;
-    margin: 0px 0px 0px 0px;
+    margin: 0px;
     display: inline-block;
 }
 
@@ -79,6 +83,7 @@ fieldset.login-fieldset {
     width: 45%;
     margin-left: 5%;
 }
+
 fieldset.login-fieldset,
 fieldset.signup-fieldset {
     border-top: none;
@@ -144,7 +149,7 @@ nav ul li {
         z-index: 3;
     }
 
-    a:active {
+    nav ul li a:active {
         border-bottom: 5px solid #5d9624;
     }
 
@@ -179,6 +184,7 @@ footer {
     text-align:center;
     bottom: 0;
     background-color: #000;
+    z-index: 8;
 }
 
 /*Drawing Pane layout----------------------------------------------------------------------*/
@@ -187,11 +193,10 @@ footer {
     color: #979797;
     display: inline-block;
     width: 20%;
-    height: 89.9%;
+    height: 88%;
     margin-bottom: 5%;
     position: absolute;
     top: 40px;
-    bottom: 45px;
     left: 0px;
     z-index: 3;
 }
@@ -215,11 +220,10 @@ footer {
 /*Drawing Canvas layout-------------------------------------------------------------------*/
 #drawing-canvas {
     background-color: #e2e2e2;
-    position: absolute;
+    position:absolute;
     top: 40px;
     right: 0px;
-    bottom: 45px;
     width: 80%;
-    height: 89.9%;
+    height: 88%;
     z-index: 4;
 }
