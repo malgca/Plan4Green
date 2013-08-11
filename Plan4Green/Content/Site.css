@@ -218,12 +218,23 @@ footer {
         height: 20px;
     }
 /*Drawing Canvas layout-------------------------------------------------------------------*/
-#drawing-canvas {
+#drawing-page {
     background-color: #e2e2e2;
-    position:absolute;
+    position: absolute;
     top: 40px;
     right: 0px;
     width: 80%;
     height: 88%;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
     z-index: 4;
+}
+/*Debugging CSS---------------------------------------------*/
+#position {
+    color: #979797;
+    font-weight:700;
+    float: right;
+    margin-right: 5%;
+    bottom: 5px;
 }

@@ -4,10 +4,10 @@
     ViewBag.Title = "CanvasView";
     Html.RenderPartial("DrawingPanePartial");
 }
-
-@Scripts.Render("~/Scripts/plan4Green/BSObjects.js", "~/Scripts/plan4Green/main.js")
+@Styles.Render("~/Content/theme/base/plan4Green/js.ui.canvas.css")
+@Scripts.Render("~/Scripts/plan4Green/types.js", "~/Scripts/plan4Green/main.js")
 
 <body onload="initialize()">
-    <canvas id="drawing-canvas" onclick="drawPerspective()">
-    </canvas>
+    <div id="drawing-page">
+    </div>
 </body>

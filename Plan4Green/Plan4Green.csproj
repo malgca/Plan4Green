@@ -206,6 +206,7 @@
     <Content Include="Content\theme\base\images\ui-bg-01-grey.png" />
     <Content Include="Content\theme\base\images\ui-required-01-red.png" />
     <Content Include="Content\theme\base\jquery.ui.validation.css" />
+    <Content Include="Content\theme\base\plan4Green\js.ui.canvas.css" />
     <Content Include="Content\theme\base\thirdparty\orbit-1.2.3.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\favicon.png" />
@@ -233,7 +234,7 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\plan4Green\main.js" />
-    <Content Include="Scripts\plan4Green\BSObjects.js" />
+    <Content Include="Scripts\plan4Green\types.js" />
     <Content Include="Scripts\thirdparty\jquery-1.5.1.min.js" />
     <Content Include="Scripts\thirdparty\jquery.orbit-1.2.3.js" />
     <Content Include="Scripts\thirdparty\jquery.orbit-1.2.3.min.js" />

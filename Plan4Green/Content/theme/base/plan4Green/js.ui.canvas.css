@@ -1,0 +1,9 @@
+﻿.bsobject {
+    display: inline-block;
+    position: absolute;
+    background-color: aliceblue;
+}
+
+.canvasObject {
+    position: relative;
+}
