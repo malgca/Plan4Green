@@ -1,6 +1,9 @@
 ﻿.bsobject {
     display: inline-block;
     position: absolute;
+}
+
+.bsobject:hover {
     background-color: aliceblue;
 }
 

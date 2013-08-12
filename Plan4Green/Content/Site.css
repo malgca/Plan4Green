@@ -230,8 +230,12 @@ footer {
     overflow-y: auto;
     z-index: 4;
 }
+
+    #drawing-page::selection {
+        cursor: default;
+    }
 /*Debugging CSS---------------------------------------------*/
-#position {
+.debug {
     color: #979797;
     font-weight:700;
     float: right;
