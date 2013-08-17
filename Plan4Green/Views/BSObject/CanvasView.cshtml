@@ -4,8 +4,9 @@
     ViewBag.Title = "CanvasView";
     Html.RenderPartial("DrawingPanePartial");
 }
+
 @Styles.Render("~/Content/theme/base/plan4Green/js.ui.canvas.css")
-@Scripts.Render("~/Scripts/plan4Green/utilities.js", "~/Scripts/plan4Green/types.js", "~/Scripts/plan4Green/animation.js", "~/Scripts/plan4Green/bsobject.js", "~/Scripts/plan4Green/graph.js", "~/Scripts/plan4Green/main.js")
+@Scripts.Render("~/Scripts/plan4Green/utilities.js", "~/Scripts/plan4Green/types.js", "~/Scripts/plan4Green/animation.js", "~/Scripts/plan4Green/canvasObject.js", "~/Scripts/plan4Green/graph.js", "~/Scripts/plan4Green/main.js")
 
 <body onload="initialize()">
     <div id="drawing-page">

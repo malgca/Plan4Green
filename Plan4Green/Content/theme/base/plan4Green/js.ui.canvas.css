@@ -1,12 +1,9 @@
-﻿.bsobject {
+﻿.canvasObject {
     display: inline-block;
     position: absolute;
+    z-index: 3;
 }
 
-.bsobject:hover {
+.canvasObject:hover {
     background-color: aliceblue;
-}
-
-.canvasObject {
-    position: relative;
 }

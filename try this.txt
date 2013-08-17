@@ -1,1 +1,0 @@
-Try placing all bsObjects into an array so that you can pick the items out individually from the array and move them that way. Though the individual moving code is correct, the picking code can't be done from within the bsObject class.

@@ -2,7 +2,7 @@
 UTILITY METHODS
 -------------------------------------------------------------------------*/
 // gets the position of a mouse event on the screen.
-function getPosition(event)
+var currentPosition = function(event)
 {
     // position on the screen.  
     var pos = new Point(event.pageX, event.pageY);

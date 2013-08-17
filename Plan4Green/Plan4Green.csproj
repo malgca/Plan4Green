@@ -234,7 +234,7 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\plan4Green\animation.js" />
-    <Content Include="Scripts\plan4Green\bsobject.js" />
+    <Content Include="Scripts\plan4Green\canvasObject.js" />
     <Content Include="Scripts\plan4Green\graph.js" />
     <Content Include="Scripts\plan4Green\main.js" />
     <Content Include="Scripts\plan4Green\types.js" />

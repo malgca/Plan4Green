@@ -10,7 +10,6 @@ var status = document.getElementById("status");
 
 // dummy count and object size
 var count = 0;
-var classSize = 100;
 
 /*-----------------------------------------------------------------
 SCRIPT VARIABLES
@@ -43,14 +42,17 @@ function initialize()
     page.addEventListener("mousemove", mousedragged, false);
     page.addEventListener("mouseout", mousecancelled, false);
 
-    createBSObject('Perspective');
-    createBSObject('Perspective');
+    for (var i = 0; i < 5000; i++) {
+        canvasObject.create('Perspective');
+        count++;
+    }
+
 }
 
 function createBSObject(type)
 {
     count++;
-    new bsobject(type, count, classSize);
+    canvasObject.create(type);
 }
 // mousedown event handler
 function mousepressed(event)
@@ -67,9 +69,8 @@ function mousedragged(event)
 {
     if (isUnderConstruction)
     {
-        var pos = getPosition(event);
+        var pos = currentPosition(event);
         position.innerHTML = "(x: " + pos.x + " | y: " + pos.y + ")";
-        
     }
 }
 
