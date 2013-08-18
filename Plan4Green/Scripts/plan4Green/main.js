@@ -42,7 +42,7 @@ function initialize()
     page.addEventListener("mousemove", mousedragged, false);
     page.addEventListener("mouseout", mousecancelled, false);
 
-    for (var i = 0; i < 5000; i++) {
+    for (var i = 0; i < 1; i++) {
         canvasObject.create('Perspective');
         count++;
     }

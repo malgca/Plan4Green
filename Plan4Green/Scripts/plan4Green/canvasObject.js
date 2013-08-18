@@ -7,14 +7,6 @@
      globalId,
         classSize = 100,
 
-    /*-----------------------------------------------------------------
-    SCRIPT VARIABLES
-    -------------------------------------------------------------------*/
-    // references to the children of the bs object represented by this canvasObject
-    children = new Array(),
-    // parent of the bs object represented by this canvasObject
-    parent = null,
-
     /*------------------------------------------------------------
     DRAWING METHODS
     --------------------------------------------------------------*/
@@ -68,12 +60,16 @@
                 hasDragged = true;
 
                 var pos = currentPosition(event);
+                //alert(page.offsetLeft + ", " + page.offsetWidth + ", " + page.offsetTop + ", " + page.offsetHeight);
 
-                // make sure to move only this div
-                
-                // move the perspective by middle
-                div.style.left = (pos.x - classSize / 2) + 'px';
-                div.style.top = (pos.y - classSize / 2) + 'px';
+
+                if (pos.x > page.offsetLeft && pos.x < page.offsetWidth) {
+                    // move the perspective by middle
+                    div.style.left = (pos.x - classSize / 2) + 'px';
+                }
+                if (pos.y > page.offsetTop && pos.y < page.offsetHeight) {
+                    div.style.top = (pos.y - classSize / 2) + 'px';
+                }
             }
         },
 
@@ -147,7 +143,6 @@
     drawIndicator = function (type, name) {
         var type = typeof (bsObject);
         if (typeof type == "Perspective") {
-            alert(type);
         }
         else {
         }
@@ -174,6 +169,8 @@
         drawObject(objectType);
     };
 
-    // expose methods
-    return { create: create, children: children, parent: parent };
+    // expose members
+    return {
+        create: create,
+    };
 }());

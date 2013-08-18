@@ -1,7 +1,4 @@
-﻿/*------------------------------------------------------------------------
-UTILITY METHODS
--------------------------------------------------------------------------*/
-// gets the position of a mouse event on the screen.
+﻿// gets the position of a mouse event on the screen.
 var currentPosition = function(event)
 {
     // position on the screen.  
