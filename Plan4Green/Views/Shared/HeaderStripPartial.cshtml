@@ -1,7 +1,8 @@
-﻿@if (Request.IsAuthenticated) {
+﻿@model Plan4Green.ViewModels.BSObjectViewModel
+
+@if (Request.IsAuthenticated) {
 <text>
     Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
-
 </text>
 }
 
@@ -22,4 +23,13 @@
             </li>
         </ul>
     </nav>
+
+    <div id="current-information">
+        <select>
+            <optgroup label="Hells">
+                <option>Fictional Organisation</option>
+            </optgroup>
+        </select>
+    </div>
+
 </section>

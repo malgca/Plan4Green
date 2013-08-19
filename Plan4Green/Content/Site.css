@@ -31,24 +31,24 @@ a {
 }
 
 ul.remember-me {
-    position:relative;
+    position: relative;
     text-align: center;
 }
 
-ul.remember-me li {
-    display: inline;
-    list-style: none;
-}
+    ul.remember-me li {
+        display: inline;
+        list-style: none;
+    }
 
 ul.inputs li {
     display: inline;
     list-style: none;
 }
 
-ul.inputs li label {
-    width: 18%;
-    display: inline-block;
-}
+    ul.inputs li label {
+        width: 18%;
+        display: inline-block;
+    }
 
 .required-field-container {
     width: 80%;
@@ -71,7 +71,7 @@ ul.inputs li label {
 
 .required-field-hidden {
     margin-left: 25%;
-    visibility:hidden;
+    visibility: hidden;
 }
 
 fieldset.signup-fieldset {
@@ -121,38 +121,6 @@ form.signup {
     background-color: #000;
 }
 
-/*Navigation Partial layout----------------------------------------------------------------*/
-nav ul li {
-    display: inline;
-    list-style: none;
-    margin: 5px;
-    color: #979797;
-}
-
-    nav ul li a {
-        font-size: 14px;
-        text-decoration: none;
-        color: #979797;
-        margin-right: 10px;
-        margin-left: 10px;
-        z-index: 3;
-        font-weight: 600;
-    }
-
-    nav ul li a:hover {
-        font-size: 14px;
-        color: #fff;
-        font-weight: 600;
-        border-bottom: 5px solid #76ed00;
-        margin-right: 10px;
-        margin-left: 10px;
-        z-index: 3;
-    }
-
-    nav ul li a:active {
-        border-bottom: 5px solid #5d9624;
-    }
-
 /*Header Strip layout-----------------------------------------------------------------------*/
 #header-strip {
     background-color: #000;
@@ -164,14 +132,50 @@ nav ul li {
     z-index: 3;
 }
 
-#page-info {
-    color: #5d9624;
-    font-size: 14px;
-    font-weight: 600;
-    z-index: 5;
+nav {
+    display: inline-block;
+}
+
+    nav ul li {
+        display: inline;
+        list-style: none;
+        margin: 5px;
+        color: #979797;
+    }
+
+        nav ul li a {
+            font-size: 14px;
+            text-decoration: none;
+            color: #979797;
+            margin-right: 10px;
+            margin-left: 10px;
+            z-index: 3;
+            font-weight: 600;
+        }
+
+            nav ul li a:hover {
+                font-size: 14px;
+                color: #fff;
+                font-weight: 600;
+                border-bottom: 5px solid #76ed00;
+                margin-right: 10px;
+                margin-left: 10px;
+                z-index: 3;
+            }
+
+            nav ul li a:active {
+                border-bottom: 5px solid #5d9624;
+            }
+
+#current-information {
     float: right;
-    margin-top: 10px;
-    margin-right: 20px;
+    margin-right: 3%;
+    margin-top: 0.8%;
+    color: #979797;
+    z-index:3;
+    font-weight: 600;
+    font-size: 14px;
+
 }
 
 /*Footer layout-------------------------------------------------------------------------------*/
@@ -181,7 +185,7 @@ footer {
     width: 100%;
     height: 45px;
     position: absolute;
-    text-align:center;
+    text-align: center;
     bottom: 0;
     background-color: #000;
     z-index: 8;
@@ -206,17 +210,18 @@ footer {
         width: 90%;
     }
 
-    #drawing-pane table thead tr th {
-        color: #fff;
-        font-size: 16px;
-        padding-bottom: 10px;
-        border-bottom: 3px solid #00b1ff;
-    }
+        #drawing-pane table thead tr th {
+            color: #fff;
+            font-size: 16px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #00b1ff;
+        }
 
-    #drawing-pane table thead tr td {
-        width: 20px;
-        height: 20px;
-    }
+        #drawing-pane table thead tr td {
+            width: 20px;
+            height: 20px;
+        }
+
 /*Drawing Canvas layout-------------------------------------------------------------------*/
 #drawing-page {
     background-color: #e2e2e2;
@@ -225,19 +230,17 @@ footer {
     right: 0px;
     width: 80%;
     height: 88%;
-    overflow: scroll;
-    overflow-x: hidden;
-    overflow-y: auto;
     z-index: 4;
 }
 
     #drawing-page::selection {
         cursor: default;
     }
+
 /*Debugging CSS---------------------------------------------*/
 .debug {
     color: #979797;
-    font-weight:700;
+    font-weight: 700;
     float: right;
     margin-right: 5%;
     bottom: 5px;

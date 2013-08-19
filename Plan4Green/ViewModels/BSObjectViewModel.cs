@@ -8,6 +8,7 @@ namespace Plan4Green.ViewModels
 {
     public class BSObjectViewModel
     {
+        public IEnumerable<OrganisationModel> Organisations { get; set; }
         public IEnumerable<PerspectiveModel> Perspectives { get; set; }
         public IEnumerable<GoalModel> Goals { get; set; }
         public IEnumerable<MeasureModel> Measures { get; set; }

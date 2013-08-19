@@ -238,7 +238,6 @@
     <Content Include="Scripts\plan4Green\graph.js" />
     <Content Include="Scripts\plan4Green\main.js" />
     <Content Include="Scripts\plan4Green\types.js" />
-    <Content Include="Scripts\plan4Green\utilities.js" />
     <Content Include="Scripts\thirdparty\jquery-1.5.1.min.js" />
     <Content Include="Scripts\thirdparty\jquery.orbit-1.2.3.js" />
     <Content Include="Scripts\thirdparty\jquery.orbit-1.2.3.min.js" />

@@ -1,96 +1,106 @@
-﻿/*-----------------------------------------------------------------
-BUILDING VARIABLES
--------------------------------------------------------------------*/
-// flag set while creatings site.
-var isUnderConstruction = true;
+﻿var main = (function () {
+    var
+    /*-----------------------------------------------------------------
+    BUILDING VARIABLES
+    -------------------------------------------------------------------*/
+    // flag set while creatings site.
+    isUnderConstruction = true,
+    // elements to show building information
+    position = document.getElementById("position"),
+    status = document.getElementById("status"),
 
-// elements to show building information
-var position = document.getElementById("position");
-var status = document.getElementById("status");
+    // dummy count
+    count = 0,
 
-// dummy count and object size
-var count = 0;
-
-/*-----------------------------------------------------------------
-SCRIPT VARIABLES
--------------------------------------------------------------------*/
-
-// page upon which stuff will be drawn.
-var page;
-
-// array of existing BS objects.
-var bsObjects;
-
-// current level of the page.
-var currentLevel;
-
-/*---------------------------------------------------------------------
-DOM EVENTS
-----------------------------------------------------------------------*/
-function initialize()
-{
-    page = document.getElementById('drawing-page');
-    
-    isDragging = false;
-
-    // clear the starting array.
-    bsObjects = new Array();
-    
-    // add mouse event listeners to page
-    page.addEventListener("mousedown", mousepressed, false);
-    page.addEventListener("mouseup", mousereleased, false);
-    page.addEventListener("mousemove", mousedragged, false);
-    page.addEventListener("mouseout", mousecancelled, false);
-
-    for (var i = 0; i < 1; i++) {
-        canvasObject.create('Perspective');
-        count++;
+    /*------------------------------------------------------------------------
+    PAGE METHODS
+    -------------------------------------------------------------------------*/
+    // Returns the current level of the app.
+    getCurrentLevel = function (name, type) {
+        if (typeof type == null) {
+            return "All Perspectives";
+        }
+        else {
+            return typeof type + ": " + name;
+        }
     }
 
-}
+    /*-----------------------------------------------------------------
+    SCRIPT VARIABLES
+    -------------------------------------------------------------------*/
+    // the page on which stuff is drawn
+    page = document.getElementById("drawing-page"),
 
-function createBSObject(type)
-{
-    count++;
-    canvasObject.create(type);
-}
-// mousedown event handler
-function mousepressed(event)
-{
-}
+    // array of existing BS objects.
+    bsObjects,
 
-// mouseup event handler
-function mousereleased(event)
-{
-}
+    // current level of the page.
+    currentLevel,
 
-// mousemove event handler
-function mousedragged(event)
-{
-    if (isUnderConstruction)
-    {
-        var pos = currentPosition(event);
-        position.innerHTML = "(x: " + pos.x + " | y: " + pos.y + ")";
+
+            // get the current position of the object in relation to the drawing page
+        currentPosition = function (event) {
+            // position on the screen.
+            var pos = new Point(event.pageX, event.pageY);
+
+            pos.x -= main.page.offsetLeft;
+            pos.y -= main.page.offsetTop;
+
+            return pos;
+        },
+
+    /*---------------------------------------------------------------------
+    DOM EVENTS
+    ----------------------------------------------------------------------*/
+    init = function () {
+        var
+
+        // clear the starting array.
+        bsObjects = new Array(),
+
+        // mousedown event handler
+        mousepressed = function (event) {
+        },
+
+        // mouseup event handler
+        mousereleased = function (event) {
+        },
+
+        // mousemove event handler
+        mousedragged = function (event) {
+            if (isUnderConstruction) {
+                var pos = currentPosition(event);
+                position.innerHTML = "(x: " + pos.x + " | y: " + pos.y + ")";
+            }
+        },
+
+        // mouseout event handler
+        mousecancelled = function (event) {
+        };
+
+        // add mouse event listeners to page
+        page.addEventListener("mousedown", mousepressed, false);
+        page.addEventListener("mouseup", mousereleased, false);
+        page.addEventListener("mousemove", mousedragged, false);
+        page.addEventListener("mouseout", mousecancelled, false);
+
+        for (var i = 0; i < 2; i++) {
+            canvasObject.create('Perspective');
+            count++;
+        }
     }
-}
 
-// mouseout event handler
-function mousecancelled(event)
-{
-}
+    // initilalize the main.js script when the window loads
+    window.onload = init;
 
-/*------------------------------------------------------------------------
-PAGE METHODS
--------------------------------------------------------------------------*/
-// Returns the current level of the app.
-function getCurrentLevel(name, type)
-{
-    if (typeof type == null)
-    {
-        return "All Perspectives";
-    }
-    else
-    {
-        return typeof type + ": " + name;
-    }
-}
+    // expose members
+    return {
+        init: init,
+        page: page,
+        bsObjects: bsObjects,
+        count: count,
+        position: position,
+        status: status,
+        currentPosition: currentPosition
+    };
+}());

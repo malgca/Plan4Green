@@ -217,6 +217,12 @@ namespace Plan4Green.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class OrganisationModel
+    {
+        [Required]
+        public string Organisation_Name { get; set; }
+    }
+
     public class PerspectiveModel
     {
         [Required]

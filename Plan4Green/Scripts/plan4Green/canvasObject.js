@@ -4,12 +4,17 @@
     BUILDING VARIABLES
     -------------------------------------------------------------------*/
     // dummy count and object size
-     globalId,
-        classSize = 100,
+    classSize = 100,
 
     /*------------------------------------------------------------
     DRAWING METHODS
     --------------------------------------------------------------*/
+        // redraw the canvas whenever something get's done.
+    refreshCanvas = function () {
+        // clear the old stuff off the canvas.
+        context.clearRect(0, 0, canvas.scrollWidth, canvas.scrollHeight);
+    },
+
     // create the parent div with inner canvas'.
     createDiv = function (xPosition, yPosition) {
         var
@@ -45,6 +50,7 @@
             div.style.zIndex = '10';
 
             // change level when clicked.
+            main.changeLevel();
         },
 
         // mouseup event handler
@@ -59,15 +65,17 @@
             if (isDragging) {
                 hasDragged = true;
 
-                var pos = currentPosition(event);
-                //alert(page.offsetLeft + ", " + page.offsetWidth + ", " + page.offsetTop + ", " + page.offsetHeight);
+                // get the current mouse position
+                var pos = main.currentPosition(event);
 
-
-                if (pos.x > page.offsetLeft && pos.x < page.offsetWidth) {
+                if ((pos.x - classSize / 2 + main.page.offsetLeft) > main.page.offsetLeft
+                    && (pos.x + classSize / 2 + 10) < main.page.offsetWidth) {
                     // move the perspective by middle
                     div.style.left = (pos.x - classSize / 2) + 'px';
                 }
-                if (pos.y > page.offsetTop && pos.y < page.offsetHeight) {
+                if ((pos.y - 10) > main.page.offsetTop
+                    && (pos.y + classSize / 2 + 10) < main.page.offsetHeight) {
+                    // move the perspective by middle
                     div.style.top = (pos.y - classSize / 2) + 'px';
                 }
             }
@@ -83,12 +91,12 @@
 
         // outer wrapper div.
         div = document.createElement('div');
-        div.setAttribute('id', 'canvasObject' + count + '-outer-wrapper');
+        div.setAttribute('id', 'canvasObject' + main.count + '-outer-wrapper');
         div.className = 'canvasObject';
 
         // inner canvas with id
-        canvas = createCanvas('canvasObject' + count, classSize, classSize)
-        count++;
+        canvas = createCanvas('canvasObject' + main.count, classSize, classSize)
+        main.count++;
 
         // set the div to the mouse click 
         div.style.left = xPosition + 'px';
@@ -107,15 +115,9 @@
         return div;
     },
 
-    // redraw the canvas whenever something get's done.
-    refreshCanvas = function () {
-        // clear the old stuff off the canvas.
-        context.clearRect(0, 0, canvas.scrollWidth, canvas.scrollHeight);
-    },
-
     // draw a perspective BS Object
     drawPerspective = function (perspective) {
-        var pos = currentPosition(event);
+        var pos = main.currentPosition;
         var div = createDiv(pos.x, pos.y);
 
         // get the canvas context and draw the perspective outline
@@ -126,7 +128,7 @@
         context.fillRect(5, 5, classSize, classSize)
 
         // place the div on the drawing page
-        page.appendChild(div);
+        main.page.appendChild(div);
     },
 
     // draw a goal BS Object
