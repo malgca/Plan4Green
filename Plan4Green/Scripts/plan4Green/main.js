@@ -12,24 +12,13 @@
     // dummy count
     count = 0,
 
-    /*------------------------------------------------------------------------
-    PAGE METHODS
-    -------------------------------------------------------------------------*/
-    // Returns the current level of the app.
-    getCurrentLevel = function (name, type) {
-        if (typeof type == null) {
-            return "All Perspectives";
-        }
-        else {
-            return typeof type + ": " + name;
-        }
-    }
-
     /*-----------------------------------------------------------------
     SCRIPT VARIABLES
     -------------------------------------------------------------------*/
     // the page on which stuff is drawn
     page = document.getElementById("drawing-page"),
+    // drawing panel from which to get the drawing items
+    drawPane = document.getElementById("drawing-pane"),
 
     // array of existing BS objects.
     bsObjects,
@@ -37,57 +26,135 @@
     // current level of the page.
     currentLevel,
 
+    /*------------------------------------------------------------------------
+    PAGE METHODS
+    -------------------------------------------------------------------------*/
+    // clear all child elements from page
+    clearPage = function () {
+        while (page.childElementCount > 0) {
+            console.log(page.lastChild.id + " removed")
+            page.removeChild(page.lastChild);
+        }
+    }
 
-            // get the current position of the object in relation to the drawing page
-        currentPosition = function (event) {
-            // position on the screen.
-            var pos = new Point(event.pageX, event.pageY);
+    // get the current position of the object in relation to the drawing page
+    currentPosition = function (event) {
+        // position on the screen.
+        var pos = new Point(event.pageX, event.pageY);
 
-            pos.x -= main.page.offsetLeft;
-            pos.y -= main.page.offsetTop;
+        pos.x -= main.page.offsetLeft;
+        pos.y -= main.page.offsetTop;
 
-            return pos;
-        },
+        return pos;
+    },
 
+    // change the current level of the drawing page
+    changeLevel = function () {
+        if (currentLevel == 'Perspective') {
+            clearPage();
+        }
+        canvasObject.create('Perspective');
+    }
     /*---------------------------------------------------------------------
     DOM EVENTS
     ----------------------------------------------------------------------*/
     init = function () {
-        var
-
         // clear the starting array.
-        bsObjects = new Array(),
+        bsObjects = new Array();
 
-        // mousedown event handler
-        mousepressed = function (event) {
-        },
+        // set the default current level
+        currentLevel = 'Perspective';
 
-        // mouseup event handler
-        mousereleased = function (event) {
-        },
+        var pageEvents = (function () {
+            // mousedown event handler
+            mousedown = function (event) {
+                console.log(event.target);
+                if (event.target === this) {
+                }
+            },
 
-        // mousemove event handler
-        mousedragged = function (event) {
-            if (isUnderConstruction) {
-                var pos = currentPosition(event);
-                position.innerHTML = "(x: " + pos.x + " | y: " + pos.y + ")";
+            // mouseup event handler
+            mouseup = function (event) {
+                console.log(event.target);
+                if (event.target === this) {
+                    changeLevel();
+                }
+            },
+
+            // mousemove event handler
+            mousedrag = function (event) {
+                if (isUnderConstruction) {
+                    var pos = currentPosition(event);
+                    position.innerHTML = "(x: " + pos.x + " | y: " + pos.y + ")";
+                }
+
+                if (event.target === this) {
+                }
+            },
+
+            // mouseout event handler
+            mouseout = function (event) {
+                if (event.target === this) {
+                }
             }
-        },
 
-        // mouseout event handler
-        mousecancelled = function (event) {
-        };
+            // mouse drop event handler
+            mousedrop = function (event) {
+            }
+
+            // dragover event handler
+            dragover = function (event) {
+                event.preventDefault();
+            }
+
+            drop = function (event) {
+                event.preventDefault();
+                var data = event.dataTransfer.getData("thumb");
+
+                if (data == 'perspective') {
+                    // create a new perspective.
+                }
+                else if (data == 'goal') {
+                    // createa a new goal.
+                }
+                else {
+                    // create a new measure.
+                }
+
+                canvasObject.create('Perspective');
+                count++;
+            }
+
+            // expose members
+            return {
+                mousedown: mousedown,
+                mouseup: mouseup,
+                mousedrag: mousedrag,
+                mouseout: mouseout,
+                dragover: dragover,
+                drop: drop
+            }
+        }());
+
+        drawPaneEvents = (function () {
+            dragstart = function (event) {
+                event.dataTransfer.setData("thumb", event.target.id);
+            }
+
+            return {
+                dragstart: dragstart
+            }
+        }());
 
         // add mouse event listeners to page
-        page.addEventListener("mousedown", mousepressed, false);
-        page.addEventListener("mouseup", mousereleased, false);
-        page.addEventListener("mousemove", mousedragged, false);
-        page.addEventListener("mouseout", mousecancelled, false);
+        page.addEventListener("mousedown", pageEvents.mousedown, false);
+        page.addEventListener("mouseup", pageEvents.mouseup, false);
+        page.addEventListener("mousemove", pageEvents.mousedrag, false);
+        page.addEventListener("mouseout", pageEvents.mouseout, false);
+        page.addEventListener("dragover", pageEvents.dragover, false);
+        page.addEventListener("drop", pageEvents.drop, false);
 
-        for (var i = 0; i < 2; i++) {
-            canvasObject.create('Perspective');
-            count++;
-        }
+        drawPane.addEventListener("dragstart", drawPaneEvents.dragstart, false);
     }
 
     // initilalize the main.js script when the window loads
@@ -101,6 +168,7 @@
         count: count,
         position: position,
         status: status,
-        currentPosition: currentPosition
+        currentPosition: currentPosition,
+        changeLevel: changeLevel
     };
 }());

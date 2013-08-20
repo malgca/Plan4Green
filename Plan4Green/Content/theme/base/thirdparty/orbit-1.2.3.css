@@ -19,6 +19,7 @@
 /* CONTAINER
    ================================================== */
 div.orbit-wrapper {
+    margin-top: 3.5%;
     width: 1px;
     height: 1px;
     display: inline-block;

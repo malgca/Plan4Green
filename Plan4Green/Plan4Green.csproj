@@ -209,12 +209,12 @@
     <Content Include="Content\theme\base\plan4Green\js.ui.canvas.css" />
     <Content Include="Content\theme\base\thirdparty\orbit-1.2.3.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\drawing-tools\goal-thumb.png" />
+    <Content Include="Images\drawing-tools\mapview-thumb.png" />
+    <Content Include="Images\drawing-tools\measure-thumb.png" />
+    <Content Include="Images\drawing-tools\perspective-thumb.png" />
     <Content Include="Images\favicon.png" />
     <Content Include="Images\logo.png" />
-    <Content Include="Images\signup-slides\captions.jpg" />
-    <Content Include="Images\signup-slides\coffee.jpg" />
-    <Content Include="Images\signup-slides\features.jpg" />
-    <Content Include="Images\signup-slides\overflow.jpg" />
     <Content Include="Images\signup-slides\slideImage.png" />
     <Content Include="Images\welcome-logo.png" />
     <Content Include="Content\theme\base\jquery.ui.login.css" />
@@ -254,12 +254,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\BSObject\CanvasView.cshtml" />
-    <Content Include="Views\Shared\HeaderStripPartial.cshtml" />
+    <Content Include="Views\Shared\NavigationStripPartial.cshtml" />
     <Content Include="Views\BSObject\DrawingPanePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\theme\base\minified\" />
+    <Folder Include="Images\homepage-slides\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

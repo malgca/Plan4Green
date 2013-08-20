@@ -23,9 +23,10 @@ a {
     color: #0e8297;
 }
 /*login page layout--------------------------------------------------------------------------*/
-.welcome-image {
+#welcome-image {
     text-align: center;
-    padding-top: 1%;
+    position: relative;
+    top: 50px;
     width: 100%;
     z-index: 1;
 }
@@ -86,6 +87,7 @@ fieldset.login-fieldset {
 
 fieldset.login-fieldset,
 fieldset.signup-fieldset {
+    margin-top: 3%;
     border-top: none;
     border-left: none;
     border-bottom: none;
@@ -121,15 +123,15 @@ form.signup {
     background-color: #000;
 }
 
-/*Header Strip layout-----------------------------------------------------------------------*/
-#header-strip {
+/*Navigation Strip layout-----------------------------------------------------------------------*/
+#navigation-strip {
     background-color: #000;
     position: absolute;
     top: 0px;
-    height: 40px;
+    height: 50px;
     width: 100%;
     display: inline;
-    z-index: 3;
+    z-index: 99;
 }
 
 nav {
@@ -144,7 +146,7 @@ nav {
     }
 
         nav ul li a {
-            font-size: 14px;
+            font-size: 16px;
             text-decoration: none;
             color: #979797;
             margin-right: 10px;
@@ -154,7 +156,6 @@ nav {
         }
 
             nav ul li a:hover {
-                font-size: 14px;
                 color: #fff;
                 font-weight: 600;
                 border-bottom: 5px solid #76ed00;
@@ -164,6 +165,7 @@ nav {
             }
 
             nav ul li a:active {
+                color: #979797;
                 border-bottom: 5px solid #5d9624;
             }
 
@@ -172,10 +174,9 @@ nav {
     margin-right: 3%;
     margin-top: 0.8%;
     color: #979797;
-    z-index:3;
+    z-index: 3;
     font-weight: 600;
     font-size: 14px;
-
 }
 
 /*Footer layout-------------------------------------------------------------------------------*/
@@ -196,16 +197,17 @@ footer {
     background-color: #000;
     color: #979797;
     display: inline-block;
-    width: 20%;
-    height: 88%;
+    width: 10%;
+    height: 89%;
     margin-bottom: 5%;
     position: absolute;
-    top: 40px;
+    top: 50px;
     left: 0px;
     z-index: 3;
 }
 
     #drawing-pane table {
+        margin-top: 5%;
         margin-left: 4%;
         width: 90%;
     }
@@ -219,17 +221,30 @@ footer {
 
         #drawing-pane table thead tr td {
             width: 20px;
+            font-size: 14px;
             height: 20px;
+        }
+
+        #drawing-pane table tbody tr td img {
+            display: inline-block;
+            margin: 5% 5% 0% 20%;
+        }
+
+        #drawing-pane table tbody tr td p {
+            display: block;
+            margin-left: 5%;
+            text-align: center;
+            -webkit-user-select: none;
         }
 
 /*Drawing Canvas layout-------------------------------------------------------------------*/
 #drawing-page {
     background-color: #e2e2e2;
     position: absolute;
-    top: 40px;
+    top: 50px;
     right: 0px;
-    width: 80%;
-    height: 88%;
+    width: 90%;
+    height: 89%;
     z-index: 4;
 }
 

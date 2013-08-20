@@ -32,62 +32,67 @@
             canvas.setAttribute('id', name + "-canvas");
             canvas.setAttribute('width', width + 10);
             canvas.setAttribute('height', height + 10);
-
             // get the canvas' context
             context = canvas.getContext('2d');
 
             return canvas;
-        },
+        };
 
-        // mouseover event handler
-        mouseover = function (event) {
-        },
+        // canvas div mouse events
+        var canvasEvents = (function () {
+            // mouseover event handler
+            mouseover = function (event) {
+            },
 
-        // mousedown event handler
-        mousedown = function (event) {
-            isDragging = true;
-            hasDragged = false;
-            div.style.zIndex = '10';
+            // mousedown event handler
+            mousedown = function (event) {
+                isDragging = true;
+                hasDragged = false;
+                div.style.zIndex = '10';
+                // change level when clicked.
+                //main.changeLevel();
+            },
 
-            // change level when clicked.
-            main.changeLevel();
-        },
-
-        // mouseup event handler
-        mouseup = function (event) {
-            isDragging = false;
-            hasDragged = false;
-            div.style.zIndex = '3';
-        },
-
-        // mousedrag event handler
-        mousedrag = function (event) {
-            if (isDragging) {
-                hasDragged = true;
-
-                // get the current mouse position
-                var pos = main.currentPosition(event);
-
-                if ((pos.x - classSize / 2 + main.page.offsetLeft) > main.page.offsetLeft
-                    && (pos.x + classSize / 2 + 10) < main.page.offsetWidth) {
-                    // move the perspective by middle
-                    div.style.left = (pos.x - classSize / 2) + 'px';
+            // mouseup event handler
+            mouseup = function (event) {
+                isDragging = false;
+                if (hasDragged == false) {
+                    main.changeLevel();
                 }
-                if ((pos.y - 10) > main.page.offsetTop
-                    && (pos.y + classSize / 2 + 10) < main.page.offsetHeight) {
-                    // move the perspective by middle
-                    div.style.top = (pos.y - classSize / 2) + 'px';
+                hasDragged = false;
+                div.style.zIndex = '3';
+            },
+
+            // mousedrag event handler
+            mousedrag = function (event) {
+                if (isDragging) {
+                    hasDragged = true;
+
+                    // get the current mouse position
+                    var pos = main.currentPosition(event);
+
+                    if ((pos.x - classSize / 2 + main.page.offsetLeft) > main.page.offsetLeft
+                        && (pos.x + classSize / 2 + 10) < main.page.offsetWidth) {
+                        // move the perspective by middle
+                        div.style.left = (pos.x - classSize / 2) + 'px';
+                    }
+                    if ((pos.y - 10) > main.page.offsetTop
+                        && (pos.y + classSize / 2 + 10) < main.page.offsetHeight) {
+                        // move the perspective by middle
+                        div.style.top = (pos.y - classSize / 2) + 'px';
+                    }
                 }
-            }
-        },
+            },
 
-        // mouseout event handler
-        mouseout = function (event) {
-            isDragging = false;
-            if (hasDragged == false) {
+            // mouseout event handler
+            mouseout = function (event) {
+                isDragging = false;
+                if (hasDragged == false) {
 
+                }
+                hasDragged = false;
             }
-        },
+        }());
 
         // outer wrapper div.
         div = document.createElement('div');

@@ -1,4 +1,5 @@
 ﻿var base = (function () {
+
     // bs Object template
     function BSObject(name, description, currentValue, targetValue, startDate, endDate, currentPosition) {
         // bsObjects name.
@@ -21,6 +22,8 @@
         this.children = new Array();
         // parent of the bsObject
         this.parent = null;
+        // notify if bsObject is currently in strategy map view.
+        this.mapView = parent;
 
         // add a child object to this bsObject's array.
         this.addChildObject = function (childObject) {
