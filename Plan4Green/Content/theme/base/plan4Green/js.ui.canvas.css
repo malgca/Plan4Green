@@ -1,5 +1,5 @@
 ﻿.canvasObject {
-    display: inline-block;
+    display: inline;
     position: absolute;
     z-index: 3;
 }
@@ -7,3 +7,28 @@
 .canvasObject:hover {
     background-color: aliceblue;
 }
+
+    .canvasObject h1 {
+        position: absolute;
+        background-color: #ffffff;
+        font-size: 25px;
+        top: 5%;
+        left: 25%;
+        text-align:center;
+        -webkit-user-select: none;
+
+    }
+
+    .canvasObject p {
+        position: absolute;
+        font-size: 16px;
+        color: #979797;
+        top: 28%;
+        left: 10%;
+        width: 60%;
+        height: 38%;
+        overflow: auto;
+        text-align: left;
+        -webkit-user-select: none;
+
+    }

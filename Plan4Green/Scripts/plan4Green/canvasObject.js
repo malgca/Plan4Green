@@ -1,11 +1,5 @@
 ﻿var canvasObject = (function () {
     var
-    /*-----------------------------------------------------------------
-    BUILDING VARIABLES
-    -------------------------------------------------------------------*/
-    // dummy count and object size
-    classSize = 100,
-
     /*------------------------------------------------------------
     DRAWING METHODS
     --------------------------------------------------------------*/
@@ -16,7 +10,7 @@
     },
 
     // create the parent div with inner canvas'.
-    createDiv = function (xPosition, yPosition) {
+    createDiv = function (divItem) {
         var
 
         // flag indicates whether an object is busy dragging
@@ -25,13 +19,13 @@
         hasDragged,
 
         // create the canvas on which the image will be drawn
-        createCanvas = function (name, width, height) {
+        createCanvas = function () {
             var canvas = document.createElement('canvas');
 
             // set the canvas attribute tags
-            canvas.setAttribute('id', name + "-canvas");
-            canvas.setAttribute('width', width + 10);
-            canvas.setAttribute('height', height + 10);
+            canvas.setAttribute('id', divItem.name + "" + main.count + "-canvas");
+            canvas.setAttribute('width', (divItem.width + (divItem.width * 5 / 100)));
+            canvas.setAttribute('height', (divItem.height + (divItem.height * 5 / 100)));
             // get the canvas' context
             context = canvas.getContext('2d');
 
@@ -40,30 +34,32 @@
 
         // canvas div mouse events
         var canvasEvents = (function () {
-            // mouseover event handler
+            // canvas mouseover event handler
             mouseover = function (event) {
             },
 
-            // mousedown event handler
+            // canvas mousedown event handler
             mousedown = function (event) {
                 isDragging = true;
                 hasDragged = false;
                 div.style.zIndex = '10';
                 // change level when clicked.
-                //main.changeLevel();
+
             },
 
-            // mouseup event handler
+            // canvas mouseup event handler
             mouseup = function (event) {
+                console.log(event.target);
                 isDragging = false;
                 if (hasDragged == false) {
-                    main.changeLevel();
                 }
                 hasDragged = false;
                 div.style.zIndex = '3';
+
+                divItem.currentPosition = main.currentPosition(event);
             },
 
-            // mousedrag event handler
+            // canvas mousedrag event handler
             mousedrag = function (event) {
                 if (isDragging) {
                     hasDragged = true;
@@ -71,20 +67,21 @@
                     // get the current mouse position
                     var pos = main.currentPosition(event);
 
-                    if ((pos.x - classSize / 2 + main.page.offsetLeft) > main.page.offsetLeft
-                        && (pos.x + classSize / 2 + 10) < main.page.offsetWidth) {
+                    if ((pos.x - divItem.centerX + main.page.offsetLeft) > main.page.offsetLeft
+                        && (pos.x + divItem.centerX + 10) < main.page.offsetWidth) {
                         // move the perspective by middle
-                        div.style.left = (pos.x - classSize / 2) + 'px';
+                        div.style.left = (pos.x - divItem.centerX) + 'px';
                     }
+
                     if ((pos.y - 10) > main.page.offsetTop
-                        && (pos.y + classSize / 2 + 10) < main.page.offsetHeight) {
+                        && (pos.y + divItem.centerY + 10) < main.page.offsetHeight) {
                         // move the perspective by middle
-                        div.style.top = (pos.y - classSize / 2) + 'px';
+                        div.style.top = (pos.y - divItem.centerY) + 'px';
                     }
                 }
             },
 
-            // mouseout event handler
+            // canvas mouseout event handler
             mouseout = function (event) {
                 isDragging = false;
                 if (hasDragged == false) {
@@ -92,27 +89,35 @@
                 }
                 hasDragged = false;
             }
+
+            return {
+                mouseover: mouseover,
+                mousedown: mousedown,
+                mouseup: mouseup,
+                mousedrag: mousedrag,
+                mouseout: mouseout
+            }
         }());
 
         // outer wrapper div.
         div = document.createElement('div');
-        div.setAttribute('id', 'canvasObject' + main.count + '-outer-wrapper');
+        div.setAttribute('id', divItem.name + '' + main.count + '-outer-wrapper');
         div.className = 'canvasObject';
 
         // inner canvas with id
-        canvas = createCanvas('canvasObject' + main.count, classSize, classSize)
+        canvas = createCanvas()
         main.count++;
 
         // set the div to the mouse click 
-        div.style.left = xPosition + 'px';
-        div.style.top = yPosition + 'px';
+        div.style.left = divItem.currentPosition.x + 'px';
+        div.style.top = divItem.currentPosition.y + 'px';
 
         // set event listeners
-        div.addEventListener("mouseover", mouseover, false);
-        div.addEventListener("mousedown", mousedown, false);
-        div.addEventListener("mouseup", mouseup, false);
-        div.addEventListener("mousemove", mousedrag, false);
-        div.addEventListener("mouseout", mouseout, false);
+        div.addEventListener("mouseover", canvasEvents.mouseover, false);
+        div.addEventListener("mousedown", canvasEvents.mousedown, false);
+        div.addEventListener("mouseup", canvasEvents.mouseup, false);
+        div.addEventListener("mousemove", canvasEvents.mousedrag, false);
+        div.addEventListener("mouseout", canvasEvents.mouseout, false);
 
         // append inner canvas to outer div
         div.appendChild(canvas);
@@ -122,15 +127,53 @@
 
     // draw a perspective BS Object
     drawPerspective = function (perspective) {
-        var pos = main.currentPosition;
-        var div = createDiv(pos.x, pos.y);
+        var
+        pos = perspective.currentPosition;
+        div = createDiv(perspective);
 
+        var
         // get the canvas context and draw the perspective outline
-        context.strokeStyle = "#000000";
-        context.lineWidth = 4;
-        context.strokeRect(5, 5, classSize, classSize);
-        context.fillStyle = "#ffffff";
-        context.fillRect(5, 5, classSize, classSize)
+        drawOutline = function (centerX, centerY, width, height, lineWidth, fill) {
+            context.beginPath();
+
+            context.moveTo(centerX, centerY - height / 2);
+
+            context.bezierCurveTo(
+              centerX + width / 2, centerY - height / 2,
+              centerX + width / 2, centerY + height / 2,
+              centerX, centerY + height / 2);
+
+            context.bezierCurveTo(
+              centerX - width / 2, centerY + height / 2,
+              centerX - width / 2, centerY - height / 2,
+              centerX, centerY - height / 2);
+
+            context.strokeStyle = "#404040"
+            context.lineWidth = lineWidth;
+            context.fillStyle = fill;
+            context.fill();
+            context.stroke();
+            context.closePath();
+        };
+
+        drawOutline((perspective.centerX + (perspective.centerX * 5 / 100)),
+            (perspective.centerY + (perspective.height * 3 / 100)),
+            (perspective.width + (perspective.width * 35 / 100)),
+            perspective.height, 2, "#ffffff");
+
+        drawOutline((perspective.width - (perspective.width * 15 / 100)),
+            (perspective.centerY + (perspective.height * 2 / 100)), 100, 70, 1, "#ff0000");
+
+        // heading text div
+        var heading = document.createElement('h1');
+        heading.innerHTML = perspective.name;
+
+        // description
+        var description = document.createElement('p');
+        description.innerHTML = perspective.description;
+
+        div.appendChild(heading);
+        div.appendChild(description);
 
         // place the div on the drawing page
         main.page.appendChild(div);
@@ -138,42 +181,107 @@
 
     // draw a goal BS Object
     drawGoal = function (goal) {
-        // draw sextagon wrapper
+        var
+        pos = goal.currentPosition;
+        div = createDiv(goal);
+
+        var
+        //  draw the goal outline
+        drawOutline = function (centerX, centerY, width, height, lineWidth, fill) {
+            context.beginPath();
+
+            context.moveTo((width - width * 95 /100), centerY);
+            context.lineTo((width - width * 75 / 100), (height - height * 95 / 100));
+            context.lineTo((width - width * 20 / 100), (height - height * 95 / 100));
+            context.lineTo((width - width * 1 / 100), centerY);
+            context.lineTo((width - width * 20 / 100), (height - height * 2 / 100));
+            context.lineTo((width - width * 75 / 100), (height - height * 2 / 100));
+            context.closePath();
+
+            context.strokeStyle = "#404040"
+            context.lineWidth = lineWidth;
+            context.fillStyle = fill;
+            context.fill();
+            context.stroke();
+
+        };
+        drawOutline(goal.centerX, goal.centerY, goal.width, goal.height, 2, "#ffffff");
+
+        // heading text div
+        var heading = document.createElement('h1');
+        heading.innerHTML = goal.name;
+
+        // description
+        var description = document.createElement('p');
+        description.innerHTML = goal.description;
+
+        div.appendChild(heading);
+        div.appendChild(description);
+
+        // place the div on the drawing page
+        main.page.appendChild(div);
     },
 
     // draw a measure BS Object
     drawMeasure = function (measure) {
-        // draw triangle wrapper
-    },
+        var
+        pos = measure.currentPosition;
+        div = createDiv(measure);
 
-    // draw the stoplight indicators for BS Objects.
-    drawIndicator = function (type, name) {
-        var type = typeof (bsObject);
-        if (typeof type == "Perspective") {
-        }
-        else {
-        }
+        var
+//  draw the goal outline
+drawOutline = function (centerX, centerY, width, height, lineWidth, fill) {
+    context.beginPath();
+
+    context.moveTo(centerX, height - (height * 95 / 100));
+    context.lineTo((width - (width * 98 /100)), height);
+    context.lineTo((width - (width * 2 / 100)), height);
+    context.closePath();
+
+    context.strokeStyle = "#404040"
+    context.lineWidth = lineWidth;
+    context.fillStyle = fill;
+    context.fill();
+    context.stroke();
+};
+
+        // heading text div
+        var heading = document.createElement('h1');
+        heading.innerHTML = measure.name;
+
+        // description
+        var description = document.createElement('p');
+        description.innerHTML = measure.description;
+
+        div.appendChild(heading);
+        div.appendChild(description);
+
+        drawOutline(measure.centerX, measure.centerY, measure.width, measure.height, 2, "#ffffff");
+
+        
+
+        // place the div on the drawing page
+        main.page.appendChild(div);
     },
 
     /*-----------------------------------------------------------------
     CONSTRUCTION METHODS
     -------------------------------------------------------------------*/
     // constructor
-    create = function (objectType) {
-        drawObject = function (objectType) {
+    create = function (bsItem) {
+        drawObject = function (bsItem) {
             // render the object according to the type.
-            if (objectType == 'Perspective') {
-                drawPerspective(null);
+            if (bsItem.name == 'Perspective') {
+                drawPerspective(bsItem);
             }
-            else if (objectType == 'Goal') {
-                drawGoal(null);
+            else if (bsItem.name == 'Goal') {
+                drawGoal(bsItem);
             }
             else {
-                drawMeasure(null);
+                drawMeasure(bsItem);
             }
         }
-
-        drawObject(objectType);
+        drawObject(bsItem);
     };
 
     // expose members

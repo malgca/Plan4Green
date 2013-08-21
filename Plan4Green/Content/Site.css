@@ -232,7 +232,6 @@ footer {
 
         #drawing-pane table tbody tr td p {
             display: block;
-            margin-left: 5%;
             text-align: center;
             -webkit-user-select: none;
         }

@@ -32,10 +32,13 @@
     // clear all child elements from page
     clearPage = function () {
         while (page.childElementCount > 0) {
-            console.log(page.lastChild.id + " removed")
             page.removeChild(page.lastChild);
         }
-    }
+    },
+
+    redrawPage = function (levelItem) {
+
+    },
 
     // get the current position of the object in relation to the drawing page
     currentPosition = function (event) {
@@ -53,7 +56,6 @@
         if (currentLevel == 'Perspective') {
             clearPage();
         }
-        canvasObject.create('Perspective');
     }
     /*---------------------------------------------------------------------
     DOM EVENTS
@@ -68,17 +70,13 @@
         var pageEvents = (function () {
             // mousedown event handler
             mousedown = function (event) {
-                console.log(event.target);
                 if (event.target === this) {
+                    changeLevel();
                 }
             },
 
             // mouseup event handler
             mouseup = function (event) {
-                console.log(event.target);
-                if (event.target === this) {
-                    changeLevel();
-                }
             },
 
             // mousemove event handler
@@ -109,19 +107,28 @@
 
             drop = function (event) {
                 event.preventDefault();
+
                 var data = event.dataTransfer.getData("thumb");
+                var bsItem;
 
                 if (data == 'perspective') {
-                    // create a new perspective.
+                    if (bsObjects.length < 6000) {
+                        bsItem = bsType.createPerspective(currentPosition(event));
+                        // add it to the bsObjects
+                        bsObjects.push(bsItem);
+                        redrawPage();
+                    }
                 }
                 else if (data == 'goal') {
-                    // createa a new goal.
+                    bsItem = bsType.createGoal(currentPosition(event));
+                    redrawPage();
                 }
                 else {
-                    // create a new measure.
+                    bsItem = bsType.createMeasure(currentPosition(event));
+                    redrawPage();
                 }
 
-                canvasObject.create('Perspective');
+                canvasObject.create(bsItem);
                 count++;
             }
 
@@ -146,7 +153,7 @@
             }
         }());
 
-        // add mouse event listeners to page
+        // add mouse event listeners to page and drawing pane
         page.addEventListener("mousedown", pageEvents.mousedown, false);
         page.addEventListener("mouseup", pageEvents.mouseup, false);
         page.addEventListener("mousemove", pageEvents.mousedrag, false);
