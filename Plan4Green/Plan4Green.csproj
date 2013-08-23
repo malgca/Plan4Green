@@ -215,9 +215,9 @@
     <Content Include="Images\drawing-tools\measure-thumb.png" />
     <Content Include="Images\drawing-tools\perspective-thumb.png" />
     <Content Include="Images\favicon.png" />
+    <Content Include="Images\home-logo.png" />
     <Content Include="Images\homepage-slides\green.jpg" />
     <Content Include="Images\homepage-slides\sustainable.jpg" />
-    <Content Include="Images\logo-header.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\signup-slides\slideImage.png" />
     <Content Include="Images\welcome-logo.png" />

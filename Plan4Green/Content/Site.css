@@ -128,20 +128,25 @@ form.signup {
     background-color: #000;
     position: absolute;
     top: 0px;
-    height: 50px;
+    height: 60px;
     width: 100%;
     display: inline;
     z-index: 99;
 }
 
+    #navigation-strip #homeLogo {
+        margin-left: 3%;
+        margin-top: 1%;
+    }
+
 nav {
     display: inline-block;
+    float:right;
 }
 
     nav ul li {
         display: inline;
         list-style: none;
-        margin: 5px;
         color: #979797;
     }
 
@@ -150,17 +155,15 @@ nav {
             text-decoration: none;
             color: #979797;
             margin-right: 10px;
-            margin-left: 10px;
             z-index: 3;
-            font-weight: 600;
+            font-weight: 200;
         }
 
             nav ul li a:hover {
                 color: #fff;
-                font-weight: 600;
+                font-weight: 400;
                 border-bottom: 5px solid #76ed00;
                 margin-right: 10px;
-                margin-left: 10px;
                 z-index: 3;
             }
 
