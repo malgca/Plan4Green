@@ -107,7 +107,7 @@ var bsType = (function () {
     // create a goal object
     createGoal = function (position) {
         // inherit the BSObject
-        Goal.prototype = new BSObject('Goal', defaultDescription, 0, 1, null, null, position, 400, 300);
+        Goal.prototype = new BSObject('Goal', defaultDescription, 0, 1, null, null, position, 300, 200);
 
         // create a new goal object.
         return new Goal('Goal', defaultDescription, 0, 1, null, null, position);
@@ -116,7 +116,7 @@ var bsType = (function () {
     // create a measure object
     createMeasure = function (position) {
         // inherit the BSObject
-        Measure.prototype = new BSObject('Measure', defaultDescription, 0, 1, null, null, position, 400, 300);
+        Measure.prototype = new BSObject('Measure', defaultDescription, 0, 1, null, null, position, 300, 300);
 
         // create a measure goal object.
         return new Measure('Measure', defaultDescription, 0, 1, null, null, position);

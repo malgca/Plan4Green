@@ -166,10 +166,12 @@
 
         // heading text div
         var heading = document.createElement('h1');
+        heading.className = 'perspectiveHeading';
         heading.innerHTML = perspective.name;
 
         // description
         var description = document.createElement('p');
+        description.className = 'perspectiveDescription';
         description.innerHTML = perspective.description;
 
         div.appendChild(heading);
@@ -190,7 +192,7 @@
         drawOutline = function (centerX, centerY, width, height, lineWidth, fill) {
             context.beginPath();
 
-            context.moveTo((width - width * 95 /100), centerY);
+            context.moveTo((width - width * 95 / 100), centerY);
             context.lineTo((width - width * 75 / 100), (height - height * 95 / 100));
             context.lineTo((width - width * 20 / 100), (height - height * 95 / 100));
             context.lineTo((width - width * 1 / 100), centerY);
@@ -207,16 +209,31 @@
         };
         drawOutline(goal.centerX, goal.centerY, goal.width, goal.height, 2, "#ffffff");
 
-        // heading text div
+        // measure heading text
         var heading = document.createElement('h1');
+        heading.className = 'goalHeading';
         heading.innerHTML = goal.name;
 
-        // description
+        // measure description
         var description = document.createElement('p');
+        description.className = 'goalDescription';
         description.innerHTML = goal.description;
 
+        // measure stoplight indicator
+        var stoplight = document.createElement('div');
+        stoplight.className = 'goalStoplight';
+
+        // measure due date
+        var dueDate = document.createElement('p');
+        dueDate.className = 'goalDue';
+        dueDate.innerHTML = 'of ' + goal.endDate;
+
+        // append children to the current div
         div.appendChild(heading);
+        div.appendChild(dueDate);
         div.appendChild(description);
+        div.appendChild(stoplight);
+        div.appendChild(dueDate);
 
         // place the div on the drawing page
         main.page.appendChild(div);
@@ -229,36 +246,55 @@
         div = createDiv(measure);
 
         var
-//  draw the goal outline
-drawOutline = function (centerX, centerY, width, height, lineWidth, fill) {
-    context.beginPath();
+        //  draw the goal outline
+        drawOutline = function (centerX, centerY, width, height, lineWidth, fill) {
+            context.beginPath();
 
-    context.moveTo(centerX, height - (height * 95 / 100));
-    context.lineTo((width - (width * 98 /100)), height);
-    context.lineTo((width - (width * 2 / 100)), height);
-    context.closePath();
+            context.moveTo(centerX, height - (height * 95 / 100));
+            context.lineTo((width - (width * 98 / 100)), height);
+            context.lineTo((width - (width * 2 / 100)), height);
+            context.closePath();
 
-    context.strokeStyle = "#404040"
-    context.lineWidth = lineWidth;
-    context.fillStyle = fill;
-    context.fill();
-    context.stroke();
-};
+            context.strokeStyle = "#404040"
+            context.lineWidth = lineWidth;
+            context.fillStyle = fill;
+            context.fill();
+            context.stroke();
+        };
 
-        // heading text div
+        // measure heading text
         var heading = document.createElement('h1');
+        heading.className = 'measureHeading';
         heading.innerHTML = measure.name;
 
-        // description
+        // measure description
         var description = document.createElement('p');
+        description.className = 'measureDescription';
         description.innerHTML = measure.description;
 
+        // measure stoplight indicator
+        var stoplight = document.createElement('div');
+        stoplight.className = 'measureStoplight';
+
+        // measure due date
+        var dueDate = document.createElement('p');
+        dueDate.className = 'measureDue';
+        dueDate.innerHTML = 'Due ' + measure.endDate;
+
+        // measure target amount
+        var targetAmount = document.createElement('p');
+        targetAmount.className = 'measureTarget';
+        targetAmount.innerHTML = 'of ' + measure.target;
+
+        // append children to the current div
         div.appendChild(heading);
+        div.appendChild(dueDate);
         div.appendChild(description);
+        div.appendChild(stoplight);
+        div.appendChild(dueDate);
+        div.appendChild(targetAmount);
 
         drawOutline(measure.centerX, measure.centerY, measure.width, measure.height, 2, "#ffffff");
-
-        
 
         // place the div on the drawing page
         main.page.appendChild(div);

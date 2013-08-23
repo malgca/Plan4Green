@@ -183,6 +183,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BSObjectController.cs" />
     <Compile Include="Controllers\GraphController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -214,6 +215,9 @@
     <Content Include="Images\drawing-tools\measure-thumb.png" />
     <Content Include="Images\drawing-tools\perspective-thumb.png" />
     <Content Include="Images\favicon.png" />
+    <Content Include="Images\homepage-slides\green.jpg" />
+    <Content Include="Images\homepage-slides\sustainable.jpg" />
+    <Content Include="Images\logo-header.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\signup-slides\slideImage.png" />
     <Content Include="Images\welcome-logo.png" />
@@ -256,11 +260,12 @@
     <Content Include="Views\BSObject\CanvasView.cshtml" />
     <Content Include="Views\Shared\NavigationStripPartial.cshtml" />
     <Content Include="Views\BSObject\DrawingPanePartial.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\theme\base\minified\" />
-    <Folder Include="Images\homepage-slides\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
