@@ -1,14 +1,12 @@
 ﻿@model Plan4Green.Models.SignupModel
 
 @{
-    ViewBag.Title = "Signup - It's Worth It!";
-    Html.RenderPartial("LoginHeaderPartial");
+    ViewBag.Page = "Signup";
 }
 
 <body>
     @using (Html.BeginForm(null, null, null, FormMethod.Post, new { @class="signup"}))
     {
-        
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
 

@@ -1,12 +1,12 @@
 ﻿/*Global css settings--------------------------------------------------------------------*/
 body {
     font-family: Verdana, Arial;
-    font-size: 10pt;
+    font-size: 11pt;
     margin: 0px;
     padding: 0px;
 }
 
-header, footer, hgroup, nav, section {
+header, footer, hgroup, section {
     display: block;
 }
 
@@ -18,19 +18,15 @@ header, footer, hgroup, nav, section {
     float: right;
 }
 
-a {
-    text-decoration: none;
-    color: #0e8297;
-}
-/*login page layout--------------------------------------------------------------------------*/
-#welcome-image {
-    text-align: center;
-    position: relative;
-    top: 50px;
-    width: 100%;
-    z-index: 1;
+.highlight {
+    color: #76ed00;
 }
 
+    .highlight:active {
+        color: #5d9624;
+    }
+
+/*login page layout--------------------------------------------------------------------------*/
 ul.remember-me {
     position: relative;
     text-align: center;
@@ -78,10 +74,14 @@ ul.inputs li {
 fieldset.signup-fieldset {
     width: 90%;
     margin-left: 10%;
+    top: 120px;
+    position: relative;
 }
 
 fieldset.login-fieldset {
     width: 45%;
+    top: 380px;
+    position: absolute;
     margin-left: 5%;
 }
 
@@ -95,17 +95,23 @@ fieldset.signup-fieldset {
     border-color: #e2e2e2;
 }
 
-    fieldset.login-fieldset legend,
-    fieldset.signup-fieldset legend {
-        color: #979797;
-        font-style: italic;
+.legendInfo {
+    background-color: #000000;
+    position: relative;
+    top: 352px;
+    height: 50px;
+}
+
+    .legendInfo img {
+        margin-top: 3px;
+        margin-left: 5%;
     }
 
-    fieldset.login-fieldset input[type=submit],
-    fieldset.signup-fieldset input[type=submit] {
-        float: right;
-        margin-right: 15%;
-    }
+fieldset.login-fieldset input[type=submit],
+fieldset.signup-fieldset input[type=submit] {
+    float: right;
+    margin-right: 15%;
+}
 
 p.signup {
     margin-top: 4%;
@@ -135,13 +141,16 @@ form.signup {
 }
 
     #navigation-strip #homeLogo {
-        margin-left: 3%;
+        margin-left: 5%;
         margin-top: 1%;
     }
 
 nav {
     display: inline-block;
-    float:right;
+    float: right;
+    top: 25px;
+    right: 200px;
+    position: relative;
 }
 
     nav ul li {
@@ -157,11 +166,13 @@ nav {
             margin-right: 10px;
             z-index: 3;
             font-weight: 200;
+            bottom: 0px;
+            position: relative;
         }
 
             nav ul li a:hover {
                 color: #fff;
-                font-weight: 400;
+                font-weight: 200;
                 border-bottom: 5px solid #76ed00;
                 margin-right: 10px;
                 z-index: 3;

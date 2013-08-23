@@ -6,13 +6,17 @@
 }
 
 <section id="navigation-strip">
-    <img id="homeLogo" src="~/Images/home-logo.png" alt="Go back Home." />
+    <a href="@Url.Action("Home", "Home")">
+        <img id="homeLogo" src="~/Images/home-logo.png" alt="Go back Home." />
+    </a>
     <nav>
         <ul>
             <li>
-                @Html.ActionLink("LOG IN STRANGER", "Login", "Login")
+                @if (ViewBag.Page != "Login" && ViewBag.Page != "Signup")
+                {
+                    <a href="@Url.Action("Login", "Login")">Get Started, <span class="highlight">Stranger</span></a>
+                }
             </li>
-            <li>
         </ul>
     </nav>
 </section>

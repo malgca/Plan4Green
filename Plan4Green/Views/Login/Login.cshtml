@@ -1,52 +1,56 @@
 ﻿@model Plan4Green.Models.LoginModel
 
 @{
-    ViewBag.Title = "Login - Welcome to Plan4Green";
-    
-    Html.RenderPartial("LoginHeaderPartial");
+    ViewBag.Page = "Login";
 }
+
 @Styles.Render("~/Content/theme/base/jquery.ui.login.css", "~/Content/theme/base/jquery.ui.validation.css")
 
 <body>
-        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary()
+    <img src="~/Images/hi-res/leaf.jpg" alt="Alternate Text" class="pageBanner" />
+    <div class="legendInfo">
+        <img src="~/Images/hi-res/login-title.png" />        
+    </div>
 
-            <fieldset class="login-fieldset">
-                <legend>Login</legend>
-                <ul class="inputs">
-            <!-- Username input boxes.........................................................................................-->
-            <li>@Html.LabelFor(model => model.UserName)</li>
-            <li>
-                <div class="required-field-container">
-                    @Html.TextBoxFor(model => model.UserName, null, new { id = "tbLoginUsername", @class = "required-field" })
-                    <div class="required-field-identifier" />
-                </div>
-            </li>
-        </ul>
-                <p>@Html.Label("This field is required", new { id = "lblLoginUsername", @class = "required-field-hidden" })</p>
-        <!-- Password input boxes.........................................................................................-->
-        <ul class="inputs">
-            <li>@Html.LabelFor(model => model.Password)</li>
-            <li>
-                <div class="required-field-container">
-                    @Html.PasswordFor(model => model.Password, new { id = "pbLoginPassword", @class = "required-field" })
-                    <div class="required-field-identifier" /> 
-                </div>
-            </li>
-        </ul>
-                <p>@Html.Label("This field is required", new { id = "lblLoginUsername", @class = "required-field-hidden" })</p>
-        <!-- Remember me checkbox.........................................................................................-->
-        <ul class="remember-me">
-            <li>@Html.CheckBoxFor(model => model.RememberMe)</li>
-            <li>
-                Remember Me
-            </li>
-        </ul>        
-                <p class="signup">Don't have an account? @Html.ActionLink("Sign Up!", "Signup")</p>
-                
-                <input type="submit" value="Log in" />
-            </fieldset>
-        }
+    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <fieldset class="login-fieldset">
+            <legend>
+            </legend>
+            <ul class="inputs">
+                <!-- Username input boxes.........................................................................................-->
+                <li>@Html.LabelFor(model => model.UserName)</li>
+                <li>
+                    <div class="required-field-container">
+                        @Html.TextBoxFor(model => model.UserName, null, new { id = "tbLoginUsername", @class = "required-field" })
+                        <div class="required-field-identifier" />
+                    </div>
+                </li>
+            </ul>
+            <p>@Html.Label("This field is required", new { id = "lblLoginUsername", @class = "required-field-hidden" })</p>
+            <!-- Password input boxes.........................................................................................-->
+            <ul class="inputs">
+                <li>@Html.LabelFor(model => model.Password)</li>
+                <li>
+                    <div class="required-field-container">
+                        @Html.PasswordFor(model => model.Password, new { id = "pbLoginPassword", @class = "required-field" })
+                        <div class="required-field-identifier" />
+                    </div>
+                </li>
+            </ul>
+            <p>@Html.Label("This field is required", new { id = "lblLoginUsername", @class = "required-field-hidden" })</p>
+            <!-- Remember me checkbox.........................................................................................-->
+            <ul class="remember-me">
+                <li>@Html.CheckBoxFor(model => model.RememberMe)</li>
+                <li>Remember Me
+                </li>
+            </ul>
+            <p class="signup">Don't have an account? @Html.ActionLink("Sign Up!", "Signup")</p>
+
+            <input type="submit" value="Log in" />
+        </fieldset>
+    }
 </body>
