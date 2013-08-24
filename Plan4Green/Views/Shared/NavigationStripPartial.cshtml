@@ -11,12 +11,34 @@
     </a>
     <nav>
         <ul>
-            <li>
-                @if (ViewBag.Page != "Login" && ViewBag.Page != "Signup")
-                {
-                    <a href="@Url.Action("Login", "Login")">Get Started, <span class="highlight">Stranger</span></a>
-                }
-            </li>
+            @if (ViewBag.Page != "Login"
+                && ViewBag.Page != "Signup"
+                && ViewBag.Page != "CanvasView")
+            {
+                <li>
+
+                    <a href="@Url.Action("Login", "Login")">Howdy, <span class="highlight">Stranger</span></a>
+
+                </li>
+            
+                <li>
+                    <strong>| </strong>
+                </li>
+            }
+
+            @if (ViewBag.Page != "CanvasView")
+            {
+                <li>
+                    <a href="@Url.Action("CanvasView", "BSObject")">This is a <span class="highlight">Demo</span></a>
+                </li>
+            }
+
+            @if (ViewBag.Page == "CanvasView")
+            {
+                <li>
+                    <a href="#">Fictional <span class="highlight">Organisation</span></a>
+                </li>
+            }
         </ul>
     </nav>
 </section>

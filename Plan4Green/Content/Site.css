@@ -26,7 +26,97 @@ header, footer, hgroup, section {
         color: #5d9624;
     }
 
+.highlight {
+    color: #76ed00;
+}
+
+    .highlight:active {
+        color: #5d9624;
+    }
+
+/*home page layout-------------------------------------------------------------------------*/
+.pageBanner {
+    position: relative;
+    top: 59px;
+    width: 100%;
+    overflow: hidden;
+}
+
+    .pageBanner img {
+        width: 101%;
+    }
+
+.homeheading1 {
+    left: 10%;
+}
+
+.homeheading2 {
+    right: 25.5%;
+}
+
+.homeheading1,
+.homeheading2 {
+    margin-top: 7px;
+    position: absolute;
+}
+
+
+.homeInfo1 {
+    left: 10%;
+}
+
+.homeInfo2 {
+    right: 10%;
+}
+
+.homeInfo1,
+.homeInfo2 {
+    border-color: #000000;
+    border-style: solid;
+    border-width: 3px;
+    border-bottom-style: none;
+    border-top-style: none;
+    background-color: #ffffff;
+    position: absolute;
+    height: 337.5px;
+    overflow-x: hidden;
+    overflow: auto;
+        width: 32%;
+    padding: 2%;
+    top: 392px;
+}
+
+    .homeInfo1 p:first-child:first-letter,
+    .homeInfo2 p:first-child:first-letter,
+    .loginInfo p:first-child:first-letter {
+        float: left;
+        color: #558624;
+        font-size: 75px;
+        line-height: 60px;
+        padding-top: 4px;
+        padding-right: 8px;
+        padding-left: 3px;
+        font-family: Georgia;
+    }
+
 /*login page layout--------------------------------------------------------------------------*/
+.loginInfo {
+    border-color: #000000;
+    border-style: solid;
+    border-width: 3px;
+    border-bottom-style: none;
+    border-top-style: none;
+    background-color: #ffffff;
+    position: absolute;
+    width: 30%;
+    height: 337.5px;
+    overflow-x: hidden;
+    overflow: auto;
+    padding: 2%;
+    top: 392px;
+    right: 10%;
+}
+
 ul.remember-me {
     position: relative;
     text-align: center;
@@ -43,12 +133,12 @@ ul.inputs li {
 }
 
     ul.inputs li label {
-        width: 18%;
+        width: 20%;
         display: inline-block;
     }
 
 .required-field-container {
-    width: 80%;
+    width: 78%;
     margin: 0px;
     display: inline-block;
 }
@@ -73,39 +163,38 @@ ul.inputs li {
 
 fieldset.signup-fieldset {
     width: 90%;
-    margin-left: 10%;
-    top: 120px;
+    margin-left: 20%;
+    top: 35px;
     position: relative;
+    border:none;
 }
 
 fieldset.login-fieldset {
-    width: 45%;
+    width: 44%;
     top: 380px;
     position: absolute;
-    margin-left: 5%;
+    margin-left: 10%;
+    border: none;
 }
 
 fieldset.login-fieldset,
 fieldset.signup-fieldset {
     margin-top: 3%;
-    border-top: none;
-    border-left: none;
-    border-bottom: none;
-    border-width: medium;
-    border-color: #e2e2e2;
 }
 
 .legendInfo {
     background-color: #000000;
     position: relative;
-    top: 352px;
+    top: 56px;
     height: 50px;
 }
 
-    .legendInfo img {
-        margin-top: 3px;
-        margin-left: 5%;
-    }
+.loginheading {
+    position: absolute;
+    margin-top: 4px;
+    left: 10%;
+}
+
 
 fieldset.login-fieldset input[type=submit],
 fieldset.signup-fieldset input[type=submit] {
@@ -121,6 +210,31 @@ p.signup {
 form.signup {
     width: 50%;
     display: inline-block;
+}
+
+a.login {
+    font-size: 16px;
+    text-decoration: none;
+    color: #ff0000;
+    z-index: 3;
+    font-weight: 200;
+}
+
+    a.login:hover {
+        color: #000000;
+        font-weight: 200;
+        border-bottom: 5px solid #76ed00;
+        margin-right: 10px;
+        z-index: 3;
+    }
+
+    a.login:visited {
+        color: #000000;
+    }
+
+.loginhighlight {
+    color: #59a50d;
+    font-weight: 600;
 }
 
 /*drawing page layout----------------------------------------------------------------------*/
@@ -141,7 +255,7 @@ form.signup {
 }
 
     #navigation-strip #homeLogo {
-        margin-left: 5%;
+        margin-left: 10%;
         margin-top: 1%;
     }
 
@@ -149,7 +263,7 @@ nav {
     display: inline-block;
     float: right;
     top: 25px;
-    right: 200px;
+    right: 10%;
     position: relative;
 }
 
