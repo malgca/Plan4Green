@@ -210,10 +210,13 @@
     <Content Include="Content\theme\base\plan4Green\js.ui.canvas.css" />
     <Content Include="Content\theme\base\thirdparty\orbit-1.2.3.css" />
     <Content Include="Global.asax" />
-    <Content Include="Images\drawing-tools\goal-thumb.png" />
+    <Content Include="Images\drawing-tools\goal-active-icon.png" />
+    <Content Include="Images\drawing-tools\goal-inactive-icon.png" />
     <Content Include="Images\drawing-tools\mapview-thumb.png" />
-    <Content Include="Images\drawing-tools\measure-thumb.png" />
-    <Content Include="Images\drawing-tools\perspective-thumb.png" />
+    <Content Include="Images\drawing-tools\measure-active-icon.png" />
+    <Content Include="Images\drawing-tools\measure-inactive-icon.png" />
+    <Content Include="Images\drawing-tools\perspective-active-icon.png" />
+    <Content Include="Images\drawing-tools\perspective-inactive-icon.png" />
     <Content Include="Images\favicon.png" />
     <Content Include="Images\hi-res\heading1.png" />
     <Content Include="Images\hi-res\heading2.png" />

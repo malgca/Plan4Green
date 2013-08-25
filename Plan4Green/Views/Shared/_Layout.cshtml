@@ -9,12 +9,17 @@
 </head>
 <body>
     @{ Html.RenderPartial("NavigationStripPartial"); }
-    
+
     @RenderBody()
 
     <footer>
-        <p>&copy; @DateTime.Now.Year - Malusi Gcakasi, s208011471</p>
+        <p style="display: inline; position: absolute">
+            &copy; @DateTime.Now.Year - Malusi Gcakasi, s208011471
+        </p>
+        <p id="position" class="debug"></p>
+        <p id="status" class="debug"></p>
     </footer>
 
+    @Scripts.Render("~/Scripts/plan4Green/main.js")
 </body>
 </html>

@@ -386,4 +386,5 @@ footer {
     float: right;
     margin-right: 5%;
     bottom: 5px;
+    display:inline;
 }

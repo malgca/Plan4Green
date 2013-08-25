@@ -18,7 +18,17 @@
     // the page on which stuff is drawn
     page = document.getElementById("drawing-page"),
     // drawing panel from which to get the drawing items
-    drawPane = document.getElementById("drawing-pane"),
+
+    drawPane = {
+        // drawing pane housing all drawing tools
+        pane: document.getElementById("drawing-pane"),
+        // perspective control in drawing pane
+        perspective: document.getElementById("perspective"),
+        // goal control in drawing pane
+        goal: document.getElementById("goal"),
+        // measure control in drawing pane
+        measure: document.getElementById("measure")
+    },
 
     // array of existing BS objects.
     bsObjects,
@@ -148,8 +158,39 @@
                 event.dataTransfer.setData("thumb", event.target.id);
             }
 
+            perspectivemouseover = function (event) {
+                drawPane.perspective.src = "../../Images/drawing-tools/perspective-active-icon.png";
+            }
+            
+            perspectivemouseout = function (event) {
+                drawPane.perspective.src = "../../Images/drawing-tools/perspective-inactive-icon.png";
+            }
+
+            goalmouseover = function (event) {
+                drawPane.goal.src = "../../Images/drawing-tools/goal-active-icon.png";
+            }
+
+            goalmouseout = function (event) {
+                drawPane.goal.src = "../../Images/drawing-tools/goal-inactive-icon.png";
+            }
+
+
+            measuremouseover = function (event) {
+                drawPane.measure.src = "../../Images/drawing-tools/measure-active-icon.png";
+            }
+
+            measuremouseout = function (event) {
+                drawPane.measure.src = "../../Images/drawing-tools/measure-inactive-icon.png";
+            }
+
             return {
-                dragstart: dragstart
+                dragstart: dragstart,
+                perspectivemouseover: perspectivemouseover,
+                perspectivemouseout: perspectivemouseout,
+                goalmouseover: goalmouseover,
+                goalmouseout: goalmouseout,
+                measuremouseover: measuremouseover,
+                measuremouseout: measuremouseout,
             }
         }());
 
@@ -161,7 +202,13 @@
         page.addEventListener("dragover", pageEvents.dragover, false);
         page.addEventListener("drop", pageEvents.drop, false);
 
-        drawPane.addEventListener("dragstart", drawPaneEvents.dragstart, false);
+        drawPane.pane.addEventListener("dragstart", drawPaneEvents.dragstart, false);
+        drawPane.perspective.addEventListener("mouseover", drawPaneEvents.perspectivemouseover, false);
+        drawPane.perspective.addEventListener("mouseout", drawPaneEvents.perspectivemouseout, false);
+        drawPane.goal.addEventListener("mouseover", drawPaneEvents.goalmouseover, false);
+        drawPane.goal.addEventListener("mouseout", drawPaneEvents.goalmouseout, false);
+        drawPane.measure.addEventListener("mouseover", drawPaneEvents.measuremouseover, false);
+        drawPane.measure.addEventListener("mouseout", drawPaneEvents.measuremouseout, false);
     }
 
     // initilalize the main.js script when the window loads
