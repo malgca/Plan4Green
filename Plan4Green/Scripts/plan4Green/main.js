@@ -1,4 +1,11 @@
-﻿var main = (function () {
+﻿var global = {
+    // global bs parent reference
+    bsParent: undefined,
+    // array of existing BS perspectives.
+    perspectiveArray: new Array()
+}
+
+var main = (function () {
     var
     /*-----------------------------------------------------------------
     BUILDING VARIABLES
@@ -30,11 +37,8 @@
         measure: document.getElementById("measure")
     },
 
-    // array of existing BS objects.
-    bsObjects,
-
-    // current level of the page.
-    currentLevel,
+    // the level of the page.
+    level,
 
     /*------------------------------------------------------------------------
     PAGE METHODS
@@ -46,8 +50,20 @@
         }
     },
 
-    redrawPage = function (levelItem) {
+    drawChildren = function (bsItem) {
+        var itemCount = 0;
 
+        if (level.current == 'top') {
+            for (var i = 0; i < global.perspectiveArray.length; i++) {
+                canvasObject.create(perspectiveArray[i], true);
+            }
+        }
+
+        else {
+            for(var i = 0; i < bsItem.children.length; i++) {
+                canvasObject.create(bsItem.children[i], true);
+            }
+        }
     },
 
     // get the current position of the object in relation to the drawing page
@@ -62,17 +78,45 @@
     },
 
     // change the current level of the drawing page
-    changeLevel = function () {
-        if (currentLevel == 'Perspective') {
-            clearPage();
+    changeLevel = function (bsItem, drillDirection) {
+        clearPage();
+
+        if (drillDirection == level.drillDown) {
+            if (bsItem.type == 'perspective') {
+                level.current = bsItem.type;
+                drawChildren(bsItem); // draw goals
+            }
+            else if (bsItem.type == 'goal') {
+                level.current = bsItem.type;
+                drawChildren(bsItem); // draw measures
+            }
+        }
+
+        else {
+            if (bsItem.type == 'perspective') { // viewing goals
+                global.bsParent = undefined;
+                level.current = 'top';
+                drawChildren(bsItem);
+            }
+            else if (bsItem.type == 'goal') { // viewing measures
+                level.current = bsItem.type;
+                drawChildren(bsItem);
+            }
         }
     }
     /*---------------------------------------------------------------------
     DOM EVENTS
     ----------------------------------------------------------------------*/
     init = function () {
+        // set the default current level to perspective
+        level = {
+            current: 'top',
+            drillUp: 'drillUp',
+            drillDown: 'drillDown',
+        }
+
         // clear the starting array.
-        bsObjects = new Array();
+        perspectiveArray = new Array();
 
         // set the default current level
         currentLevel = 'Perspective';
@@ -81,7 +125,11 @@
             // mousedown event handler
             mousedown = function (event) {
                 if (event.target === this) {
-                    changeLevel();
+                    // get child and find the parent, then drill up
+                    if (level.current != 'top') {
+                        level.current = global.bsParent.type;
+                        changeLevel(global.bsParent, 'drillUp');
+                    }
                 }
             },
 
@@ -117,29 +165,33 @@
 
             drop = function (event) {
                 event.preventDefault();
-
                 var data = event.dataTransfer.getData("thumb");
                 var bsItem;
 
-                if (data == 'perspective') {
-                    if (bsObjects.length < 6000) {
-                        bsItem = bsType.createPerspective(currentPosition(event));
-                        // add it to the bsObjects
-                        bsObjects.push(bsItem);
-                        redrawPage();
-                    }
+                switch (data) {
+                    case ('perspective'):
+                        if (level.current == 'top') {
+                            bsItem = bsType.createPerspective(currentPosition(event));
+                            // add it to the perspectiveArray
+                            perspectiveArray.push(bsItem);
+                            //redrawPage();
+                        }
+                        break;
+                    case ('goal'):
+                        if (level.current == 'perspective') {
+                            bsItem = bsType.createGoal(currentPosition(event));
+                        }
+                        break;
+                    case ('measure'):
+                        if (level.current == 'goal') {
+                            bsItem = bsType.createMeasure(currentPosition(event));
+                        }
+                        break;
                 }
-                else if (data == 'goal') {
-                    bsItem = bsType.createGoal(currentPosition(event));
-                    redrawPage();
+                if (bsItem != undefined) {
+                    canvasObject.create(bsItem);
+                    count++;
                 }
-                else {
-                    bsItem = bsType.createMeasure(currentPosition(event));
-                    redrawPage();
-                }
-
-                canvasObject.create(bsItem);
-                count++;
             }
 
             // expose members
@@ -161,7 +213,7 @@
             perspectivemouseover = function (event) {
                 drawPane.perspective.src = "../../Images/drawing-tools/perspective-active-icon.png";
             }
-            
+
             perspectivemouseout = function (event) {
                 drawPane.perspective.src = "../../Images/drawing-tools/perspective-inactive-icon.png";
             }
@@ -218,11 +270,11 @@
     return {
         init: init,
         page: page,
-        bsObjects: bsObjects,
         count: count,
         position: position,
         status: status,
         currentPosition: currentPosition,
-        changeLevel: changeLevel
+        changeLevel: changeLevel,
+        level: level
     };
 }());

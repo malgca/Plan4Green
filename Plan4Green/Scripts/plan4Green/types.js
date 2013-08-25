@@ -32,7 +32,7 @@ var bsType = (function () {
         // children belonging to the bsObject.
         this.children = new Array();
         // parent of the bsObject
-        this.parent = null;
+        this.bsParent = null;
         // notify if bsObject is currently in strategy map view.
         this.mapView = parent;
         // the height and width dimensions of the current object
@@ -57,42 +57,20 @@ var bsType = (function () {
 
     // bs perspective object.
     Perspective = function (name, description, currentPosition) {
-        // the name of the current perspective.
-        this.name = name;
-        // the description assigned to this perspective
-        this.description = description;
+        // set the type to perspective by default
+        this.type = "perspective";
     },
     
     // bs goal object.
     Goal = function (name, description, currentValue, targetValue, startDate, endDate, currentPosition) {
-        // the name of the current perspective.
-        this.name = name;
-        // the description assigned to this perspective
-        this.description = description;
-        // bsObjects current value.
-        this.currentValue = currentValue;
-        // bsObjects target value.
-        this.targetValue = targetValue;
-        // date at which bsObject starts
-        this.startDate = startDate;
-        // date at which bsObject is due.
-        this.endDate = endDate;
+        // set the type to goal by default
+        this.type = "goal";
     },
 
     // bs measure object.
     Measure = function (name, description, currentValue, targetValue, startDate, endDate, currentPosition) {
-        // the name of the current perspective.
-        this.name = name;
-        // the description assigned to this perspective
-        this.description = description;
-        // bsObjects current value.
-        this.currentValue = null;
-        // bsObjects target value.
-        this.targetValue = null;
-        // date at which bsObject starts
-        this.startDate = startDate;
-        // date at which bsObject is due.
-        this.endDate = endDate;
+        // set the type to perspective by default
+        this.type = "measure";
     },
 
     // create a perspective object
@@ -101,7 +79,7 @@ var bsType = (function () {
         Perspective.prototype = new BSObject('Perspective', defaultDescription, null, null, null, null, position, 400, 200);
 
         // create a new perspective object.
-        return new Perspective('Perspective', defaultDescription, position);
+        return new Perspective();
     },
 
     // create a goal object
@@ -110,7 +88,7 @@ var bsType = (function () {
         Goal.prototype = new BSObject('Goal', defaultDescription, 0, 1, null, null, position, 300, 200);
 
         // create a new goal object.
-        return new Goal('Goal', defaultDescription, 0, 1, null, null, position);
+        return new Goal();
     },
 
     // create a measure object
@@ -119,7 +97,7 @@ var bsType = (function () {
         Measure.prototype = new BSObject('Measure', defaultDescription, 0, 1, null, null, position, 300, 300);
 
         // create a measure goal object.
-        return new Measure('Measure', defaultDescription, 0, 1, null, null, position);
+        return new Measure();
     };
 
     // expose public members
