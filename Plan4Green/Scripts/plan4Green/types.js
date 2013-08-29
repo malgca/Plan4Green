@@ -45,13 +45,17 @@ var bsType = (function () {
 
         // add a child object to this bsObject's array.
         this.addChildObject = function (childObject) {
-            this.children.push(childObject);
+            if (this.children.indexOf(childObject) > -1) {
+                this.children.push(childObject);
+            }
         };
 
         // remove a child object from this bsObject's array.
         this.removeChildObject = function (childObject) {
             var childIndex = this.children.indexOf(childObject);
-            this.children.splice(childIndex, 1);
+            if (childIndex > -1) {
+                this.children.splice(childIndex, 1);
+            }
         };
     },
 

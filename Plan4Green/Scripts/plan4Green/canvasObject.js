@@ -23,6 +23,7 @@
     // draw a BS Item.
     drawBSItem = function (bsItem, exists) {
         // set default value for exists to false -- delete this after demo and find cleaner code!
+        console.log(exists);
         if (exists == undefined) {
             exists = false;
         }
@@ -37,7 +38,7 @@
                 bsItem.bsParent.children.push(bsItem);
             }
         }
-
+        
         var
             pos = goal.currentPosition,
         div = createDiv(bsItem),

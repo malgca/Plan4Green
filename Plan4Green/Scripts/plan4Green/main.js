@@ -54,13 +54,15 @@ var main = (function () {
         var itemCount = 0;
 
         if (level.current == 'top') {
-            for (var i = 0; i < global.perspectiveArray.length; i++) {
+            var loopsEnd = global.perspectiveArray.length;
+            for (var i = 0; i < loopsEnd; i++) {
                 canvasObject.create(perspectiveArray[i], true);
             }
         }
 
         else {
-            for(var i = 0; i < bsItem.children.length; i++) {
+            var loopsEnd = bsItem.children.length;
+            for(var i = 0; i < loopsEnd; i++) {
                 canvasObject.create(bsItem.children[i], true);
             }
         }
