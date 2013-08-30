@@ -247,8 +247,10 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\plan4Green\animation.js" />
     <Content Include="Scripts\plan4Green\canvasObject.js" />
+    <Content Include="Scripts\plan4Green\drawingPane.js" />
     <Content Include="Scripts\plan4Green\graph.js" />
-    <Content Include="Scripts\plan4Green\main.js" />
+    <Content Include="Scripts\plan4Green\mainPage.js" />
+    <Content Include="Scripts\plan4Green\strategyMap.js" />
     <Content Include="Scripts\plan4Green\types.js" />
     <Content Include="Scripts\thirdparty\jquery-1.5.1.min.js" />
     <Content Include="Scripts\thirdparty\jquery.orbit-1.2.3.js" />

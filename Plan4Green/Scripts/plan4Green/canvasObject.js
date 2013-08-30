@@ -19,7 +19,7 @@
 
         return div;
     },
-
+    
     // draw a BS Item.
     drawBSItem = function (bsItem, exists) {
         // set default value for exists to false -- delete this after demo and find cleaner code!

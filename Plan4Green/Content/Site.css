@@ -211,7 +211,6 @@ form.signup {
 }
 
 a.login {
-    font-size: 16px;
     text-decoration: none;
     color: #ff0000;
     z-index: 3;
@@ -272,7 +271,6 @@ nav {
     }
 
         nav ul li a {
-            font-size: 16px;
             text-decoration: none;
             color: #979797;
             margin-right: 10px;
@@ -302,7 +300,6 @@ nav {
     color: #979797;
     z-index: 3;
     font-weight: 600;
-    font-size: 14px;
 }
 
 /*Footer layout-------------------------------------------------------------------------------*/
@@ -340,22 +337,18 @@ footer {
 
         #drawing-pane table thead tr th {
             color: #fff;
-            font-size: 16px;
             padding-bottom: 10px;
             border-bottom: 3px solid #5d9624;
         }
 
         #drawing-pane table thead tr td {
             width: 20px;
-            font-size: 14px;
             height: 20px;
         }
 
         #drawing-pane table tbody tr td img {
             display: inline-block;
             margin: 5% 5% 0% 20%;
-            width: 80px;
-            height: 80px;
         }
 
         #drawing-pane table tbody tr td p {
