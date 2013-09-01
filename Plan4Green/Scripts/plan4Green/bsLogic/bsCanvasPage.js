@@ -95,6 +95,7 @@ main = (function () {
     /*---------------------------------------------------------------------
     DOM EVENTS
     ----------------------------------------------------------------------*/
+    // initialize the bsPage
     init = function () {
         // set the default current level to perspective
         level = {
@@ -203,7 +204,7 @@ main = (function () {
     }
 
     // initilalize the main.js script when the window loads
-    window.onload = init;
+    //window.onload = init;
 
     // expose members
     return {

@@ -35,86 +35,25 @@ header, footer, hgroup, section {
         color: #5d9624;
     }
 
-/*home page layout-------------------------------------------------------------------------*/
-.pageBanner {
-    position: relative;
-    top: 59px;
+.overlay {
     width: 100%;
-    overflow: hidden;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.4;
+    position: fixed;
+    top: 0px;
+    left: 0px;
 }
 
-    .pageBanner img {
-        width: 101%;
-    }
-
-.homeheading1 {
-    left: 10%;
+#backgroundClipper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
 }
-
-.homeheading2 {
-    right: 25.5%;
-}
-
-.homeheading1,
-.homeheading2 {
-    margin-top: 7px;
-    position: absolute;
-}
-
-
-.homeInfo1 {
-    left: 10%;
-}
-
-.homeInfo2 {
-    right: 10%;
-}
-
-.homeInfo1,
-.homeInfo2 {
-    border-style: solid;
-    border-width: 3px;
-    border-bottom-style: none;
-    border-top-style: none;
-    background-color: #f5f5f5;
-    position: absolute;
-    height: 337.5px;
-    overflow-x: hidden;
-    overflow: auto;
-    width: 32%;
-    padding: 2%;
-    top: 392px;
-}
-
-    .homeInfo1 p:first-child:first-letter,
-    .homeInfo2 p:first-child:first-letter,
-    .loginInfo p:first-child:first-letter {
-        float: left;
-        color: #558624;
-        font-size: 75px;
-        line-height: 60px;
-        padding-top: 4px;
-        padding-right: 8px;
-        font-family: "Arial Black";
-    }
 
 /*login page layout--------------------------------------------------------------------------*/
-.loginInfo {
-    background-color: #f5f5f5;
-    border-style: solid;
-    border-width: 3px;
-    border-bottom-style: none;
-    border-top-style: none;
-    position: absolute;
-    width: 30%;
-    height: 337.5px;
-    overflow-x: hidden;
-    overflow: auto;
-    padding: 2%;
-    top: 392px;
-    right: 10%;
-}
-
 ul.remember-me {
     position: relative;
     text-align: center;
@@ -197,7 +136,13 @@ fieldset.signup-fieldset {
 fieldset.login-fieldset input[type=submit],
 fieldset.signup-fieldset input[type=submit] {
     float: right;
-    margin-right: 15%;
+    background: url('../Images/controls/login-page/button.png') no-repeat top left;
+    border: none;
+    width: 421px;
+    height: 91px;
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 600
 }
 
 p.signup {
@@ -302,19 +247,6 @@ nav {
     font-weight: 600;
 }
 
-/*Footer layout-------------------------------------------------------------------------------*/
-footer {
-    color: #979797;
-    display: block;
-    width: 100%;
-    height: 45px;
-    position: absolute;
-    text-align: center;
-    bottom: 0;
-    background-color: #000;
-    z-index: 8;
-}
-
 /*Drawing Pane layout----------------------------------------------------------------------*/
 #drawing-pane {
     background-color: #000;
@@ -379,5 +311,5 @@ footer {
     float: right;
     margin-right: 5%;
     bottom: 5px;
-    display:inline;
+    display: inline;
 }

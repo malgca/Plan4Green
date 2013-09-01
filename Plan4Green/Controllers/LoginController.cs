@@ -24,7 +24,7 @@ namespace Plan4Green.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.Message = "Welcome to the Green.";
+            ViewBag.Message = "Sustainability Made Simple";
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -46,7 +46,7 @@ namespace Plan4Green.Controllers
             }
 
             // If we get this far, something failed and we should redisplay the form.
-            ViewBag.Message = "Welcome to the Green.";
+            ViewBag.Message = "Sustainability Made Simple";
             ModelState.AddModelError("","The user name or password you've entered is incorrect. Please try again.");
             return View(model);
         }

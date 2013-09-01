@@ -6,20 +6,24 @@
     <link href="~/Images/favicon.png" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/modernizr")
+
 </head>
 <body>
-    @{ Html.RenderPartial("NavigationStripPartial"); }
+    <div id="backgroundClipper">
+        <img id="backgroundImage" src="#" />
+    </div>
+    <div class="overlay">
+    </div>
 
     @RenderBody()
 
     <footer>
-        <p style="display: inline; position: absolute">
-            &copy; @DateTime.Now.Year - Malusi Gcakasi, s208011471
-        </p>
         <p id="position" class="debug"></p>
         <p id="status" class="debug"></p>
     </footer>
 
-    @Scripts.Render("~/Scripts/plan4Green/mainPage.js")
+    @Scripts.Render("~/bundles/jquery", "~/Scripts/plan4Green/siteLogic/login.js")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
