@@ -1,6 +1,7 @@
 ﻿/*Global css settings--------------------------------------------------------------------*/
 body {
-    font-family: Verdana, Arial;
+    font-family: Arial, Verdana;
+    color: #ffffff;
     font-size: 11pt;
     margin: 0px;
     padding: 0px;
@@ -36,16 +37,18 @@ header, footer, hgroup, section {
     }
 
 .overlay {
+    z-index: -3;
     width: 100%;
     height: 100%;
     background-color: #000000;
-    opacity: 0.4;
+    opacity: 0.6;
     position: fixed;
     top: 0px;
     left: 0px;
 }
 
 #backgroundClipper {
+    z-index: -5;
     position: fixed;
     width: 100%;
     height: 100%;
@@ -54,10 +57,79 @@ header, footer, hgroup, section {
 }
 
 /*login page layout--------------------------------------------------------------------------*/
+#accountHeader {
+    display: inline-block;
+    position: absolute;
+    left: 100px;
+    top: 65px;
+}
+
+.validationForm {
+    display: inline-block;
+    position: absolute;
+    left: 340px;
+    top: 3px;
+    /*visibility: hidden; /*For now*/
+}
+
+#loginForm,
+#signupForm {
+    display: inline-block;
+    position: absolute;
+    left: 130px;
+    top: 125px;
+}
+
+#loginForm {
+    visibility: collapse;
+}
+
+    #loginForm fieldset .form {
+        height: 240px;
+    }
+
+    .validationForm,
+    #signupForm fieldset .form,
+    #loginForm fieldset .form {
+        width: 300px;
+        margin-bottom: -5%;
+        border-radius: 20px;
+        background-color: rgba(0, 0, 0, 0.45);
+        padding: 5px 5px 5px 0px;
+    }
+
+    #signupForm .actionButton,
+    #loginForm .actionButton {
+        text-align: center;
+        z-index: 5;
+        position: relative;
+    }
+
+#signupForm {
+    visibility: visible;
+}
+
+    #signupForm fieldset .form {
+        height: 355px;
+    }
+
+    #signupForm .header {
+    }
+
+    #signupForm .actionButton {
+        text-align: center;
+    }
+
 ul.remember-me {
-    position: relative;
+    position: absolute;
+    margin-top: 5%;
     text-align: center;
 }
+
+    ul.remember-me input[type=checkbox] input[type=hidden] {
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.20);
+    }
 
     ul.remember-me li {
         display: inline;
@@ -70,109 +142,71 @@ ul.inputs li {
 }
 
     ul.inputs li label {
-        width: 20%;
-        display: inline-block;
     }
 
-.required-field-container {
-    width: 78%;
-    margin: 0px;
-    display: inline-block;
-}
-
-    .required-field-container input[type=text], input[type=password] {
-        width: 80%;
-        margin-left: 8%;
-        margin-bottom: 5px;
-    }
-
-.required-field-identifier {
-    width: 81%;
-    margin-left: 8%;
-    height: 5px;
-    background-color: #f00;
-}
-
-.required-field-hidden {
-    margin-left: 25%;
-    visibility: hidden;
-}
-
-fieldset.signup-fieldset {
-    width: 90%;
-    margin-left: 20%;
-    top: 35px;
-    position: relative;
-    border: none;
-}
-
-fieldset.login-fieldset {
-    width: 44%;
-    top: 380px;
-    position: absolute;
-    margin-left: 10%;
-    border: none;
-}
-
-fieldset.login-fieldset,
-fieldset.signup-fieldset {
-    margin-top: 3%;
-}
-
-.legendInfo {
-    background-color: #000000;
-    position: relative;
-    top: 56px;
-    height: 50px;
-}
-
-.loginheading {
-    position: absolute;
-    margin-top: 4px;
-    left: 10%;
-}
-
-
-fieldset.login-fieldset input[type=submit],
-fieldset.signup-fieldset input[type=submit] {
-    float: right;
-    background: url('../Images/controls/login-page/button.png') no-repeat top left;
-    border: none;
-    width: 421px;
-    height: 91px;
+#signupForm .form ul.inputs li input[type=text], input[type=password],
+#loginForm .form ul.inputs li input[type=text], input[type=password] {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.20);
+    margin: 15px 0px 10px 0px;
+    height: 30px;
+    width: 230px;
     color: #ffffff;
-    font-size: 36px;
-    font-weight: 600
+    font-weight: 600;
+    font-size: 12pt;
 }
 
-p.signup {
-    margin-top: 4%;
-    margin-left: 7%;
+#signupForm .form ul.inputs li .lblUsername, .lblPassword,
+#loginForm .form ul.inputs li .lblUsername, .lblPassword {
+    color: #ffffff;
+    font-size: 12pt;
 }
 
-form.signup {
-    width: 50%;
-    display: inline-block;
+fieldset.signup-fieldset,
+fieldset.login-fieldset {
+    border: none;
 }
 
-a.login {
+#loginForm fieldset input[type=submit],
+#signupForm fieldset input[type=submit] {
+    border: none;
+    width: 200px;
+    height: 40px;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 16pt;
+    font-weight: 400;
+    border-radius: 5px 5px;
+    background-image: -webkit-linear-gradient(top, rgb(0,127,0) 15%, rgb(4,195,4) 100%);
+}
+
+
+.linkContainer {
+    text-align: center;
+}
+
+a.accountLink {
     text-decoration: none;
-    color: #ff0000;
+    color: #ffffff;
     z-index: 3;
-    font-weight: 200;
+    width: 300px;
+    text-align: center;
+    font-weight: 400;
+    position: absolute;
+    margin-top: 10px;
 }
 
-    a.login:hover {
-        color: #000000;
-        font-weight: 200;
-        border-bottom: 5px solid #76ed00;
-        margin-right: 10px;
-        z-index: 3;
-    }
+a.login:hover {
+    color: #000000;
+    font-weight: 200;
+    border-bottom: 5px solid #76ed00;
+    margin-right: 10px;
+    z-index: 3;
+}
 
-    a.login:visited {
-        color: #000000;
-    }
+a.login:visited {
+    color: #000000;
+}
 
 .loginhighlight {
     color: #59a50d;
@@ -183,68 +217,6 @@ a.login {
 .left-border {
     display: inline;
     background-color: #000;
-}
-
-/*Navigation Strip layout-----------------------------------------------------------------------*/
-#navigation-strip {
-    background-color: #000;
-    position: absolute;
-    top: 0px;
-    height: 60px;
-    width: 100%;
-    display: inline;
-    z-index: 99;
-}
-
-    #navigation-strip #homeLogo {
-        margin-left: 10%;
-        margin-top: 1%;
-    }
-
-nav {
-    display: inline-block;
-    float: right;
-    top: 25px;
-    right: 10%;
-    position: relative;
-}
-
-    nav ul li {
-        display: inline;
-        list-style: none;
-        color: #979797;
-    }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #979797;
-            margin-right: 10px;
-            z-index: 3;
-            font-weight: 200;
-            bottom: 0px;
-            position: relative;
-        }
-
-            nav ul li a:hover {
-                color: #fff;
-                font-weight: 200;
-                border-bottom: 5px solid #76ed00;
-                margin-right: 10px;
-                z-index: 3;
-            }
-
-            nav ul li a:active {
-                color: #979797;
-                border-bottom: 5px solid #5d9624;
-            }
-
-#current-information {
-    float: right;
-    margin-right: 3%;
-    margin-top: 0.8%;
-    color: #979797;
-    z-index: 3;
-    font-weight: 600;
 }
 
 /*Drawing Pane layout----------------------------------------------------------------------*/

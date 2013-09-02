@@ -1,4 +1,4 @@
-﻿@model Plan4Green.Models.LoginModel
+﻿@model  Plan4Green.ViewModels.AuthenticationViewModel
 
 @{
     ViewBag.Page = "Login";
@@ -7,46 +7,97 @@
 @Styles.Render("~/Content/theme/base/jquery.ui.login.css", "~/Content/theme/base/jquery.ui.validation.css")
 
 <body>
-    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary()
+    <div id="accountHeader">
+        <a href="@Url.Action("Login", "Login")">
+            <img src="~/Images/home-logo.png" alt="Alternate Text" />
+        </a>
+    </div>
 
-        <fieldset class="login-fieldset">
-            <legend></legend>
-            <ul class="inputs">
-                <!-- Username input boxes.........................................................................................-->
-                <li>@Html.LabelFor(model => model.UserName)</li>
-                <li>
-                    <div class="required-field-container">
-                        @Html.TextBoxFor(model => model.UserName, null, new { id = "tbLoginUsername", @class = "required-field" })
-                    </div>
-                </li>
-            </ul>
-            <p>@Html.Label("This field is required", new { id = "lblLoginUsername", @class = "required-field-hidden" })</p>
-            <!-- Password input boxes.........................................................................................-->
-            <ul class="inputs">
-                <li>@Html.LabelFor(model => model.Password)</li>
-                <li>
-                    <div class="required-field-container">
-                        @Html.PasswordFor(model => model.Password, new { id = "pbLoginPassword", @class = "required-field" })
-                    </div>
-                </li>
-            </ul>
-            <p>@Html.Label("This field is required", new { id = "lblLoginUsername", @class = "required-field-hidden" })</p>
-            <!-- Remember me checkbox.........................................................................................-->
-            <ul class="remember-me">
-                <li>@Html.CheckBoxFor(model => model.RememberMe)</li>
-                <li>Remember Me
-                </li>
-            </ul>
-            <p class="signup">
-                <a class="login" href="@Url.Action("Signup", "Login")">I don't have an Account</a>
-            </p>
+    <div id="loginForm">
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="validationForm">
+                @Html.ValidationSummary(true)
+            </div>
 
-            <input type="submit" value="Log in" />
-        </fieldset>
-    }
+            <fieldset class="login-fieldset">
+                <legend></legend>
+
+                <div class="form">
+                    <ul class="inputs">
+                        <!-- Username input boxes.........................................................................................-->
+                        <li>
+                            @Html.LabelFor(model => model.Username, new { @class = "lblUsername" })
+                            @Html.TextBoxFor(model => model.Username, null, new { id = "tbLoginUsername" })
+                        </li>
+                        <li>
+                            @Html.LabelFor(model => model.Password, new { @class = "lblPassword" })
+                            @Html.PasswordFor(model => model.Password, new { id = "pbLoginPassword" })
+                        </li>
+                        <li>
+                            <ul class="remember-me">
+                                <li>@Html.CheckBoxFor(model => model.RememberMe)</li>
+                                <li>Remember Me</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="actionButton">
+                    <input id="loginButton" type="submit" value="Log in" />
+                </div>
+
+                <a id="loginLink" class="accountLink" href="#">I don't have an <strong>account...</strong></a>
+            </fieldset>
+        }
+
+    </div>
+
+    <div id="signupForm">
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="validationForm">
+                @Html.ValidationSummary(true)
+            </div>
+
+            <fieldset class="signup-fieldset">
+                <legend></legend>
+
+                <div class="form">
+                    <ul class="inputs">
+                        <!--Organisation input boxes.........................................................................................-->
+                        <li>
+                            @Html.LabelFor(model => model.Organisation)
+                            @Html.TextBoxFor(model => model.Organisation, null, new { id = "tbSignupOrganisation" })
+                        </li>
+                        <!-- Username input boxes.........................................................................................-->
+                        <li>
+                            @Html.LabelFor(model => model.Username)
+                            @Html.TextBoxFor(model => model.Username, null, new { id = "tbSignupUsername" })
+                        </li>
+                        <!-- Password input boxes.........................................................................................-->
+                        <li>
+                            @Html.LabelFor(model => model.Password)
+                            @Html.PasswordFor(model => model.Password, new { id = "pbSignupPassword" })
+                        </li>
+                        <!-- Confirm Password input boxes.........................................................................................-->
+                        <li>
+                            @Html.LabelFor(model => model.ConfirmPassword)
+                            @Html.PasswordFor(model => model.ConfirmPassword, new { id = "pbSignupConfirmPassword" })
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="actionButton">
+                    <input id="signupButton" type="submit" value="Sign up!" />
+                </div>
+
+                <a id="signupLink" class="accountLink" href="#">I already have an <strong>account...</strong></a>
+            </fieldset>
+        }
+    </div>
 </body>
 
 @Scripts.Render("~/Scripts/plan4Green/siteLogic/login.js")

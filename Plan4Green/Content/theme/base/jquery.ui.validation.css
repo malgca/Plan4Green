@@ -1,9 +1,4 @@
 ﻿/*Styles native to MVC--------------------------------------------------------------------*/
-.validation-summary-errors {
-    text-align: center;
-    background-color: aliceblue;
+.validation-summary-errors ul li {
+    list-style: none;
 }
-
-    .validation-summary-errors ul li {
-        list-style: none;
-    }

@@ -9,6 +9,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using Plan4Green.Filters;
 using Plan4Green.Models;
+using Plan4Green.ViewModels;
 
 namespace Plan4Green.Controllers
 {
@@ -24,7 +25,6 @@ namespace Plan4Green.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.Message = "Sustainability Made Simple";
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -37,18 +37,25 @@ namespace Plan4Green.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(AuthenticationViewModel model, string returnUrl)
         {
-            if(ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            try
             {
-                ViewBag.Message = string.Format("Hi, {0}", model.UserName);
+                if (ModelState.IsValid && WebSecurity.Login(model.Username, model.Password, persistCookie: model.RememberMe))
+                {
+                    ViewBag.UserMessage = string.Format("Hi, {0}", model.Username);
+                    return RedirectToLocal(returnUrl);
+                }
+
+                // If we get this far, something failed and we should redisplay the form.
+                ModelState.AddModelError("", "The user name or password you've entered is incorrect. Please try again.");
+                return View(model);
+            }
+            catch (Exception exception)
+            {
+                ViewBag.Error = exception.Message;
                 return RedirectToLocal(returnUrl);
             }
-
-            // If we get this far, something failed and we should redisplay the form.
-            ViewBag.Message = "Sustainability Made Simple";
-            ModelState.AddModelError("","The user name or password you've entered is incorrect. Please try again.");
-            return View(model);
         }
 
         [HttpPost]
@@ -66,7 +73,6 @@ namespace Plan4Green.Controllers
         [AllowAnonymous]
         public ActionResult Signup()
         {
-            ViewBag.Message = "The Grass is Greener on this Side.";
             return View();
         }
 
