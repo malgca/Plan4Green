@@ -41,9 +41,9 @@ namespace Plan4Green.Controllers
         {
             try
             {
-                if (ModelState.IsValid && WebSecurity.Login(model.Username, model.Password, persistCookie: model.RememberMe))
+                if (ModelState.IsValid && WebSecurity.Login(model.LoginModel.UserName, model.LoginModel.Password, persistCookie: model.LoginModel.RememberMe))
                 {
-                    ViewBag.UserMessage = string.Format("Hi, {0}", model.Username);
+                    ViewBag.UserMessage = string.Format("Hi, {0}", model.LoginModel.UserName);
                     return RedirectToLocal(returnUrl);
                 }
 
@@ -71,9 +71,9 @@ namespace Plan4Green.Controllers
         /// </summary>
         /// <remarks>GET method</remarks>
         [AllowAnonymous]
-        public ActionResult Signup()
+        public ActionResult Signup(string returnUrl)
         {
-            return View();
+            return View(returnUrl);
         }
 
         /// <summary>
@@ -82,16 +82,16 @@ namespace Plan4Green.Controllers
         /// <remarks>POST method</remarks>
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Signup(SignupModel model)
+        public ActionResult Signup(AuthenticationViewModel model)
         {
             if (ModelState.IsValid)
             {
                 // Try to register the user.
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Organisation_ID = model.Organisation });
-                    WebSecurity.Login(model.UserName, model.Password);
-                    ViewBag.Message = string.Format("Hi, {0}", model.UserName);
+                    WebSecurity.CreateUserAndAccount(model.SignupModel.UserName, model.SignupModel.Password, new { Organisation_ID = model.SignupModel.Organisation });
+                    WebSecurity.Login(model.SignupModel.UserName, model.SignupModel.Password);
+                    ViewBag.Message = string.Format("Hi, {0}", model.SignupModel.UserName);
                     return RedirectToAction("CanvasView", "BSObject");
                 }
                 catch (MembershipCreateUserException exception)

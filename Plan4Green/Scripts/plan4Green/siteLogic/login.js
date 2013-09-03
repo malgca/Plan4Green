@@ -64,6 +64,10 @@
 
         links.login.addEventListener("mousedown", linkEvents.logindown, false);
         links.signup.addEventListener("mousedown", linkEvents.signupdown, false);
+
+        // ensure that we're looking at the login screen on start.
+        document.getElementById("loginForm").style.visibility = "visible";
+        document.getElementById("signupForm").style.visibility = "collapse";
     }
 
     window.onload = init;

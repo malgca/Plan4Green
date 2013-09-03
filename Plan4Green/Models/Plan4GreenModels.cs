@@ -48,8 +48,8 @@ namespace Plan4Green.Models
 
     #region Tables
 
-    [Table("User")]
-    public class User
+    [Table("OrganisationalUser")]
+    public class OrganisationalUser
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -111,7 +111,7 @@ namespace Plan4Green.Models
 
         [Column("Perspective_Name")]
         [ForeignKey("Perspective_Name")]
-        public string Assigned_Perspective { get; set; }
+        public string Perspective_ID { get; set; }
 
         public virtual Perspective Perspective_Name { get; set; }
         public virtual ICollection<Measure> Measures { get; set; }
@@ -149,7 +149,7 @@ namespace Plan4Green.Models
         [DataType(DataType.DateTime)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
         public DateTime Completion_Score_Time { get; set; }
-        public string Current_Value { get; set; }
+        public double Current_Value { get; set; }
 
         [Column("Measure_ID")]
         [ForeignKey("Measure_ID")]
@@ -157,6 +157,7 @@ namespace Plan4Green.Models
 
         public virtual Measure Measure_ID { get; set; }
     }
+
 #endregion
 
     #region Models

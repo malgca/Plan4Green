@@ -65,11 +65,10 @@ header, footer, hgroup, section {
 }
 
 .validationForm {
-    display: inline-block;
     position: absolute;
     left: 340px;
     top: 3px;
-    /*visibility: hidden; /*For now*/
+    color: #ef0000;
 }
 
 #loginForm,
@@ -110,7 +109,7 @@ header, footer, hgroup, section {
 }
 
     #signupForm fieldset .form {
-        height: 355px;
+        height: 360px;
     }
 
     #signupForm .header {
@@ -140,9 +139,6 @@ ul.inputs li {
     display: inline;
     list-style: none;
 }
-
-    ul.inputs li label {
-    }
 
 #signupForm .form ul.inputs li input[type=text], input[type=password],
 #loginForm .form ul.inputs li input[type=text], input[type=password] {
@@ -180,7 +176,6 @@ fieldset.login-fieldset {
     background-image: -webkit-linear-gradient(top, rgb(0,127,0) 15%, rgb(4,195,4) 100%);
 }
 
-
 .linkContainer {
     text-align: center;
 }
@@ -196,20 +191,8 @@ a.accountLink {
     margin-top: 10px;
 }
 
-a.login:hover {
-    color: #000000;
-    font-weight: 200;
-    border-bottom: 5px solid #76ed00;
-    margin-right: 10px;
-    z-index: 3;
-}
-
-a.login:visited {
-    color: #000000;
-}
-
-.loginhighlight {
-    color: #59a50d;
+.required {
+    color: #ff0000;
     font-weight: 600;
 }
 

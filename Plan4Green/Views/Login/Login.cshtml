@@ -28,16 +28,16 @@
                     <ul class="inputs">
                         <!-- Username input boxes.........................................................................................-->
                         <li>
-                            @Html.LabelFor(model => model.Username, new { @class = "lblUsername" })
-                            @Html.TextBoxFor(model => model.Username, null, new { id = "tbLoginUsername" })
+                            @Html.LabelFor(model => model.LoginModel.UserName, new { @class = "lblUsername" })<span class="required">*</span>
+                            @Html.TextBoxFor(model => model.LoginModel.UserName, null, new { id = "tbLoginUsername" })
                         </li>
                         <li>
-                            @Html.LabelFor(model => model.Password, new { @class = "lblPassword" })
-                            @Html.PasswordFor(model => model.Password, new { id = "pbLoginPassword" })
+                            @Html.LabelFor(model => model.LoginModel.Password, new { @class = "lblPassword" })<span class="required">*</span>
+                            @Html.PasswordFor(model => model.LoginModel.Password, new { id = "pbLoginPassword" })
                         </li>
                         <li>
                             <ul class="remember-me">
-                                <li>@Html.CheckBoxFor(model => model.RememberMe)</li>
+                                <li>@Html.CheckBoxFor(model => model.LoginModel.RememberMe)</li>
                                 <li>Remember Me</li>
                             </ul>
                         </li>
@@ -69,23 +69,23 @@
                     <ul class="inputs">
                         <!--Organisation input boxes.........................................................................................-->
                         <li>
-                            @Html.LabelFor(model => model.Organisation)
-                            @Html.TextBoxFor(model => model.Organisation, null, new { id = "tbSignupOrganisation" })
+                            @Html.LabelFor(model => model.SignupModel.Organisation)<span class="required">*</span>
+                            @Html.TextBoxFor(model => model.SignupModel.Organisation, null, new { id = "tbSignupOrganisation" })
                         </li>
                         <!-- Username input boxes.........................................................................................-->
                         <li>
-                            @Html.LabelFor(model => model.Username)
-                            @Html.TextBoxFor(model => model.Username, null, new { id = "tbSignupUsername" })
+                            @Html.LabelFor(model => model.SignupModel.UserName)<span class="required">*</span>
+                            @Html.TextBoxFor(model => model.SignupModel.UserName, null, new { id = "tbSignupUsername" })
                         </li>
                         <!-- Password input boxes.........................................................................................-->
                         <li>
-                            @Html.LabelFor(model => model.Password)
-                            @Html.PasswordFor(model => model.Password, new { id = "pbSignupPassword" })
+                            @Html.LabelFor(model => model.SignupModel.Password)<span class="required">*</span>
+                            @Html.PasswordFor(model => model.SignupModel.Password, new { id = "pbSignupPassword" })
                         </li>
                         <!-- Confirm Password input boxes.........................................................................................-->
                         <li>
-                            @Html.LabelFor(model => model.ConfirmPassword)
-                            @Html.PasswordFor(model => model.ConfirmPassword, new { id = "pbSignupConfirmPassword" })
+                            @Html.LabelFor(model => model.SignupModel.ConfirmPassword)<span class="required">*</span>
+                            @Html.PasswordFor(model => model.SignupModel.ConfirmPassword, new { id = "pbSignupConfirmPassword" })
                         </li>
                     </ul>
                 </div>
