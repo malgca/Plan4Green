@@ -12,6 +12,22 @@ header, footer, hgroup, section {
     display: block;
 }
 
+input[type=submit] {
+    border-radius: 5px 5px;
+}
+
+input[type=text],
+input[type=password] {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.20);
+    margin: 15px 0px 10px 0px;
+    height: 30px;
+    width: 230px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 12pt;
+}
+
 .float-left {
     float: left;
 }
@@ -140,26 +156,13 @@ ul.inputs li {
     list-style: none;
 }
 
-#signupForm .form ul.inputs li input[type=text], input[type=password],
-#loginForm .form ul.inputs li input[type=text], input[type=password] {
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.20);
-    margin: 15px 0px 10px 0px;
-    height: 30px;
-    width: 230px;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 12pt;
-}
-
 #signupForm .form ul.inputs li .lblUsername, .lblPassword,
 #loginForm .form ul.inputs li .lblUsername, .lblPassword {
     color: #ffffff;
     font-size: 12pt;
 }
 
-fieldset.signup-fieldset,
-fieldset.login-fieldset {
+fieldset {
     border: none;
 }
 
@@ -172,7 +175,6 @@ fieldset.login-fieldset {
     font-family: Arial;
     font-size: 16pt;
     font-weight: 400;
-    border-radius: 5px 5px;
     background-image: -webkit-linear-gradient(top, rgb(0,127,0) 15%, rgb(4,195,4) 100%);
 }
 
@@ -204,45 +206,36 @@ a.accountLink {
 
 /*Drawing Pane layout----------------------------------------------------------------------*/
 #drawing-pane {
-    background-color: #000;
-    color: #979797;
-    display: inline-block;
-    width: 10%;
-    height: 89%;
-    margin-bottom: 5%;
-    position: absolute;
-    top: 50px;
-    left: 0px;
-    z-index: 3;
+    position: fixed;
+    height: 100%;
+    z-index: 5;
+    display: inline;
 }
 
-    #drawing-pane table {
-        margin-top: 5%;
-        margin-left: 4%;
-        width: 90%;
+    #drawing-pane #info {
+        background-color: #808080;
+        height: 100%;
+        width: 300px;
     }
 
-        #drawing-pane table thead tr th {
-            color: #fff;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #5d9624;
-        }
+    #drawing-pane #tools {
+        background-color: rgba(0, 0, 0, 0.75);
+        width: 69px;
+        padding: 5px;
+        position: absolute;
+        visibility: visible;
+    }
 
-        #drawing-pane table thead tr td {
-            width: 20px;
-            height: 20px;
-        }
+    #drawing-pane table tbody tr td img {
+        display: inline-block;
+        margin: 10px;
+    }
 
-        #drawing-pane table tbody tr td img {
-            display: inline-block;
-            margin: 5% 5% 0% 20%;
-        }
-
-        #drawing-pane table tbody tr td p {
-            display: block;
-            text-align: center;
-            -webkit-user-select: none;
-        }
+    #drawing-pane table tbody tr td p {
+        display: block;
+        text-align: center;
+        -webkit-user-select: none;
+    }
 
 /*Drawing Canvas layout-------------------------------------------------------------------*/
 #drawing-page {

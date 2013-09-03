@@ -225,7 +225,6 @@
     <Content Include="Images\controls\drawing-pane\dp-arrow-open.png" />
     <Content Include="Images\controls\drawing-pane\goal-active.png" />
     <Content Include="Images\controls\drawing-pane\goal-inactive.png" />
-    <Content Include="Images\controls\drawing-pane\mapview-thumb.png" />
     <Content Include="Images\controls\drawing-pane\measure-active.png" />
     <Content Include="Images\controls\drawing-pane\measure-inactive.png" />
     <Content Include="Images\controls\drawing-pane\perspective-active.png" />
@@ -256,6 +255,7 @@
     <Content Include="Scripts\plan4Green\bsLogic\strategyMap.js" />
     <Content Include="Scripts\plan4Green\bsLogic\types.js" />
     <Content Include="Scripts\plan4Green\siteLogic\login.js" />
+    <Content Include="Scripts\plan4Green\siteLogic\layout.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

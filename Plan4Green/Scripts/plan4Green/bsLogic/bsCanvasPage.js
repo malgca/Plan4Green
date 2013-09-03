@@ -204,7 +204,7 @@ main = (function () {
     }
 
     // initilalize the main.js script when the window loads
-    //window.onload = init;
+    window.addEventListener("load", init, false);
 
     // expose members
     return {

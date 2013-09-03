@@ -1,37 +1,32 @@
 ﻿<section id="drawing-pane">
-    <table border="0">
-        <thead>
-            <tr>
-                <th colspan="3">Drawing Tools</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <img id="perspective" src="~/Images/controls/drawing-pane/perspective-inactive.png" draggable="true" />
-                    <p>Perspective</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <img id="goal" src="~/Images/controls/drawing-pane/goal-inactive.png" draggable="true" />
-                    <p>Goal</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <img id="measure" src="~/Images/controls/drawing-pane/measure-inactive.png" draggable="true" />
-                    <p>Measure</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <img id="mapview" src="~/Images/controls/drawing-pane/mapview-thumb.png" />
-                    <p>Map View</p>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div id="info">
+    </div>
+    <div id="tools">
+        <table border="0">
+            <tbody>
+                <tr>
+                    <td>
+                        <img id="control-arrow" src="~/Images/controls/drawing-pane/dp-arrow-open.png" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img id="perspective" src="~/Images/controls/drawing-pane/perspective-inactive.png" draggable="true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img id="goal" src="~/Images/controls/drawing-pane/goal-inactive.png" draggable="true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img id="measure" src="~/Images/controls/drawing-pane/measure-inactive.png" draggable="true" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
 
-@Scripts.Render("~/Scripts/plan4Green/drawingPane.js")
+@Scripts.Render("~/Scripts/plan4Green/bsLogic/drawingPane.js")

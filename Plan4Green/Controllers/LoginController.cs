@@ -22,11 +22,9 @@ namespace Plan4Green.Controllers
         /// Log into the Plan4Green app using already established credentials.
         /// </summary>
         /// <remarks>GET method</remarks>
-        /// <param name="returnUrl">Url to go to once login is successful.</param>
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
         /// <summary>
