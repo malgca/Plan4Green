@@ -4,7 +4,7 @@ using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
-using Plan4Green.Models;
+using Plan4Green.Models.DB;
 
 namespace Plan4Green.Filters
 {
@@ -38,7 +38,7 @@ namespace Plan4Green.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("Plan4GreenDB", "User", "User_ID", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("Plan4GreenDB", "OrganisationalUser", "User_ID", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

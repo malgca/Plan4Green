@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Plan4Green.Models;
+using Plan4Green.Models.DB;
 
-namespace Plan4Green.ViewModels
+namespace Plan4Green.Models.ViewModels
 {
     public class BSObjectViewModel
     {

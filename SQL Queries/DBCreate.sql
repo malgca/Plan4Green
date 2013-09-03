@@ -15,7 +15,7 @@ GO
 
 CREATE TABLE OrganisationalUser
 (
-	User_ID int NOT NULL PRIMARY KEY,
+	User_ID int IDENTITY NOT NULL PRIMARY KEY,
 	
 	UserName varchar(255) UNIQUE,
 	UserPassword varchar(255),
@@ -36,7 +36,7 @@ GO
 
 CREATE TABLE Goal
 (
-	Goal_ID int NOT NULL PRIMARY KEY,
+	Goal_ID int IDENTITY NOT NULL PRIMARY KEY,
 	
 	Name text,
 	Description text,
@@ -50,7 +50,7 @@ GO
 
 CREATE TABLE Measure
 (
-	Measure_ID int NOT NULL PRIMARY KEY,
+	Measure_ID int IDENTITY NOT NULL PRIMARY KEY,
 	
 	Name text,
 	Description text,

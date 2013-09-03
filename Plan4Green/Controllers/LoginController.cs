@@ -8,8 +8,9 @@ using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using Plan4Green.Filters;
-using Plan4Green.Models;
-using Plan4Green.ViewModels;
+using Plan4Green.Models.DB;
+using Plan4Green.Models.ViewModels;
+using Plan4Green.Models.ObjectManager;
 
 namespace Plan4Green.Controllers
 {
@@ -41,14 +42,15 @@ namespace Plan4Green.Controllers
         {
             try
             {
-                if (ModelState.IsValid && WebSecurity.Login(model.LoginModel.UserName, model.LoginModel.Password, persistCookie: model.LoginModel.RememberMe))
+                bool loggedIn = WebSecurity.Login(model.LoginModel.UserName, model.LoginModel.Password, persistCookie: model.LoginModel.RememberMe);
+                if (ModelState.IsValid && loggedIn)
                 {
                     ViewBag.UserMessage = string.Format("Hi, {0}", model.LoginModel.UserName);
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("CanvasView", "BSObject");
                 }
 
                 // If we get this far, something failed and we should redisplay the form.
-                ModelState.AddModelError("", "The user name or password you've entered is incorrect. Please try again.");
+                ModelState.AddModelError("unknownLogonError", "Unable to log on. If this problem persists, please contact your system administrator.");
                 return View(model);
             }
             catch (Exception exception)
@@ -69,19 +71,10 @@ namespace Plan4Green.Controllers
         /// <summary>
         /// Signup to use the Plan4Green app.
         /// </summary>
-        /// <remarks>GET method</remarks>
-        [AllowAnonymous]
-        public ActionResult Signup(string returnUrl)
-        {
-            return View(returnUrl);
-        }
-
-        /// <summary>
-        /// Signup to use the Plan4Green app.
-        /// </summary>
         /// <remarks>POST method</remarks>
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult Signup(AuthenticationViewModel model)
         {
             if (ModelState.IsValid)
@@ -89,9 +82,13 @@ namespace Plan4Green.Controllers
                 // Try to register the user.
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.SignupModel.UserName, model.SignupModel.Password, new { Organisation_ID = model.SignupModel.Organisation });
+                    OrganisationManager orgManager = new OrganisationManager();
+                    orgManager.AddOrganisation(model.SignupModel.Organisation);
+                    WebSecurity.CreateUserAndAccount(model.SignupModel.UserName, model.SignupModel.Password, new { UserPassword = model.SignupModel.Password, Organisation_ID = model.SignupModel.Organisation });
+
                     WebSecurity.Login(model.SignupModel.UserName, model.SignupModel.Password);
                     ViewBag.Message = string.Format("Hi, {0}", model.SignupModel.UserName);
+                    
                     return RedirectToAction("CanvasView", "BSObject");
                 }
                 catch (MembershipCreateUserException exception)
@@ -100,7 +97,7 @@ namespace Plan4Green.Controllers
                 }
             }
 
-            // Something's wrong, redisplay the form.
+            ModelState.AddModelError("unknownSignupError", "Unable to sign on. If this problem persists, please contact your system administrator.");
             return View(model);
         }
 

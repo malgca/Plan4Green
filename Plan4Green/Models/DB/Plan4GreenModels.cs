@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
 
-namespace Plan4Green.Models
+namespace Plan4Green.Models.DB
 {
     public class Plan4GreenDB : DbContext
     {
@@ -18,7 +18,7 @@ namespace Plan4Green.Models
         /// <summary>
         /// User Dataset.
         /// </summary>
-        public DbSet<User> Users { get; set; }
+        public DbSet<OrganisationalUser> Users { get; set; }
 
         /// <summary>
         /// Organisation Dataset.
@@ -72,7 +72,7 @@ namespace Plan4Green.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
         public string Organisation_Name { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<OrganisationalUser> Users { get; set; }
         public virtual ICollection<Perspective> Perspectives { get; set; }
     }
 

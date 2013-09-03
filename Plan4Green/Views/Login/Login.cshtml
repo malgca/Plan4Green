@@ -1,4 +1,4 @@
-﻿@model  Plan4Green.ViewModels.AuthenticationViewModel
+﻿@model  Plan4Green.Models.ViewModels.AuthenticationViewModel
 
 @{
     ViewBag.Page = "Login";
@@ -14,12 +14,10 @@
     </div>
 
     <div id="loginForm">
-        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { enctype = "multipary/form-data" }))
         {
             @Html.AntiForgeryToken()
-            <div class="validationForm">
-                @Html.ValidationSummary(true)
-            </div>
+            @Html.ValidationSummary("", new { @class = "validationForm" })
 
             <fieldset class="login-fieldset">
                 <legend></legend>
@@ -55,12 +53,10 @@
     </div>
 
     <div id="signupForm">
-        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        @using (Html.BeginForm("Signup", "Login", FormMethod.Post, new { enctype = "multipary/form-data" }))
         {
             @Html.AntiForgeryToken()
-            <div class="validationForm">
-                @Html.ValidationSummary(true)
-            </div>
+            @Html.ValidationSummary("", new { @class = "validationForm" })
 
             <fieldset class="signup-fieldset">
                 <legend></legend>

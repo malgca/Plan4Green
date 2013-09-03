@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using Plan4Green.Models;
+using Plan4Green.Models.DB;
 
 namespace Plan4Green.Helpers
 {
