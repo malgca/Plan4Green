@@ -199,7 +199,7 @@
             var createStoplight = function (bsItem) {
                 var canvas = document.createElement('canvas');
                 canvas.style.position = 'absolute';
-                canvas.style.left = '110px';
+                canvas.style.left = '85px';
                 canvas.style.zIndex = '-5'
 
                 if (bsItem.name == 'Perspective') {

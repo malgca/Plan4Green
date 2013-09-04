@@ -30,14 +30,20 @@ var drawingPane = (function () {
             controlarrowdown = function (event) {
                 if (pane.isPaneOut) {
                     pane.isPaneOut = false;
+
                     pane.info.style.width = "0px";
+                    pane.info.style.display = "none";
                     pane.tools.style.left = "0px";
+
                     pane.controlarrow.src = "../../Images/controls/drawing-pane/dp-arrow-open.png"
                 }
                 else {
                     pane.isPaneOut = true;
+
                     pane.info.style.width = "300px";
+                    pane.info.style.display = "block";
                     pane.tools.style.left = "300px";
+
                     pane.controlarrow.src = "../../Images/controls/drawing-pane/dp-arrow-closed.png"
                 }
             }

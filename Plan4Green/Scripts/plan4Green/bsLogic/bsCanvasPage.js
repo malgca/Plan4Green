@@ -49,7 +49,7 @@ main = (function () {
         if (level.current == 'top') {
             var loopsEnd = global.perspectiveArray.length;
             for (var i = 0; i < loopsEnd; i++) {
-                canvasObject.create(perspectiveArray[i], true);
+                canvasObject.create(global.perspectiveArray[i], true);
             }
         }
 
@@ -176,7 +176,7 @@ main = (function () {
                         if (level.current == 'top') {
                             bsItem = bsType.createPerspective(currentPosition(event));
                             // add it to the perspectiveArray
-                            perspectiveArray.push(bsItem);
+                            global.perspectiveArray.push(bsItem);
                             //redrawPage();
                         }
                         break;

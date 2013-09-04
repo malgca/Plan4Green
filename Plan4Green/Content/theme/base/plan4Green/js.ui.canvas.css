@@ -112,7 +112,7 @@
     margin: 0px;
     padding: 0px;
     position: absolute;
-    top: 0px;
+    top: 15px;
 }
 
     .bsControlList li {
@@ -126,7 +126,8 @@
     margin: 0px;
     padding: 0px;
     max-width: 350px;
-    margin-left: 80px;
+    margin-left: 60px;
+    color: #151515;
 }
 
     .bsViewList li {
