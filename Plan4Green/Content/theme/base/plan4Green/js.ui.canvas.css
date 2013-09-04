@@ -1,4 +1,30 @@
-﻿.canvasObject {
+﻿/*Drawing Canvas layout-------------------------------------------------------------------*/
+#drawing-page {
+    background-color: #e2e2e2;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    margin: 0px;
+    width: 90%;
+    height: 89%;
+    z-index: 4;
+}
+
+    #drawing-page::selection {
+        cursor: default;
+    }
+
+/*Debugging CSS---------------------------------------------*/
+.debug {
+    color: #979797;
+    font-weight: 700;
+    float: right;
+    margin-right: 5%;
+    bottom: 5px;
+    display: inline;
+}
+
+.canvasObject {
     display: inline;
     position: absolute;
     z-index: 3;

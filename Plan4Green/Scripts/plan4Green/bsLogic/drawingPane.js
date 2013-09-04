@@ -2,8 +2,10 @@
 var drawingPane = (function () {
     // drawing panel from which to get the drawing items
     pane = {
-        // drawing pane housing all drawing tools
-        container: document.getElementById("drawing-pane"),
+        //pane housing information about the page
+        info: document.getElementById("info"),
+        // pane housing all drawing tools
+        tools: document.getElementById("tools"),
         // drawing pane control arrow
         controlarrow: document.getElementById("control-arrow"),
         // perspective control in drawing pane
@@ -27,10 +29,14 @@ var drawingPane = (function () {
         controlarrowdown = function (event) {
             if (pane.isPaneOut) {
                 pane.isPaneOut = false;
+                pane.info.style.width = "0px";
+                pane.tools.style.left = "0px";
                 pane.controlarrow.src = "../../Images/controls/drawing-pane/dp-arrow-open.png"
             }
             else {
                 pane.isPaneOut = true;
+                pane.info.style.width = "300px";
+                pane.tools.style.left = "300px";
                 pane.controlarrow.src = "../../Images/controls/drawing-pane/dp-arrow-closed.png"
             }
         }
@@ -71,7 +77,7 @@ var drawingPane = (function () {
         }
     }());
 
-    pane.container.addEventListener("dragstart", paneEvents.dragstart, false);
+    pane.tools.addEventListener("dragstart", paneEvents.dragstart, false);
     pane.controlarrow.addEventListener("mousedown", paneEvents.controlarrrowdown, false);
     pane.perspective.addEventListener("mouseover", paneEvents.perspectivemouseover, false);
     pane.perspective.addEventListener("mouseout", paneEvents.perspectivemouseout, false);

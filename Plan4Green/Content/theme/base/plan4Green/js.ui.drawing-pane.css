@@ -1,0 +1,28 @@
+﻿#drawing-pane {
+    position: fixed;
+    height: 100%;
+    z-index: 5;
+    display: inline;
+}
+
+    #drawing-pane #info {
+        background-color: rgba(46, 46, 46, 0.99);
+        height: 100%;
+        width: 0px;
+        left: 0px;
+        top:0px;
+    }
+
+    #drawing-pane #tools {
+        background-color: rgba(0, 0, 0, 0.90);
+        width: 69px;
+        padding: 5px;
+        position: fixed;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+    }
+
+        #drawing-pane #tools table tbody tr td img {
+            margin: 10px;
+        }
