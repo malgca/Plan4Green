@@ -6,6 +6,20 @@
 }
 
 <body>
+    @using(Html.BeginForm("Logout", "Login", FormMethod.Post, new { enctype = "multipary/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Log Out" id="logout-action" />
+    }
+
+    <div class="instructions">
+        <a id="instruction-title" href="#">What to do next...</a>
+        <ul>
+            <li id="instruction-number">1</li>
+            <li id="instruction-text">Please Drag and Drop a Perspective (the blue icon) onto the canvas.</li>
+        </ul>
+    </div>
+
     <div id="drawing-page">
     </div>
 

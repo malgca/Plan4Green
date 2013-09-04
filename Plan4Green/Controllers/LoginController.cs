@@ -23,7 +23,7 @@ namespace Plan4Green.Controllers
         /// </summary>
         /// <remarks>GET method</remarks>
         [AllowAnonymous]
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
             return View();
         }
@@ -43,7 +43,6 @@ namespace Plan4Green.Controllers
                 bool loggedIn = WebSecurity.Login(model.LoginModel.UserName, model.LoginModel.Password, persistCookie: model.LoginModel.RememberMe);
                 if (ModelState.IsValid && loggedIn)
                 {
-                    ViewBag.UserMessage = string.Format("Hi, {0}", model.LoginModel.UserName);
                     return RedirectToAction("CanvasView", "BSObject");
                 }
 
@@ -62,7 +61,10 @@ namespace Plan4Green.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
-            WebSecurity.Logout();
+            if (WebSecurity.IsAuthenticated)
+            {
+                WebSecurity.Logout();
+            }
             return RedirectToAction("Login", "Login");
         }
 
@@ -85,7 +87,7 @@ namespace Plan4Green.Controllers
                     WebSecurity.CreateUserAndAccount(model.SignupModel.UserName, model.SignupModel.Password, new { UserPassword = model.SignupModel.Password, Organisation_ID = model.SignupModel.Organisation });
 
                     WebSecurity.Login(model.SignupModel.UserName, model.SignupModel.Password);
-                    ViewBag.Message = string.Format("Hi, {0}", model.SignupModel.UserName);
+                    ViewBag.User = model.SignupModel.UserName;
                     
                     return RedirectToAction("CanvasView", "BSObject");
                 }

@@ -213,6 +213,7 @@
     <Content Include="Content\theme\base\images\ui-required-01-red.png" />
     <Content Include="Content\theme\base\jquery.ui.validation.css" />
     <Content Include="Content\theme\base\plan4Green\js.ui.canvas.css" />
+    <Content Include="Content\theme\base\plan4Green\js.ui.drawing-pane.css" />
     <Content Include="Content\theme\base\thirdparty\orbit-1.2.3.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\background-images\1.jpg" />

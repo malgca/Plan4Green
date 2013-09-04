@@ -12,7 +12,9 @@ header, footer, hgroup, section {
     display: block;
 }
 
+input[type=button],
 input[type=submit] {
+    border: none;
     border-radius: 5px 5px;
 }
 
@@ -168,7 +170,6 @@ fieldset {
 
 #loginForm fieldset input[type=submit],
 #signupForm fieldset input[type=submit] {
-    border: none;
     width: 200px;
     height: 40px;
     color: #ffffff;

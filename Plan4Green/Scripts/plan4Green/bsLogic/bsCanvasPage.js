@@ -22,7 +22,14 @@ main = (function () {
     var
     // the page on which stuff is drawn
     page = document.getElementById("drawing-page"),
-
+    // the logout button
+    logout = document.getElementById("logout-action"),
+    // the current instruction number
+    instructionNum = document.getElementById("instruction-number"),
+    // the current instruction text
+    instructionText = document.getElementById("instruction-text"),
+    // instructions array
+    instructionArray = new Array(),
     // the level of the page.
     level,
 
@@ -104,13 +111,20 @@ main = (function () {
             drillDown: 'drillDown',
         }
 
-        // clear the starting array.
-        perspectiveArray = new Array();
-
-        // set the default current level
-        currentLevel = 'Perspective';
-
+        // populate instruction array
+        var populateInstructions = function () {
+            instructionArray.push("Please drag and drop a Perspective (the blue icon) onto the canvas.");
+            instructionArray.push("Please drag and drop a Goal (the red icon) onto the canvas.");
+            instructionArray.push("Please drag and drop a Measure (the green icon) onto the canvas.");
+            instructionArray.push("Click on edit to edit the object you just dropped.");
+            instructionArray.push("Click on view to view the object you just dropped.");
+        }
+        
         var pageEvents = (function () {
+            // logout event handler
+            logUserOut = function (event) {
+            }
+
             // mousedown event handler
             mousedown = function (event) {
                 if (event.target === this) {
@@ -179,12 +193,13 @@ main = (function () {
                 }
                 if (bsItem != undefined) {
                     canvasObject.create(bsItem);
-                    count++;
+                    debug.count++;
                 }
             }
 
             // expose members
             return {
+                logUserOut: logUserOut,
                 mousedown: mousedown,
                 mouseup: mouseup,
                 mousedrag: mousedrag,
@@ -201,6 +216,12 @@ main = (function () {
         page.addEventListener("mouseout", pageEvents.mouseout, false);
         page.addEventListener("dragover", pageEvents.dragover, false);
         page.addEventListener("drop", pageEvents.drop, false);
+
+        // add mouse event to logout button
+        logout.addEventListener("click", pageEvents.logUserOut, false);
+
+        // call the poplate instruction array method
+        populateInstructions();
     }
 
     // initilalize the main.js script when the window loads

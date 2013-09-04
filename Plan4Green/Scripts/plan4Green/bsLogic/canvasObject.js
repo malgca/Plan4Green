@@ -43,7 +43,7 @@
             pos = goal.currentPosition,
         div = createDiv(bsItem),
 
-        bsImage = new Image(70, 70),
+        bsImage = new Image(),
 
         createControls = function () {
             var controls = new Array();
@@ -120,13 +120,13 @@
             bsImage.className = 'bsImage'
 
             if (bsItem.name == 'Perspective') {
-                bsImage.src = "../../Images/drawing-tools/perspective-active-icon.png";
+                bsImage.src = "../../Images/controls/drawing-pane/perspective-active.png";
             }
             else if (bsItem.name == 'Goal') {
-                bsImage.src = "../../Images/drawing-tools/goal-active-icon.png";
+                bsImage.src = "../../Images/controls/drawing-pane/goal-active.png";
             }
             else if (bsItem.name == 'Measure') {
-                bsImage.src = "../../Images/drawing-tools/measure-active-icon.png";
+                bsImage.src = "../../Images/controls/drawing-pane/measure-active.png";
             }
 
             bsImage.addEventListener("mousedown", imgEvents.mousedown, false);
