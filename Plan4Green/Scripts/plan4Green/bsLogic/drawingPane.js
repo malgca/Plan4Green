@@ -2,8 +2,16 @@
 var drawingPane = (function () {
     // drawing panel from which to get the drawing items
     pane = {
-        //pane housing information about the page
+        // pane housing information about the page
         info: document.getElementById("info"),
+        // organisations name
+        orgName: document.getElementById("organisation-name"),
+        // perspective info list
+        persInfo: document.getElementById("perspective-info"),
+        // goal info list
+        goalInfo: document.getElementById("goal-info"),
+        // measure info list
+        measInfo: document.getElementById("measure-info"),
         // pane housing all drawing tools
         tools: document.getElementById("tools"),
         // drawing pane control arrow
@@ -14,10 +22,25 @@ var drawingPane = (function () {
         goal: document.getElementById("goal"),
         // measure control in drawing pane
         measure: document.getElementById("measure"),
-
         // flag representing whether or not pane is out
         isPaneOut: false
     },
+
+    // change an organisations name according to info in the DB.
+    setOrganisationName = function () {
+        var orgUrl = '/JSON/GetOrganisation';
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: orgUrl,
+            data: JSON.stringify(orgUrl),
+            dataType: "json",
+            success: function (newOrgName) {
+                pane.orgName.innerHTML = newOrgName;
+            }
+        });
+    }
 
     init = function () {
         toolEvents = (function () {
@@ -93,8 +116,11 @@ var drawingPane = (function () {
         pane.goal.addEventListener("mouseout", toolEvents.goalmouseout, false);
         pane.measure.addEventListener("mouseover", toolEvents.measuremouseover, false);
         pane.measure.addEventListener("mouseout", toolEvents.measuremouseout, false);
+
+        // set the organisation information
+        setOrganisationName();
     }
-    
+
     // add this set of events to the window on load.
     window.addEventListener("load", init, false);
 }());

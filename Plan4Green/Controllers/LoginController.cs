@@ -43,6 +43,7 @@ namespace Plan4Green.Controllers
                 bool loggedIn = WebSecurity.Login(model.LoginModel.UserName, model.LoginModel.Password, persistCookie: model.LoginModel.RememberMe);
                 if (ModelState.IsValid && loggedIn)
                 {
+                    ViewBag.CurrentUserID = WebSecurity.CurrentUserId;
                     return RedirectToAction("CanvasView", "BSObject");
                 }
 
@@ -87,7 +88,7 @@ namespace Plan4Green.Controllers
                     WebSecurity.CreateUserAndAccount(model.SignupModel.UserName, model.SignupModel.Password, new { UserPassword = model.SignupModel.Password, Organisation_ID = model.SignupModel.Organisation });
 
                     WebSecurity.Login(model.SignupModel.UserName, model.SignupModel.Password);
-                    ViewBag.User = model.SignupModel.UserName;
+                    
                     
                     return RedirectToAction("CanvasView", "BSObject");
                 }

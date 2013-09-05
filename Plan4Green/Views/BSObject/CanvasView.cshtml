@@ -6,7 +6,7 @@
 }
 
 <body>
-    @using(Html.BeginForm("Logout", "Login", FormMethod.Post, new { enctype = "multipary/form-data" }))
+    @using (Html.BeginForm("Logout", "Login", FormMethod.Post, new { enctype = "multipary/form-data" }))
     {
         @Html.AntiForgeryToken()
         <input type="submit" value="Log Out" id="logout-action" />
@@ -26,11 +26,10 @@
     <p id="position" class="debug"></p>
     <p id="status" class="debug"></p>
 
-</body>
-
-@Styles.Render("~/Content/theme/base/plan4Green/js.ui.canvas.css")
-@Scripts.Render("~/Scripts/plan4Green/bsLogic/types.js",
+    @Styles.Render("~/Content/theme/base/plan4Green/js.ui.canvas.css")
+    @Scripts.Render("~/Scripts/plan4Green/bsLogic/types.js",
 "~/Scripts/plan4Green/animation.js",
 "~/Scripts/plan4Green/bsLogic/canvasObject.js",
 "~/Scripts/plan4Green/bsLogic/graph.js",
 "~/Scripts/plan4Green/bsLogic/bsCanvasPage.js")
+</body>
