@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Plan4Green.Models.DB;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Plan4Green.Models.DB;
 
 namespace Plan4Green.Models.ViewModels
 {

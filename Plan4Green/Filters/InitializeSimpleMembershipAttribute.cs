@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Plan4Green.Models.DB;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
-using Plan4Green.Models.DB;
 
 namespace Plan4Green.Filters
 {

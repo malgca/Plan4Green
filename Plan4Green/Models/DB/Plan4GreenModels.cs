@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Globalization;
-using System.Web.Security;
 
 namespace Plan4Green.Models.DB
 {
@@ -57,11 +55,10 @@ namespace Plan4Green.Models.DB
         public string UserName { get; set; }
         public string UserPassword { get; set; }
 
-        [Column("Organisation_Name")]
-        [ForeignKey("Organisation_Name")]
-        public string Organisation_ID { get; set; }
+        [ForeignKey("Organisation_ID")]
+        public string Organisation_Name { get; set; }
 
-        public virtual Organisation Organisation_Name { get; set; }
+        public virtual Organisation Organisation_ID { get; set; }
     }
 
     [Table("Organisation")]
@@ -80,15 +77,17 @@ namespace Plan4Green.Models.DB
     public class Perspective
     {
         [Key]
+        [Column(Order = 0)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
         public string Perspective_Name { get; set; }
         public string Description { get; set; }
         
-        [Column("Organisation_Name")]
-        [ForeignKey("Organisation_Name")]
-        public string Organisation_ID { get; set; }
+        [Key]
+        [Column(Order=1)]
+        [ForeignKey("Organisation_ID")]
+        public string Organisation_Name { get; set; }
 
-        public virtual Organisation Organisation_Name { get; set; }
+        public virtual Organisation Organisation_ID { get; set; }
         public virtual ICollection<Goal> Goals { get; set; }
     }
 
@@ -109,11 +108,14 @@ namespace Plan4Green.Models.DB
         
         public string Target_Value { get; set; }
 
-        [Column("Perspective_Name")]
-        [ForeignKey("Perspective_Name")]
-        public string Perspective_ID { get; set; }
+        [Column(Order = 0)]
+        [ForeignKey("Perspective_ID")]
+        public string Perspective_Name { get; set; }
+        [Column(Order = 1)]
+        [ForeignKey("Perspective_ID")]
+        public string Organisation_Name { get; set; }
 
-        public virtual Perspective Perspective_Name { get; set; }
+        public virtual Perspective Perspective_ID { get; set; }
         public virtual ICollection<Measure> Measures { get; set; }
     }
 
@@ -134,11 +136,10 @@ namespace Plan4Green.Models.DB
 
         public string Target_Value { get; set; }
 
-        [Column("Goal_ID")]
-        [ForeignKey("Goal_ID")]
-        public int Assigned_Goal { get; set; }
+        [ForeignKey("Assigned_Goal")]
+        public int Goal_ID { get; set; }
 
-        public virtual Goal Goal_ID { get; set; }
+        public virtual Goal Assigned_Goal { get; set; }
         public virtual ICollection<Completion_Score> Completion_Score_Times { get; set; }
     }
 
@@ -151,11 +152,10 @@ namespace Plan4Green.Models.DB
         public DateTime Completion_Score_Time { get; set; }
         public double Current_Value { get; set; }
 
-        [Column("Measure_ID")]
-        [ForeignKey("Measure_ID")]
-        public int Assigned_Measure { get; set; }
+        [ForeignKey("Assigned_Measure")]
+        public int Measure_ID { get; set; }
 
-        public virtual Measure Measure_ID { get; set; }
+        public virtual Measure Assigned_Measure { get; set; }
     }
 
 #endregion

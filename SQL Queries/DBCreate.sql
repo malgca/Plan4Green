@@ -9,34 +9,41 @@ GO
 
 CREATE TABLE Organisation
 (
-	Organisation_Name varchar(900) NOT NULL PRIMARY KEY
+	Organisation_Name varchar(600) NOT NULL PRIMARY KEY
 );
 GO
 
 CREATE TABLE OrganisationalUser
 (
-	User_ID int IDENTITY NOT NULL PRIMARY KEY,
+	User_ID int IDENTITY NOT NULL,
 	
 	UserName varchar(255) UNIQUE,
 	UserPassword varchar(255),
 	
-	Organisation_ID varchar(900) FOREIGN KEY REFERENCES Organisation(Organisation_Name)
+	Organisation_Name varchar(600)
+	
+	PRIMARY KEY(User_ID)
+	FOREIGN KEY REFERENCES Organisation(Organisation_Name)
+
 );
 GO
 
 CREATE TABLE Perspective
 (
-	Perspective_Name varchar(900) NOT NULL PRIMARY KEY,
+	Perspective_Name varchar(300) NOT NULL,
 	
 	Description text,
 	
-	Organisation_ID varchar(900) FOREIGN KEY REFERENCES Organisation(Organisation_Name)
-);
+	Organisation_Name varchar(600)
+
+	PRIMARY KEY(Perspective_Name, Organisation_Name)
+	FOREIGN KEY REFERENCES Organisation(Organisation_Name)
+	);
 GO
 
 CREATE TABLE Goal
 (
-	Goal_ID int IDENTITY NOT NULL PRIMARY KEY,
+	Goal_ID int IDENTITY NOT NULL,
 	
 	Name text,
 	Description text,
@@ -44,30 +51,40 @@ CREATE TABLE Goal
 	End_Date date,
 	Target_Value varchar(100),
 	
-	Perspective_ID varchar(900) FOREIGN KEY REFERENCES Perspective(Perspective_Name)
+	Perspective_Name varchar(300),
+	Organisation_Name varchar(600),
+
+	PRIMARY KEY(Goal_ID),
+	FOREIGN KEY (Perspective_Name, Organisation_Name) REFERENCES Perspective(Perspective_Name, Organisation_Name)
 );
 GO
 
 CREATE TABLE Measure
 (
-	Measure_ID int IDENTITY NOT NULL PRIMARY KEY,
+	Measure_ID int IDENTITY NOT NULL,
 	
 	Name text,
 	Description text,
 	Start_Date date,
 	End_Date date,
 	Target_Value varchar(100),
+	
+	Goal_ID int
 
-	Goal_ID int FOREIGN KEY REFERENCES Goal(Goal_ID)
+	PRIMARY KEY(Measure_ID)
+	FOREIGN KEY REFERENCES Goal(Goal_ID)
 );
 GO
 
 CREATE TABLE Completion_Score
 (
-	Completion_Score_Time datetime NOT NULL PRIMARY KEY,
+	Completion_Score_Time datetime NOT NULL,
 		
 	Current_Value float,
 
-	Measure_ID int FOREIGN KEY REFERENCES Measure(Measure_ID)
+	Measure_ID int
+
+	PRIMARY KEY(Completion_Score_Time)
+	FOREIGN KEY REFERENCES Measure(Measure_ID)
 );
 GO

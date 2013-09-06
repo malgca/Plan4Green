@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Plan4Green.Models.DB;
 using System.Linq;
-using Plan4Green.Models.DB;
 
 namespace Plan4Green.Models.ObjectManager
 {
@@ -18,9 +17,7 @@ namespace Plan4Green.Models.ObjectManager
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                OrganisationalUser orgUser = UserExists(context, oldUser.User_ID);
-
-                if (orgUser != null)
+                if (!UserExists(context, oldUser.User_ID))
                 {
                     return;
                 }
@@ -38,28 +35,23 @@ namespace Plan4Green.Models.ObjectManager
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                OrganisationalUser orgUser = UserExists(context, userID);
-                if (orgUser != null)
+                if (UserExists(context, userID))
                 {
-                    return orgUser.Organisation_ID;
+                    OrganisationalUser orgUser = context.Users.First(currentUser => currentUser.User_ID == userID);
+                    return orgUser.Organisation_Name;
                 }
 
                 return string.Empty;
             }
         }
 
-
-
         // Check if a User already exists in the database.
-        private OrganisationalUser UserExists(Plan4GreenDB context, int userID)
+        private bool UserExists(Plan4GreenDB context, int userID)
         {
-            //TODO: Fix This
-            //object newUser = null;
-            //return newUser = (
-            //    from user in context.Users
-            //    where user.User_ID == userID
-            //    select user).First();
-            return null;
+            return (
+               from user in context.Users
+               where user.User_ID == userID
+               select user).Any();
         }
 
     }

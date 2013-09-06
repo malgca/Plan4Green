@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Plan4Green.Filters;
+using Plan4Green.Models.ObjectManager;
+using Plan4Green.Models.ViewModels;
+using System;
 using System.Web.Mvc;
 using System.Web.Security;
-using DotNetOpenAuth.AspNet;
-using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using Plan4Green.Filters;
-using Plan4Green.Models.DB;
-using Plan4Green.Models.ViewModels;
-using Plan4Green.Models.ObjectManager;
 
 namespace Plan4Green.Controllers
 {
@@ -85,7 +79,7 @@ namespace Plan4Green.Controllers
                 {
                     OrganisationManager orgManager = new OrganisationManager();
                     orgManager.AddOrganisation(model.SignupModel.Organisation);
-                    WebSecurity.CreateUserAndAccount(model.SignupModel.UserName, model.SignupModel.Password, new { UserPassword = model.SignupModel.Password, Organisation_ID = model.SignupModel.Organisation });
+                    WebSecurity.CreateUserAndAccount(model.SignupModel.UserName, model.SignupModel.Password, new { UserPassword = model.SignupModel.Password, Organisation_Name = model.SignupModel.Organisation });
 
                     WebSecurity.Login(model.SignupModel.UserName, model.SignupModel.Password);
                     

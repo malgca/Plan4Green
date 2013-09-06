@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Plan4Green.Models.DB;
 using System.Linq;
-using Plan4Green.Models.DB;
 
 namespace Plan4Green.Models.ObjectManager
 {

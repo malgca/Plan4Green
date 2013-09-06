@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Hosting;
+﻿using Plan4Green.Models.ObjectManager;
 using System.IO;
-using Plan4Green.Filters;
-using Plan4Green.Models.DB;
-using Plan4Green.Models.ObjectManager;
-using Plan4Green.Models.ViewModels;
+using System.Web.Hosting;
+using System.Web.Mvc;
 using WebMatrix.WebData;
 
 namespace Plan4Green.Controllers
@@ -19,6 +12,8 @@ namespace Plan4Green.Controllers
     [AllowAnonymous]
     public class JSONController : Controller
     {
+        #region Misc Operations
+
         /// <summary>
         /// Converts list of background images from the local serve to JSON.
         /// </summary>
@@ -41,10 +36,13 @@ namespace Plan4Green.Controllers
             return Json(imagePaths);
         }
 
+        #endregion
+
+        #region Organisation Operations
+
         /// <summary>
-        /// Given a User ID, get that user's organisation from the database pertaining to that users organisation.
+        /// Get the current user's organisation from the database.
         /// </summary>
-        /// <param name="userID">The user ID to search on.</param>
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult GetOrganisation()
         {
@@ -52,5 +50,123 @@ namespace Plan4Green.Controllers
             string organisationalInfo = userMan.GetUserOrganisation(WebSecurity.CurrentUserId);
             return Json(organisationalInfo);
         }
+        
+        #endregion
+
+        #region Perspective Operations
+
+        /// <summary>
+        /// Gets the current perspectives belonging to an organisation.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult GetPerspectives()
+        {
+            return Json("");
+        }
+
+        /// <summary>
+        /// Add a perspective to the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult AddPerspective()
+        {
+            return Json("");
+        }
+
+        /// <summary>
+        /// Delete a perspective from the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult DeletePerspective()
+        {
+            return Json("");
+        }
+
+        /// <summary>
+        /// Change a perspective in the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult UpdatePerspective()
+        {
+            return Json("");
+        }
+
+        #endregion
+
+        #region Goal Operations
+
+        /// <summary>
+        /// Add a perspective to the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult AddGoal()
+        {
+            return Json("");
+        }
+
+        /// <summary>
+        /// Delete a perspective from the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult DeleteGoal()
+        {
+            return Json("");
+        }
+
+        /// <summary>
+        /// Change a perspective in the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult UpdateGoal()
+        {
+            return Json("");
+        }
+
+        #endregion
+
+        #region Measure Operations
+
+        /// <summary>
+        /// Add a perspective to the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult AddMeasure()
+        {
+            return Json("");
+        }
+
+        /// <summary>
+        /// Delete a perspective from the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult DeleteMeasure()
+        {
+            return Json("");
+        }
+
+        /// <summary>
+        /// Change a perspective in the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult UpdateMeasure()
+        {
+            return Json("");
+        }
+
+        #endregion
+
+        #region Completion_Score Operations
+
+        /// <summary>
+        /// Add a perspective to the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult AddCompletionScore()
+        {
+            return Json("");
+        }
+
+        #endregion
+
     }
 }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Web.WebPages.OAuth;
-using Plan4Green.Models;
-
-namespace Plan4Green
+﻿namespace Plan4Green
 {
     public static class AuthConfig
     {

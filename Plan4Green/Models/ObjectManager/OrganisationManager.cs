@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using Plan4Green.Models.DB;
+﻿using Plan4Green.Models.DB;
+using System.Linq;
 
 namespace Plan4Green.Models.ObjectManager
 {
@@ -25,6 +25,7 @@ namespace Plan4Green.Models.ObjectManager
             }
         }
 
+        // find if the organisation in question actually exists
         private bool OrganisationExists(Plan4GreenDB context, string organisationName)
         {
             return (
