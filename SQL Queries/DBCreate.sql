@@ -19,22 +19,21 @@ CREATE TABLE OrganisationalUser
 	
 	UserName varchar(255) UNIQUE,
 	UserPassword varchar(255),
-	
-	Organisation_Name varchar(600)
-	
+		
+	Organisation_Name varchar(600) NOT NULL
+
 	PRIMARY KEY(User_ID)
 	FOREIGN KEY REFERENCES Organisation(Organisation_Name)
-
 );
 GO
 
 CREATE TABLE Perspective
 (
 	Perspective_Name varchar(300) NOT NULL,
-	
+
 	Description text,
-	
-	Organisation_Name varchar(600)
+
+	Organisation_Name varchar(600) NOT NULL
 
 	PRIMARY KEY(Perspective_Name, Organisation_Name)
 	FOREIGN KEY REFERENCES Organisation(Organisation_Name)
@@ -42,37 +41,37 @@ CREATE TABLE Perspective
 GO
 
 CREATE TABLE Goal
-(
-	Goal_ID int IDENTITY NOT NULL,
-	
-	Name text,
+(	
+	Goal_Name varchar(450) NOT NULL,
+
 	Description text,
 	Start_Date date,
-	End_Date date,
+	Due_Date date,
 	Target_Value varchar(100),
 	
 	Perspective_Name varchar(300),
 	Organisation_Name varchar(600),
 
-	PRIMARY KEY(Goal_ID),
+	PRIMARY KEY(Goal_Name, Perspective_Name),
 	FOREIGN KEY (Perspective_Name, Organisation_Name) REFERENCES Perspective(Perspective_Name, Organisation_Name)
 );
 GO
 
 CREATE TABLE Measure
 (
-	Measure_ID int IDENTITY NOT NULL,
-	
-	Name text,
+	Measure_Name varchar(450) NOT NULL,
+
 	Description text,
 	Start_Date date,
-	End_Date date,
-	Target_Value varchar(100),
-	
-	Goal_ID int
+	Due_Date date,
 
-	PRIMARY KEY(Measure_ID)
-	FOREIGN KEY REFERENCES Goal(Goal_ID)
+	Target_Value varchar(100),
+
+	Perspective_Name varchar(300) NOT NULL,
+	Goal_Name varchar(450) NOT NULL
+	
+	PRIMARY KEY(Measure_Name, Goal_Name),
+	FOREIGN KEY (Goal_Name, Perspective_Name) REFERENCES Goal(Goal_Name, Perspective_Name)
 );
 GO
 
@@ -82,9 +81,10 @@ CREATE TABLE Completion_Score
 		
 	Current_Value float,
 
-	Measure_ID int
+	Measure_Name varchar(450) NOT NULL,
+	Goal_Name varchar(450) NOT NULL
 
-	PRIMARY KEY(Completion_Score_Time)
-	FOREIGN KEY REFERENCES Measure(Measure_ID)
+	PRIMARY KEY(Completion_Score_Time),
+	FOREIGN KEY (Measure_Name, Goal_Name) REFERENCES Measure(Measure_Name, Goal_Name)
 );
 GO

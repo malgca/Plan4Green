@@ -76,28 +76,26 @@ namespace Plan4Green.Models.DB
     [Table("Perspective")]
     public class Perspective
     {
-        [Key]
-        [Column(Order = 0)]
+        [Key, Column(Order = 0)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
         public string Perspective_Name { get; set; }
+        
         public string Description { get; set; }
         
-        [Key]
-        [Column(Order=1)]
-        [ForeignKey("Organisation_ID")]
+        [Key, Column(Order = 1)]
+        [ForeignKey("Assigned_Organisation")]
         public string Organisation_Name { get; set; }
 
-        public virtual Organisation Organisation_ID { get; set; }
+        public virtual Organisation Assigned_Organisation { get; set; }
         public virtual ICollection<Goal> Goals { get; set; }
     }
 
     [Table("Goal")]
     public class Goal
     {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int Goal_ID { get; set; }
-        public string Name { get; set; }
+        [Key, Column(Order = 0)]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
+        public string Goal_Name { get; set; }
         public string Description { get; set; }
         
         [DataType(DataType.Date)]
@@ -108,24 +106,24 @@ namespace Plan4Green.Models.DB
         
         public string Target_Value { get; set; }
 
-        [Column(Order = 0)]
-        [ForeignKey("Perspective_ID")]
+        [Key, Column(Order = 1)]
+        [ForeignKey("Assigned_Perspective")]
         public string Perspective_Name { get; set; }
-        [Column(Order = 1)]
-        [ForeignKey("Perspective_ID")]
+
+
+        [ForeignKey("Assigned_Perspective"), Column(Order = 2)]
         public string Organisation_Name { get; set; }
 
-        public virtual Perspective Perspective_ID { get; set; }
+        public virtual Perspective Assigned_Perspective { get; set; }
         public virtual ICollection<Measure> Measures { get; set; }
     }
 
     [Table("Measure")]
     public class Measure
     {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int Measure_ID { get; set; }
-        public string Name { get; set; }
+        [Key, Column(Order = 0)]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
+        public string Measure_Name { get; set; }
         public string Description { get; set; }
 
         [DataType(DataType.Date)]
@@ -135,9 +133,12 @@ namespace Plan4Green.Models.DB
         public DateTime Due_Date { get; set; }
 
         public string Target_Value { get; set; }
-
+        
+        [Key, Column(Order = 1)]
         [ForeignKey("Assigned_Goal")]
-        public int Goal_ID { get; set; }
+        public string Goal_Name { get; set; }
+        [ForeignKey("Assigned_Goal"), Column(Order = 2)]
+        public string Perspective_Name { get; set; }
 
         public virtual Goal Assigned_Goal { get; set; }
         public virtual ICollection<Completion_Score> Completion_Score_Times { get; set; }
@@ -152,8 +153,10 @@ namespace Plan4Green.Models.DB
         public DateTime Completion_Score_Time { get; set; }
         public double Current_Value { get; set; }
 
-        [ForeignKey("Assigned_Measure")]
-        public int Measure_ID { get; set; }
+        [ForeignKey("Assigned_Measure"), Column(Order = 0)]
+        public string Measure_Name { get; set; }
+        [ForeignKey("Assigned_Measure"), Column(Order = 1)]
+        public string Goal_Name { get; set; }
 
         public virtual Measure Assigned_Measure { get; set; }
     }

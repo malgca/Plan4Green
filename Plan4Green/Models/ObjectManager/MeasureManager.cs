@@ -18,7 +18,7 @@ namespace Plan4Green.Models.ObjectManager
             {
                 Measure workingMeasure = new Measure();
 
-                if (!MeasureExists(context, newMeasure.Measure_ID))
+                if (!MeasureExists(context, newMeasure.Measure_Name, newMeasure.Goal_Name))
                 {
                     workingMeasure = newMeasure;
                 }
@@ -45,11 +45,12 @@ namespace Plan4Green.Models.ObjectManager
         }
 
         // Check if a Measure already exists in the database.
-        private bool MeasureExists(Plan4GreenDB context, int measureID)
+        private bool MeasureExists(Plan4GreenDB context, string measureName, string goalName)
         {
             return (
                 from measure in context.Measures
-                where measure.Measure_ID == measureID
+                where measure.Measure_Name.Equals(measureName)
+                && measure.Goal_Name.Equals(goalName)
                 select measure).Any();
         }
     }
