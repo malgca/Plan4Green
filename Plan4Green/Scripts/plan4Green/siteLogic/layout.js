@@ -1,9 +1,4 @@
 ﻿var layout = (function () {
-    var ajaxVars = {
-        // list of available background images
-        imageList: '/JSON/GetBackgroundImages'
-    }
-
     var init = function () {
         var setBackground = function (imagePath) {
             // converts an absoluate image name to a relative image name, necessary to load from localhost
@@ -26,18 +21,10 @@
             backImage.src = absoluteToRelative(imagePath);
         }
 
-        $.ajax({
-            cache: false,
-            type: "POST",
-            url: ajaxVars.imageList,
-            dataType: "json",
-            data: JSON.stringify(ajaxVars.imageList),
-            success: function (images) {
-                var imageNum = Math.floor(Math.random() * 5);
-                setBackground(images[imageNum]);
-            }
+        ajax.get('/JSON/GetBackgroundImages', function (images) {
+            var imageNum = Math.floor(Math.random() * 5);
+            setBackground(images[imageNum]);
         });
     }
-
     window.addEventListener("load", init, false);
 }());

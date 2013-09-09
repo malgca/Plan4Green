@@ -2,15 +2,21 @@
     @Styles.Render("~/Content/theme/base/plan4Green/js.ui.drawing-pane.css")
 
     <div id="info">
-        <p id="organisation-name">Fictional Organisation</p>
+        <ul id="login-info">
+            <li id="organisation-name">Fictional Organisation</li>
+            <li id="user-name">Username</li>
+        </ul>
 
         <ul id="perspective-info">
+            <li class="viewHeader"><a href="#">Perspectives</a></li>
         </ul>
 
         <ul id="goal-info">
+            <li class="viewHeader"><a href="#">Goals</a></li>
         </ul>
 
         <ul id="measure-info">
+            <li class="viewHeader"><a href="#">Measures</a></li>
         </ul>
 
     </div>
@@ -41,5 +47,5 @@
         </table>
     </div>
 
-    @Scripts.Render("~/Scripts/plan4Green/bsLogic/drawingPane.js")
+    @Scripts.Render("~/Scripts/plan4Green/siteLogic/ajaxOperations.js", "~/Scripts/plan4Green/bsLogic/drawingPane.js")
 </section>

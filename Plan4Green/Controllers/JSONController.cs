@@ -38,6 +38,21 @@ namespace Plan4Green.Controllers
 
         #endregion
 
+        #region User Operations
+
+        /// <summary>
+        /// Get the current user's organisation from the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult GetUsername()
+        {
+            UserManager userMan = new UserManager();
+            string usernameInfo = userMan.GetUsername(WebSecurity.CurrentUserId);
+            return Json(usernameInfo);
+        }
+
+        #endregion
+
         #region Organisation Operations
 
         /// <summary>

@@ -19,11 +19,10 @@
 
         return div;
     },
-    
+
     // draw a BS Item.
     drawBSItem = function (bsItem, exists) {
         // set default value for exists to false -- delete this after demo and find cleaner code!
-        console.log(exists);
         if (exists == undefined) {
             exists = false;
         }
@@ -38,7 +37,7 @@
                 bsItem.bsParent.children.push(bsItem);
             }
         }
-        
+
         var
             pos = goal.currentPosition,
         div = createDiv(bsItem),
@@ -49,7 +48,7 @@
             var controls = new Array();
 
             var controlList = document.createElement('ul');
-            controlList.className = 'bsControlList';
+            controlList.id = 'bsControlList';
 
             // events executed on the image
             imgEvents = (function () {
@@ -85,7 +84,7 @@
                         // get the current mouse position
                         var pos = main.currentPosition(event);
 
-                        if (div.offsetLeft - 4  >= 0
+                        if (div.offsetLeft - 4 >= 0
                             && (div.offsetWidth + pos.x - bsImage.width / 2) < main.page.offsetWidth) {
                             // move the perspective by middle
                             div.style.left = (pos.x - bsImage.width / 2) + 'px';
@@ -137,7 +136,39 @@
             controls.push(bsImage);
 
             var controlEvents = (function () {
+                isEditing = false;
+
                 editClick = function (event) {
+                    if (isEditing) {
+                        event.target.value = 'Save';
+
+                        var viewList = document.getElementById("bsViewList");
+                        viewList.style.visibility = 'collapse';
+                        viewList.style.width = '0px';
+                        viewList.style.height = '0px';
+
+                        var editList = document.getElementById("bsEditList");
+                        editList.style.visibility = 'visible';
+                        editList.style.width = '350px';
+                        editList.style.height = 'inherit';
+
+                        isEditing = false;
+                    }
+                    else {
+                        event.target.value = 'Edit';
+
+                        var viewList = document.getElementById("bsViewList");
+                        viewList.style.visibility = 'visible';
+                        viewList.style.width = '350px';
+                        viewList.style.height = 'inherit';
+
+                        var editList = document.getElementById("bsEditList");
+                        editList.style.visibility = 'collapse';
+                        editList.style.width = '0px';
+                        editList.style.height = '0px';
+
+                        isEditing = true;
+                    }
                 }
 
                 viewClick = function (event) {
@@ -194,7 +225,7 @@
             var views = new Array();
 
             var viewList = document.createElement('ul');
-            viewList.className = 'bsViewList';
+            viewList.id = 'bsViewList';
 
             var createStoplight = function (bsItem) {
                 var canvas = document.createElement('canvas');
@@ -221,7 +252,7 @@
                 return canvas;
             }
 
-            // measure heading text
+            // measure heading text label
             var heading = document.createElement('h1');
             heading.innerHTML = bsItem.name;
 
@@ -280,11 +311,52 @@
             return viewList;
         }
 
+        createEdit = function () {
+            var edits = new Array();
+
+            var editList = document.createElement('ul');
+            editList.id = 'bsEditList';
+
+            // heading text editor
+            var headingEdit = document.createElement('input');
+            headingEdit.type = 'text';
+            headingEdit.value = bsItem.name;
+            
+            edits.push(headingEdit);
+
+            var descriptionEdit = document.createElement('textarea');
+            descriptionEdit.value = bsItem.description;
+
+            edits.push(descriptionEdit);
+
+            // put all the items in the edit list
+            for (var i = 0; i < edits.length; i++) {
+                var listItem = document.createElement('li');
+                listItem.appendChild(edits[i]);
+
+                if (i == 0) {
+                    edits[i].parentElement.className = 'viewHeading';
+                }
+                else {
+                    edits[i].parentElement.className = 'viewItem';
+                }
+
+                editList.appendChild(listItem);
+            }
+
+            return editList;
+        }
+
         var controlBar = createControls();
         var viewBar = createView();
+        var editBar = createEdit();
 
         div.appendChild(controlBar);
         div.appendChild(viewBar);
+        //div.appendChild(editBar);
+
+        // reflect div in the drawing pane
+        drawingPane.a
 
         // place the div on the drawing page
         main.page.appendChild(div);

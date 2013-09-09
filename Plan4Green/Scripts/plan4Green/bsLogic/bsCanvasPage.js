@@ -121,10 +121,6 @@ main = (function () {
         }
         
         var pageEvents = (function () {
-            // logout event handler
-            logUserOut = function (event) {
-            }
-
             // mousedown event handler
             mousedown = function (event) {
                 if (event.target === this) {
@@ -136,37 +132,20 @@ main = (function () {
                 }
             },
 
-            // mouseup event handler
-            mouseup = function (event) {
-            },
-
             // mousemove event handler
-            mousedrag = function (event) {
+            mousemove = function (event) {
                 if (debug.isUnderConstruction) {
                     var pos = currentPosition(event);
                     debug.position.innerHTML = "(x: " + pos.x + " | y: " + pos.y + ")";
                 }
-
-                if (event.target === this) {
-                }
             },
 
-            // mouseout event handler
-            mouseout = function (event) {
-                if (event.target === this) {
-                }
-            }
-
-            // mouse drop event handler
-            mousedrop = function (event) {
-            }
-
             // dragover event handler
-            dragover = function (event) {
+            mousedragover = function (event) {
                 event.preventDefault();
             }
 
-            drop = function (event) {
+            mousedrop = function (event) {
                 event.preventDefault();
                 var data = event.dataTransfer.getData("thumb");
                 var bsItem;
@@ -175,9 +154,9 @@ main = (function () {
                     case ('perspective'):
                         if (level.current == 'top') {
                             bsItem = bsType.createPerspective(currentPosition(event));
-                            // add it to the perspectiveArray
                             global.perspectiveArray.push(bsItem);
-                            //redrawPage();
+
+                            drawingPane.addBSItem(bsItem);
                         }
                         break;
                     case ('goal'):
@@ -199,26 +178,18 @@ main = (function () {
 
             // expose members
             return {
-                logUserOut: logUserOut,
                 mousedown: mousedown,
-                mouseup: mouseup,
-                mousedrag: mousedrag,
-                mouseout: mouseout,
-                dragover: dragover,
-                drop: drop
+                mousemove: mousemove,
+                mousedragover: mousedragover,
+                mousedrop: mousedrop
             }
         }());
 
         // add mouse event listeners to page and drawing pane
         page.addEventListener("mousedown", pageEvents.mousedown, false);
-        page.addEventListener("mouseup", pageEvents.mouseup, false);
-        page.addEventListener("mousemove", pageEvents.mousedrag, false);
-        page.addEventListener("mouseout", pageEvents.mouseout, false);
-        page.addEventListener("dragover", pageEvents.dragover, false);
-        page.addEventListener("drop", pageEvents.drop, false);
-
-        // add mouse event to logout button
-        logout.addEventListener("click", pageEvents.logUserOut, false);
+        page.addEventListener("mousemove", pageEvents.mousemove, false);
+        page.addEventListener("dragover", pageEvents.mousedragover, false);
+        page.addEventListener("drop", pageEvents.mousedrop, false);
 
         // call the poplate instruction array method
         populateInstructions();

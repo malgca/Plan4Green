@@ -22,20 +22,28 @@
             padding: 0px;
         }
 
-        #drawing-pane #info #organisation-name {
+        #drawing-pane #info ul li#organisation-name {
             display: block;
             font-family: Aharoni;
             font-size: 24pt;
-            margin: 25px 5px 25px 5px;
+            margin: 25px 5px 10px 5px;
             max-width: 280px;
+        }
+
+        #drawing-pane #info ul li#user-name {
+            display: block;
+            font-family: Arial;
+            font-size: 14pt;
+            margin: 5px 0px 25px 5px;
         }
 
         #drawing-pane #info #perspective-info {
             display: block;
-            margin: 70px 5px 0px 5px;
+            margin: 35px 5px 0px 5px;
         }
 
-            #drawing-pane #info #perspective-info .viewHeader {
+            #drawing-pane #info #perspective-info li.viewHeader {
+
             }
 
             #drawing-pane #info #perspective-info .viewInfo {

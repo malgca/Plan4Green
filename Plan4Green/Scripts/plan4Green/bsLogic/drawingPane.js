@@ -26,20 +26,58 @@ var drawingPane = (function () {
         isPaneOut: false
     },
 
-    // change an organisations name according to info in the DB.
-    setOrganisationName = function () {
-        var orgUrl = '/JSON/GetOrganisation';
+    // set an organisations session information according to info in the DB.
+    setSessionDetails = function () {
+        //setOrganisationDetails;
+        ajax.get('/JSON/GetOrganisation', function (ajaxInfo) {
+            var orgNameShort = "";
 
-        $.ajax({
-            cache: false,
-            type: "POST",
-            url: orgUrl,
-            data: JSON.stringify(orgUrl),
-            dataType: "json",
-            success: function (newOrgName) {
-                pane.orgName.innerHTML = newOrgName;
+            if (ajaxInfo.length > 20) {
+                orgNameShort = ajaxInfo.slice(0, 20);
+                orgNameShort += '...';
+                pane.orgName.innerHTML = orgNameShort;
+            }
+            else {
+                pane.orgName.innerHTML = ajaxInfo;
             }
         });
+
+        //setUserName;
+        ajax.get('/JSON/GetUsername', function (ajaxInfo) {
+            document.getElementById("user-name").innerHTML = ajaxInfo;
+        });
+
+        //setPerspectives;
+        //ajax.get('/JSON/GetOrganisation', function (ajaxInfo) {
+        //});
+
+        //setGoals;
+        //ajaxGet('/JSON/GetOrganisation', function (ajaxInfo) {
+        //});
+
+        //setMeasures;
+        //ajaxGet('/JSON/GetOrganisation', function (ajaxInfo) {
+        //});
+    }
+
+    addBSItem = function (bsItem) {
+        // wrap item in anchor tag
+        var anchor = document.createElement('a');
+        anchor.href = '#' + bsItem.name;
+        anchor.innerHTML = bsItem.name;
+
+        // create list item wrapper
+        var listItem = document.createElement('li');
+        listItem.id = bsItem.name;
+        listItem.appendChild(anchor);
+
+        pane.persInfo.appendChild(listItem);
+    }
+
+    updateBSItem = function(bsItem) {
+    }
+
+    removeBSItem = function (bsItem) {
     }
 
     init = function () {
@@ -116,11 +154,18 @@ var drawingPane = (function () {
         pane.goal.addEventListener("mouseout", toolEvents.goalmouseout, false);
         pane.measure.addEventListener("mouseover", toolEvents.measuremouseover, false);
         pane.measure.addEventListener("mouseout", toolEvents.measuremouseout, false);
-
+        
+        
         // set the organisation information
-        setOrganisationName();
+        setSessionDetails();
     }
 
     // add this set of events to the window on load.
     window.addEventListener("load", init, false);
+
+    return {
+        addBSItem: addBSItem,
+        updateBSItem: updateBSItem,
+        removeBSItem: removeBSItem
+    }
 }());

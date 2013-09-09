@@ -28,9 +28,8 @@ namespace Plan4Green.Models.ObjectManager
         }
 
         /// <summary>
-        /// Get the information of the organisation a user belongs to.
+        /// Get the name of the organisation a user belongs to via his or her Id.
         /// </summary>
-        /// <param name="user">The user who's organisation information will be retrieved.</param>
         public string GetUserOrganisation(int userID)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
@@ -39,6 +38,23 @@ namespace Plan4Green.Models.ObjectManager
                 {
                     OrganisationalUser orgUser = context.Users.First(currentUser => currentUser.User_ID == userID);
                     return orgUser.Organisation_Name;
+                }
+
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Get the name of a user via his or her Id.
+        /// </summary>
+        public string GetUsername(int userID)
+        {
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                if (UserExists(context, userID))
+                {
+                    OrganisationalUser orgUser = context.Users.First(currentUser => currentUser.User_ID == userID);
+                    return orgUser.UserName;
                 }
 
                 return string.Empty;

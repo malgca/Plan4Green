@@ -19,7 +19,8 @@ input[type=submit] {
 }
 
 input[type=text],
-input[type=password] {
+input[type=password],
+textarea {
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.20);
     margin: 15px 0px 10px 0px;
@@ -30,6 +31,17 @@ input[type=password] {
     font-size: 12pt;
 }
 
+a {
+    text-decoration: none;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 400;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
 .float-left {
     float: left;
 }
@@ -37,22 +49,6 @@ input[type=password] {
 .float-right {
     float: right;
 }
-
-.highlight {
-    color: #76ed00;
-}
-
-    .highlight:active {
-        color: #5d9624;
-    }
-
-.highlight {
-    color: #76ed00;
-}
-
-    .highlight:active {
-        color: #5d9624;
-    }
 
 .overlay {
     z-index: -3;
@@ -75,7 +71,7 @@ input[type=password] {
 }
 
 #backgroundImage {
-     /* Preserve aspet ratio */
+    /* Preserve aspet ratio */
     min-width: 100%;
     min-height: 100%;
 }
