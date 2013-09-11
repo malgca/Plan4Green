@@ -212,6 +212,11 @@
     <Content Include="Images\background-images\4.jpg" />
     <Content Include="Images\background-images\5.jpg" />
     <Content Include="Images\background-images\6.jpg" />
+    <Content Include="Images\controls\bs-item\edit.png" />
+    <Content Include="Images\controls\bs-item\graph.png" />
+    <Content Include="Images\controls\bs-item\save.png" />
+    <Content Include="Images\controls\bs-item\viewChild.png" />
+    <Content Include="Images\controls\drawing-page\viewParent.png" />
     <Content Include="Images\controls\drawing-pane\dp-arrow-closed.png" />
     <Content Include="Images\controls\drawing-pane\dp-arrow-open.png" />
     <Content Include="Images\controls\drawing-pane\goal-active.png" />
@@ -268,7 +273,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\theme\base\minified\" />
-    <Folder Include="Images\controls\drawing-page\" />
     <Folder Include="Images\controls\login-page\" />
   </ItemGroup>
   <ItemGroup>

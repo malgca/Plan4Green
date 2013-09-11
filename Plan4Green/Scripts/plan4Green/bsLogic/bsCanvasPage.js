@@ -25,7 +25,7 @@ main = (function () {
     // the page on which stuff is drawn
     page = document.getElementById("drawing-page"),
     // the logout button
-    logout = document.getElementById("logout-action"),
+    viewParentImage = document.getElementById("viewParentImage"),
     // the current instruction number
     instructionNum = document.getElementById("instruction-number"),
     // the current instruction text
@@ -159,6 +159,7 @@ main = (function () {
 
                 if (bsItem != undefined) {
                     canvasObject.create(bsItem);
+                    drawingPane.addBSItem(bsItem);
                 }
             }
 
@@ -172,11 +173,11 @@ main = (function () {
         }());
 
         // add mouse event listeners to page and drawing pane
-        page.addEventListener("mousedown", pageEvents.mousedown, false);
         page.addEventListener("mousemove", pageEvents.mousemove, false);
         page.addEventListener("dragover", pageEvents.mousedragover, false);
         page.addEventListener("drop", pageEvents.mousedrop, false);
 
+        viewParentImage.addEventListener("mousedown", pageEvents.mousedown, false);
         // call the poplate instruction array method
         populateInstructions();
     }

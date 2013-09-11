@@ -60,11 +60,16 @@ var drawingPane = (function () {
         //});
     }
 
+    // add BS item informatoin to the drawing pane.
     addBSItem = function (bsItem) {
         // wrap item in anchor tag
         var anchor = document.createElement('a');
         anchor.href = '#' + bsItem.name;
         anchor.innerHTML = bsItem.name;
+
+        anchorClick = function (event) {
+            main.viewItem(bsItem, false);
+        }
 
         // create table row wrapper
         var tableRow = document.createElement('tr');

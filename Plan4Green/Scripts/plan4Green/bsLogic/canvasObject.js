@@ -115,12 +115,15 @@
 
                 controls.push(bsImage);
 
+                var editImage = new Image(35, 35);
+                editImage.src = '../../Images/controls/bs-item/save.png';
+
                 var controlEvents = (function () {
                     isEditing = true;
 
                     editClick = function (event) {
                         if (!isEditing) {
-                            event.target.value = 'Save';
+                            editImage.src = '../../Images/controls/bs-item/save.png';
 
                             var viewList = document.getElementById("bsViewList");
                             viewList.style.visibility = 'collapse';
@@ -135,7 +138,7 @@
                             isEditing = true;
                         }
                         else {
-                            event.target.value = 'Edit';
+                            editImage.src = '../../Images/controls/bs-item/edit.png';
 
                             var viewList = document.getElementById("bsViewList");
                             viewList.style.visibility = 'visible';
@@ -167,29 +170,24 @@
                     }
                 }());
 
-                var editBtn = document.createElement('input');
-                editBtn.type = 'submit';
-                editBtn.value = 'Save';
-                editBtn.addEventListener('click', controlEvents.editClick, false);
+                editImage.addEventListener('click', controlEvents.editClick, false);
 
-                controls.push(editBtn);
+                controls.push(editImage);
 
                 if (bsItem.type != 'measure') {
-                    var viewBtn = document.createElement('input');
-                    viewBtn.type = 'submit';
-                    viewBtn.value = 'View';
-                    viewBtn.addEventListener('click', controlEvents.viewClick, false);
+                    var viewImage = new Image(35, 35);
+                    viewImage.src = '../../Images/controls/bs-item/viewChild.png';
+                    viewImage.addEventListener('click', controlEvents.viewClick, false);
 
-                    controls.push(viewBtn);
+                    controls.push(viewImage);
                 }
 
                 if (bsItem.type != 'perspective') {
-                    var graphBtn = document.createElement('input');
-                    graphBtn.type = 'submit';
-                    graphBtn.value = 'Graph';
-                    graphBtn.addEventListener('click', controlEvents.graphClick, false);
+                    var graphImage = new Image(35, 35);
+                    graphImage.src = '../../Images/controls/bs-item/graph.png';
+                    graphImage.addEventListener('click', controlEvents.graphClick, false);
 
-                    controls.push(graphBtn);
+                    controls.push(graphImage);
                 }
 
                 // create list item nodes and place items inside
