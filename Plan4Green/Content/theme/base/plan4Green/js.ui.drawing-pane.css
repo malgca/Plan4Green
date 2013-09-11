@@ -22,36 +22,60 @@
             padding: 0px;
         }
 
-        #drawing-pane #info ul li#organisation-name {
-            display: block;
-            font-family: Aharoni;
-            font-size: 24pt;
-            margin: 25px 5px 10px 5px;
-            max-width: 280px;
+            #drawing-pane #info ul li#organisation-name {
+                display: block;
+                font-family: Aharoni;
+                font-size: 24pt;
+                margin: 25px 5px 10px 5px;
+                max-width: 280px;
+            }
+
+            #drawing-pane #info ul li#user-name {
+                display: block;
+                font-family: Arial;
+                font-size: 14pt;
+                margin: 5px 0px 25px 5px;
+            }
+
+        #drawing-pane #info table {
+            position: absolute;
+            width: 290px;
         }
 
-        #drawing-pane #info ul li#user-name {
-            display: block;
-            font-family: Arial;
-            font-size: 14pt;
-            margin: 5px 0px 25px 5px;
-        }
+            #drawing-pane #info table tbody {
+                font-size: 12pt;
+                text-align: left;
+                overflow-x: hidden;
+                overflow-y: visible;
+                display: block;
+                max-height: 105px;
+            }
+
+                #drawing-pane #info table tbody tr td.viewName {
+                    margin-left: 15px;
+                    background-color: #2b2b2b;
+                    width: 220px;
+                }
+
+                #drawing-pane #info table tbody tr td.viewID {
+                    margin-left: 15px;
+                    background-color: #2b2b2b;
+                    width: 40px;
+                }
+
 
         #drawing-pane #info #perspective-info {
-            display: block;
-            margin: 35px 5px 0px 5px;
+            top: 163px;
         }
 
             #drawing-pane #info #perspective-info li.viewHeader {
-
             }
 
             #drawing-pane #info #perspective-info .viewInfo {
             }
 
         #drawing-pane #info #goal-info {
-            display: block;
-            margin: 95px 5px 0px 5px;
+            top: 319px;
         }
 
             #drawing-pane #info #goal-info .viewHeader {
@@ -61,8 +85,7 @@
             }
 
         #drawing-pane #info #measure-info {
-            display: block;
-            margin: 95px 5px 0px 5px;
+            top: 477px;
         }
 
             #drawing-pane #info #measure-info .viewHeader {
@@ -82,5 +105,21 @@
     }
 
         #drawing-pane #tools table tbody tr td img {
-            margin: 20px 10px 55px 10px;
+            margin: 20px 10px 0px 10px;
         }
+
+            #drawing-pane #tools table tbody tr td img#control-arrow {
+                margin-bottom: 60px;
+            }
+
+            #drawing-pane #tools table tbody tr td img#perspective {
+                margin-bottom: 90px;
+            }
+
+            #drawing-pane #tools table tbody tr td img#goal {
+                margin-bottom: 90px;
+            }
+
+            #drawing-pane #tools table tbody tr td img#measure {
+                margin-bottom: 0px;
+            }

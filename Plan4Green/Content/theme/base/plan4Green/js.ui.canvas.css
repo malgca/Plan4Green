@@ -1,7 +1,7 @@
 ﻿/*Drawing Canvas layout-------------------------------------------------------------------*/
 #drawing-page {
     background-color: #e2e2e2;
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     right: 45px;
     width: 85%;
@@ -101,6 +101,7 @@ textarea {
 .canvasObject {
     display: inline;
     position: absolute;
+    width: 410px;
     z-index: 3;
     background-color: rgba(178, 178, 178, 0.50);
 }
@@ -139,12 +140,15 @@ textarea {
     list-style: none;
     margin: 0px;
     padding: 0px;
-    max-width: 350px;
+    width: 350px;
     margin-left: 60px;
     color: #151515;
+    width: 0px;
+    height: 0px;
+    visibility: collapse;
 }
 
-    #bsViewList  li {
+    #bsViewList li {
     }
 
     #bsViewList .viewHeading {
@@ -162,8 +166,9 @@ textarea {
     list-style: none;
     margin: 0px;
     padding: 0px;
-    max-width: 350px;
+    width: 350px;
     margin-left: 60px;
+    margin-top: -17px;
     color: #151515;
 }
 

@@ -7,11 +7,11 @@ var drawingPane = (function () {
         // organisations name
         orgName: document.getElementById("organisation-name"),
         // perspective info list
-        persInfo: document.getElementById("perspective-info"),
+        persInfo: document.getElementById("perspective-list"),
         // goal info list
-        goalInfo: document.getElementById("goal-info"),
+        goalInfo: document.getElementById("goal-list"),
         // measure info list
-        measInfo: document.getElementById("measure-info"),
+        measInfo: document.getElementById("measure-list"),
         // pane housing all drawing tools
         tools: document.getElementById("tools"),
         // drawing pane control arrow
@@ -66,12 +66,39 @@ var drawingPane = (function () {
         anchor.href = '#' + bsItem.name;
         anchor.innerHTML = bsItem.name;
 
-        // create list item wrapper
-        var listItem = document.createElement('li');
-        listItem.id = bsItem.name;
-        listItem.appendChild(anchor);
+        // create table row wrapper
+        var tableRow = document.createElement('tr');
+        // create name entry
+        var entryName = document.createElement('td');
+        entryName.id = bsItem.name;
+        entryName.appendChild(anchor);
+        entryName.className = 'viewName';
 
-        pane.persInfo.appendChild(listItem);
+        tableRow.appendChild(entryName);
+
+        if (bsItem.type != "perspective") {
+            // create id entry
+            var entryID = document.createElement('td');
+            entryID.id = bsItem.currentValue;
+            entryID.innerHTML = bsItem.currentValue;
+            entryID.className = 'viewID';
+
+            tableRow.appendChild(entryID);
+        }
+
+        switch (bsItem.type) {
+            case ("perspective"):
+                pane.persInfo.appendChild(tableRow);
+                break;
+            case ("goal"):
+                pane.goalInfo.appendChild(tableRow);
+                break;
+            case ("measure"):
+                pane.measInfo.appendChild(tableRow);
+                break;
+            default:
+                break;
+        }
     }
 
     updateBSItem = function(bsItem) {
@@ -81,6 +108,9 @@ var drawingPane = (function () {
     }
 
     init = function () {
+        // set the organisation information
+        setSessionDetails();
+
         toolEvents = (function () {
             dragstart = function (event) {
                 if (event.target.draggable == true) {
@@ -153,11 +183,7 @@ var drawingPane = (function () {
         pane.goal.addEventListener("mouseover", toolEvents.goalmouseover, false);
         pane.goal.addEventListener("mouseout", toolEvents.goalmouseout, false);
         pane.measure.addEventListener("mouseover", toolEvents.measuremouseover, false);
-        pane.measure.addEventListener("mouseout", toolEvents.measuremouseout, false);
-        
-        
-        // set the organisation information
-        setSessionDetails();
+        pane.measure.addEventListener("mouseout", toolEvents.measuremouseout, false);     
     }
 
     // add this set of events to the window on load.

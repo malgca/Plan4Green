@@ -12,7 +12,9 @@
 },
 
 global = {
-    // global bs parent reference
+    // current level viewed
+    bsLevel: undefined,
+    // global bs item reference
     bsParent: undefined,
     // array of existing BS perspectives.
     perspectiveArray: new Array()
@@ -30,36 +32,6 @@ main = (function () {
     instructionText = document.getElementById("instruction-text"),
     // instructions array
     instructionArray = new Array(),
-    // the level of the page.
-    level,
-
-    /*------------------------------------------------------------------------
-    PAGE METHODS
-    -------------------------------------------------------------------------*/
-    // clear all child elements from page
-    clearPage = function () {
-        while (page.childElementCount > 0) {
-            page.removeChild(page.lastChild);
-        }
-    },
-
-    drawChildren = function (bsItem) {
-        var itemCount = 0;
-
-        if (level.current == 'top') {
-            var loopsEnd = global.perspectiveArray.length;
-            for (var i = 0; i < loopsEnd; i++) {
-                canvasObject.create(global.perspectiveArray[i], true);
-            }
-        }
-
-        else {
-            var loopsEnd = bsItem.children.length;
-            for (var i = 0; i < loopsEnd; i++) {
-                canvasObject.create(bsItem.children[i], true);
-            }
-        }
-    },
 
     // get the current position of the object in relation to the drawing page
     currentPosition = function (event) {
@@ -72,45 +44,46 @@ main = (function () {
         return pos;
     },
 
-    // change the current level of the drawing page
-    changeLevel = function (bsItem, drillDirection) {
-        clearPage();
-
-        if (drillDirection == level.drillDown) {
-            if (bsItem.type == 'perspective') {
-                level.current = bsItem.type;
-                drawChildren(bsItem); // draw goals
-            }
-            else if (bsItem.type == 'goal') {
-                level.current = bsItem.type;
-                drawChildren(bsItem); // draw measures
-            }
+    // clear all child elements from page
+    clearPage = function () {
+        while (page.childElementCount > 0) {
+            page.removeChild(page.lastChild);
         }
+    },
 
-        else {
-            if (bsItem.type == 'perspective') { // viewing goals
-                global.bsParent = undefined;
-                level.current = 'top';
-                drawChildren(bsItem);
+    // draw the parents or children of a bsItem
+    viewItem = function (bsItem, viewParent) {
+        console.log(bsItem.type);
+
+        // viewing parents
+        if (viewParent) {
+            // viewing goals
+            if (bsItem.type == 'perspective') {
+                clearPage();
+
+                for (var i = 0; i < global.perspectiveArray.length; i++) {
+                    canvasObject.create(global.perspectiveArray[i]);
+                }
             }
             else if (bsItem.type == 'goal') { // viewing measures
-                level.current = bsItem.type;
-                drawChildren(bsItem);
+                clearPage();
+
+                for (var i = 0; i < bsItem.bsParent.children.length; i++) {
+                    canvasObject.create(bsItem.bsParent.children[i]);
+                }
             }
         }
-    }
-    /*---------------------------------------------------------------------
-    DOM EVENTS
-    ----------------------------------------------------------------------*/
+        else { // viewing children
+            clearPage();
+
+            for (var i = 0; i < bsItem.children.length; i++) {
+                canvasObject.create(bsItem.children[i]);
+            }
+        }
+    },
+
     // initialize the bsPage
     init = function () {
-        // set the default current level to perspective
-        level = {
-            current: 'top',
-            drillUp: 'drillUp',
-            drillDown: 'drillDown',
-        }
-
         // populate instruction array
         var populateInstructions = function () {
             instructionArray.push("Please drag and drop a Perspective (the blue icon) onto the canvas.");
@@ -119,15 +92,25 @@ main = (function () {
             instructionArray.push("Click on edit to edit the object you just dropped.");
             instructionArray.push("Click on view to view the object you just dropped.");
         }
-        
+
         var pageEvents = (function () {
             // mousedown event handler
             mousedown = function (event) {
                 if (event.target === this) {
-                    // get child and find the parent, then drill up
-                    if (level.current != 'top') {
-                        level.current = global.bsParent.type;
-                        changeLevel(global.bsParent, 'drillUp');
+                    viewItem(global.bsParent, true);
+                    global.bsParent = bsType.createPerspective();
+
+                    switch (global.bsLevel) {
+                        case ('perspective'):
+                            global.bsLevel = undefined;
+                            break;
+                        case ('goal'):
+                            global.bsLevel = 'perspective';
+                            break;
+                        case ('measure'):
+                            global.bsLevel = 'goal';
+                            break;
+                        default: return;
                     }
                 }
             },
@@ -152,27 +135,30 @@ main = (function () {
 
                 switch (data) {
                     case ('perspective'):
-                        if (level.current == 'top') {
+                        if (global.bsLevel == undefined) {
                             bsItem = bsType.createPerspective(currentPosition(event));
                             global.perspectiveArray.push(bsItem);
-
-                            drawingPane.addBSItem(bsItem);
                         }
                         break;
                     case ('goal'):
-                        if (level.current == 'perspective') {
+                        if (global.bsLevel == 'perspective') {
                             bsItem = bsType.createGoal(currentPosition(event));
+                            bsItem.bsParent = global.bsParent;
+                            bsItem.bsParent.addChildObject(bsItem);
                         }
                         break;
                     case ('measure'):
-                        if (level.current == 'goal') {
+                        if (global.bsLevel == 'goal') {
                             bsItem = bsType.createMeasure(currentPosition(event));
+                            bsItem.bsParent = global.bsParent;
+                            bsItem.bsParent.addChildObject(bsItem);
                         }
                         break;
+                    default: return;
                 }
+
                 if (bsItem != undefined) {
                     canvasObject.create(bsItem);
-                    debug.count++;
                 }
             }
 
@@ -203,7 +189,6 @@ main = (function () {
         init: init,
         page: page,
         currentPosition: currentPosition,
-        changeLevel: changeLevel,
-        level: level
+        viewItem: viewItem
     };
 }());
