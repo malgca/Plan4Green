@@ -111,6 +111,7 @@ textarea {
     display: inline;
     position: absolute;
     width: 410px;
+    min-height: 150px;
     z-index: 3;
     background-color: rgba(178, 178, 178, 0.50);
 }

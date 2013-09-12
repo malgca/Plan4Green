@@ -53,8 +53,6 @@ main = (function () {
 
     // draw the parents or children of a bsItem
     viewItem = function (bsItem, viewParent) {
-        console.log(bsItem.type);
-
         // viewing parents
         if (viewParent) {
             // viewing goals

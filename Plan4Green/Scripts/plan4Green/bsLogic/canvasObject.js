@@ -24,9 +24,21 @@
 
             bsImage = new Image(),
 
-            createControls = function () {
-                var controls = new Array();
+            controls = new Array(),
+            views = new Array(),
+            edits = new Array(),
 
+            updateBSItemInfo = function (bsItem) {
+                // update bsItem from edits
+                bsItem.name = edits[0].value;
+                bsItem.description = edits[1].value;
+
+                // update views from edits
+                views[0].innerHTML = edits[0].value;
+                views[2].innerHTML = edits[1].value;
+            }
+
+            createControls = function () {
                 var controlList = document.createElement('ul');
                 controlList.id = 'bsControlList';
 
@@ -150,6 +162,8 @@
                             editList.style.width = '0px';
                             editList.style.height = '0px';
 
+                            updateBSItemInfo(bsItem);
+
                             isEditing = false;
                         }
                     }
@@ -201,8 +215,6 @@
             },
 
             createView = function () {
-                var views = new Array();
-
                 var viewList = document.createElement('ul');
                 viewList.id = 'bsViewList';
 
@@ -292,8 +304,6 @@
             },
 
             createEdit = function () {
-                var edits = new Array();
-
                 var editList = document.createElement('ul');
                 editList.id = 'bsEditList';
 
