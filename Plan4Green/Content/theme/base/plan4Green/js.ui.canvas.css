@@ -9,10 +9,6 @@
     z-index: 4;
 }
 
-    #drawing-page::selection {
-        cursor: default;
-    }
-
 input[type=text],
 textarea {
     color: #2e2e2e;
@@ -130,7 +126,7 @@ textarea {
     -webkit-user-select: none;
 }
 
-#bsControlList {
+ul[id$="bsControlList"] {
     clear: left;
     display: inline-block;
     list-style: none;
@@ -140,12 +136,12 @@ textarea {
     top: 15px;
 }
 
-    #bsControlList li {
+    ul[id$="bsControlList"] li {
         text-align: center;
         padding-bottom: 5px;
     }
 
-#bsViewList {
+ul[id$="bsViewList"] {
     display: inline-block;
     list-style: none;
     margin: 0px;
@@ -158,20 +154,21 @@ textarea {
     visibility: collapse;
 }
 
-    #bsViewList li {
+    ul[id$="bsViewList"] li {
     }
 
-    #bsViewList .viewHeading {
+    ul[id$="bsViewList"] .viewHeading {
         padding-bottom: 0px;
         text-align: center;
     }
 
-    #bsViewList .viewItem {
+    ul[id$="bsViewList"] .viewItem {
         padding-bottom: 2px;
         text-align: center;
     }
 
-#bsEditList {
+
+ul[id$="bsEditList"] {
     display: inline-block;
     list-style: none;
     margin: 0px;
@@ -182,18 +179,18 @@ textarea {
     color: #151515;
 }
 
-    #bsEditList li {
-    }
+ul[id$="bsEditList"] li {
+}
 
-    #bsEditList .viewHeading {
-        padding-bottom: 0px;
-        text-align: center;
-    }
+ul[id$="bsEditList"] .viewHeading {
+    padding-bottom: 0px;
+    text-align: center;
+}
 
-    #bsEditList .viewItem {
-        padding-bottom: 2px;
-        text-align: center;
-    }
+ul[id$="bsEditList"] .viewItem {
+    padding-bottom: 2px;
+    text-align: center;
+}
 
 .bsImage:hover {
     cursor: move;
