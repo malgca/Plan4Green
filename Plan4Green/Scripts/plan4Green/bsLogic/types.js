@@ -73,7 +73,7 @@ var bsType = (function () {
     // create a perspective object
     createPerspective = function (position) {
         // inherit the BSObject
-        Perspective.prototype = new BSObject('newPerspective', defaultDescription, null, null, null, null, position);
+        Perspective.prototype = new BSObject('newPerspective' + debug.count, defaultDescription, null, null, null, null, position);
 
         // create a new perspective object.
         return new Perspective();
@@ -82,7 +82,7 @@ var bsType = (function () {
     // create a goal object
     createGoal = function (position) {
         // inherit the BSObject
-        Goal.prototype = new BSObject('newGoal', defaultDescription, 0, 1, null, null, position);
+        Goal.prototype = new BSObject('newGoal' + debug.count, defaultDescription, 0, 1, null, null, position);
 
         // create a new goal object.
         return new Goal();
@@ -91,7 +91,7 @@ var bsType = (function () {
     // create a measure object
     createMeasure = function (position) {
         // inherit the BSObject
-        Measure.prototype = new BSObject('newMeasure', defaultDescription, 0, 1, null, null, position);
+        Measure.prototype = new BSObject('newMeasure' + debug.count, defaultDescription, 0, 1, null, null, position);
 
         // create a measure goal object.
         return new Measure();

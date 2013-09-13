@@ -21,24 +21,38 @@
         var
             pos = goal.currentPosition,
             div = createDiv(bsItem),
-            
+
             bsImage = new Image();
 
-            controls = new Array(),
-            views = new Array(),
-            edits = new Array(),
+        // update a BS item div
+        updateBSItemInfo = function (bsItem, workingID) {
+            console.log(workingID + '-bsEditList');
+            var edits = document.getElementById(workingID + '-bsEditList');
+            var views = document.getElementById(workingID + '-bsViewList');
 
-            updateBSItemInfo = function (bsItem) {
-                // update bsItem from edits
-                bsItem.name = edits[0].value;
-                bsItem.description = edits[1].value;
-                console.log(this);
-                // update views from edits
-                views[0].innerHTML = edits[0].value;
-                views[2].innerHTML = edits[1].value;
+            console.log(edits.childNodes[0].firstChild);
+
+            if (bsItem.type == 'perspective') {
+                // update bsItem
+                bsItem.name = edits.childNodes[0].firstChild.value;
+                bsItem.description = edits.childNodes[1].firstChild.value;
+                // update views
+                views.childNodes[0].firstChild.innerHTML = bsItem.name;
+                views.childNodes[2].firstChild.innerHTML = bsItem.description;
             }
+            else {
+                // update bsItem
+                bsItem.name = edits.childNodes[0].firstChild.value;
+                bsItem.description = edits.childNodes[1].firstChild.value;
+                // update views
+                views.childNodes[0].firstChild.innerHTML = bsItem.name;
+                views.childNodes[2].firstChild.innerHTML = bsItem.description;
+            }
+        }
 
         createControls = function () {
+            var controls = new Array();
+
             var controlList = document.createElement('ul');
             controlList.id = div.id + '-bsControlList';
 
@@ -136,6 +150,7 @@
                 editClick = function (event) {
                     if (!isEditing) {
                         editImage.src = '../../Images/controls/bs-item/save.png';
+
                         var viewList = document.getElementById(div.id + "-bsViewList");
                         viewList.style.visibility = 'collapse';
                         viewList.style.width = '0px';
@@ -161,7 +176,8 @@
                         editList.style.width = '0px';
                         editList.style.height = '0px';
 
-                        updateBSItemInfo(bsItem);
+                        var currentId = editImage.parentElement.parentElement.parentElement.id;
+                        updateBSItemInfo(bsItem, currentId);
 
                         isEditing = false;
                     }
@@ -214,6 +230,8 @@
         },
 
         createView = function () {
+            var views = new Array();
+
             var viewList = document.createElement('ul');
             viewList.id = div.id + '-bsViewList';
 
@@ -303,6 +321,8 @@
         },
 
         createEdit = function () {
+            var edits = new Array();
+
             var editList = document.createElement('ul');
             editList.id = div.id + '-bsEditList';
 
