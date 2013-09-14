@@ -7,11 +7,9 @@
     width: 85%;
     height: 85%;
     z-index: 4;
-}
-
-input[type=text],
-textarea {
-    color: #2e2e2e;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 5px;
 }
 
 textarea {
@@ -19,8 +17,9 @@ textarea {
     font-size: 12pt;
     font-family: Arial;
     width: 300px;
-    min-height: 100px;
+    height: 100px;
     border-style: none;
+    color: #2e2e2e;
 }
 
 /*Debugging CSS---------------------------------------------*/
@@ -167,6 +166,11 @@ ul[id$="bsViewList"] {
         text-align: center;
     }
 
+        ul[id$="bsViewList"] .viewItem .viewDescription {
+            overflow-x: hidden;
+            overflow-y: scroll;
+            height: 100px;
+        }
 
 ul[id$="bsEditList"] {
     display: inline-block;
@@ -179,18 +183,45 @@ ul[id$="bsEditList"] {
     color: #151515;
 }
 
-ul[id$="bsEditList"] li {
-}
+    ul[id$="bsEditList"] li {
+    }
 
-ul[id$="bsEditList"] .viewHeading {
-    padding-bottom: 0px;
-    text-align: center;
-}
+    ul[id$="bsEditList"] .viewHeading {
+        padding-bottom: 0px;
+        text-align: center;
+    }
 
-ul[id$="bsEditList"] .viewItem {
-    padding-bottom: 2px;
-    text-align: center;
-}
+        ul[id$="bsEditList"] .viewHeading input[type=text] {
+            color: #2e2e2e;
+            font-weight: 600;
+        }
+
+
+    ul[id$="bsEditList"] .viewItem {
+        padding-bottom: 2px;
+        text-align: center;
+    }
+
+        ul[id$="bsEditList"] .viewItem input[type=number],
+        ul[id$="bsEditList"] .viewItem li input[type=date] {
+            color: #2e2e2e;
+            height: 25px;
+            width: 150px;
+            font-weight: 400;
+            border-radius: 5px;
+            margin-top: 0px;
+            background-color: rgba(255, 255, 255, 0.20);
+        }
+
+        ul[id$="bsEditList"] .viewItem li input[type=date] {
+            width: 180px;
+            background-color: rgba(255, 255, 255, 0.20);
+            font-size: 12pt;
+        }
+
+        ul[id$="bsEditList"] .viewItem li label {
+            font-weight: 600;
+        }
 
 .bsImage:hover {
     cursor: move;

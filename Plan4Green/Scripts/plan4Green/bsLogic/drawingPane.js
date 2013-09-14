@@ -60,7 +60,7 @@ var drawingPane = (function () {
         //});
     }
 
-    // add BS item informatoin to the drawing pane.
+    // add BS item information to the drawing pane.
     addBSItem = function (bsItem) {
         // wrap item in anchor tag
         var anchor = document.createElement('a');
@@ -68,8 +68,11 @@ var drawingPane = (function () {
         anchor.innerHTML = bsItem.name;
 
         anchorClick = function (event) {
+            console.log(bsItem);
             main.viewItem(bsItem, false);
         }
+
+        anchor.addEventListener("click", anchorClick, false);
 
         // create table row wrapper
         var tableRow = document.createElement('tr');

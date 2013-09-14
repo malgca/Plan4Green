@@ -30,8 +30,6 @@
             var edits = document.getElementById(workingID + '-bsEditList');
             var views = document.getElementById(workingID + '-bsViewList');
 
-            console.log(edits.childNodes[0].firstChild);
-
             if (bsItem.type == 'perspective') {
                 // update bsItem
                 bsItem.name = edits.childNodes[0].firstChild.value;
@@ -43,10 +41,22 @@
             else {
                 // update bsItem
                 bsItem.name = edits.childNodes[0].firstChild.value;
-                bsItem.description = edits.childNodes[1].firstChild.value;
+                bsItem.startDate = edits.childNodes[1].children[0].children[1].value;
+                bsItem.dueDate = edits.childNodes[2].children[0].children[1].value;
+                bsItem.description = edits.childNodes[3].firstChild.value;
+
+                if (edits.childNodes[4].firstChild.value > 10000000) {
+                    bsItem.targetValue = 10000000;
+                }
+                else {
+                    bsItem.targetValue = edits.childNodes[4].firstChild.value;
+                }
+                
                 // update views
                 views.childNodes[0].firstChild.innerHTML = bsItem.name;
+                views.childNodes[1].firstChild.innerHTML = 'Due: ' + bsItem.dueDate;
                 views.childNodes[2].firstChild.innerHTML = bsItem.description;
+                views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsItem.targetValue;
             }
         }
 
@@ -333,10 +343,58 @@
 
             edits.push(headingEdit);
 
+            if (bsItem.type != 'perspective') {
+                var startList = document.createElement('li');
+
+                var startDateLabel = document.createElement('label');
+                startDateLabel.innerHTML = 'Start Date';
+                startDateLabel.style.paddingRight = '20px';
+
+                var startDateEdit = document.createElement('input');
+                startDateEdit.type = 'date';
+
+                var date = new Date();
+                var dateString;
+
+                dateString = date.getFullYear() + '-' 
+                    + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
+                    + ('0' + date.getDate()).slice(-2);
+
+                startDateEdit.value = dateString;
+                startList.appendChild(startDateLabel);
+                startList.appendChild(startDateEdit);
+
+                edits.push(startList);
+
+                var dueList = document.createElement('li');
+
+                var dueDateLabel = document.createElement('label');
+                dueDateLabel.innerHTML = 'Due Date';
+                dueDateLabel.style.paddingRight = '26px';
+
+                var dueDateEdit = document.createElement('input');
+                dueDateEdit.type = 'date';
+                dueDateEdit.value = dateString;
+
+                dueList.appendChild(dueDateLabel);
+                dueList.appendChild(dueDateEdit);
+
+                edits.push(dueList);
+            }
+
             var descriptionEdit = document.createElement('textarea');
             descriptionEdit.value = bsItem.description;
 
             edits.push(descriptionEdit);
+
+            if (bsItem.type != 'perspective') {
+                var targetEdit = document.createElement('input');
+                targetEdit.type = 'number';
+                targetEdit.value = 0
+                targetEdit.max = 10000000;
+
+                edits.push(targetEdit);
+            }
 
             // put all the items in the edit list
             for (var i = 0; i < edits.length; i++) {
