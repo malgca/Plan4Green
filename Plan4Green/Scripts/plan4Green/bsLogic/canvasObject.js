@@ -41,17 +41,24 @@
             else {
                 // update bsItem
                 bsItem.name = edits.childNodes[0].firstChild.value;
-                bsItem.startDate = edits.childNodes[1].children[0].children[1].value;
-                bsItem.dueDate = edits.childNodes[2].children[0].children[1].value;
+                if (bsValidation.validDate(edits.childNodes[1].children[0].children[1].value, edits.childNodes[2].children[0].children[1].value)) {
+                    bsItem.startDate = edits.childNodes[1].children[0].children[1].value;
+                    bsItem.dueDate = edits.childNodes[2].children[0].children[1].value;
+                }
                 bsItem.description = edits.childNodes[3].firstChild.value;
 
-                if (edits.childNodes[4].firstChild.value > 10000000) {
-                    bsItem.targetValue = 10000000;
+
+                if (bsItem.type == 'goal') {
+                    bsItem.targetValue = bsValidation.validValue(edits.childNodes[4].firstChild.children[1].value, 10000000);
+                    edits.childNodes[4].firstChild.children[1].value = bsItem.targetValue;
+                } else {
+                    bsItem.currentValue = bsValidation.validValue(edits.childNodes[4].firstChild.children[1].value, 10000000)
+                    edits.childNodes[4].firstChild.children[1].value = bsItem.currentValue;
+
+                    bsItem.targetValue = bsValidation.validValue(edits.childNodes[5].firstChild.children[1].value, 10000000);
+                    edits.childNodes[5].firstChild.children[1].value = bsItem.targetValue;
                 }
-                else {
-                    bsItem.targetValue = edits.childNodes[4].firstChild.value;
-                }
-                
+
                 // update views
                 views.childNodes[0].firstChild.innerHTML = bsItem.name;
                 views.childNodes[1].firstChild.innerHTML = 'Due: ' + bsItem.dueDate;
@@ -388,12 +395,41 @@
             edits.push(descriptionEdit);
 
             if (bsItem.type != 'perspective') {
+                var targetList = document.createElement('li');
+
+                var targetLabel = document.createElement('label');
+                targetLabel.innerHTML = 'Target';
+                targetLabel.style.paddingRight = '20px';
+
+                targetList.appendChild(targetLabel);
+
                 var targetEdit = document.createElement('input');
                 targetEdit.type = 'number';
-                targetEdit.value = 0
+                targetEdit.value = bsItem.targetValue;
                 targetEdit.max = 10000000;
 
-                edits.push(targetEdit);
+                targetList.appendChild(targetEdit);
+
+                if (bsItem.type == 'measure') {
+                    var currentList = document.createElement('li');
+
+                    var currentLabel = document.createElement('label');
+                    currentLabel.innerHTML = 'Current';
+                    currentLabel.style.paddingRight = '10px';
+
+                    currentList.appendChild(currentLabel);
+
+                    var currentEdit = document.createElement('input');
+                    currentEdit.type = 'number';
+                    currentEdit.value = bsItem.currentValue;
+                    currentEdit.max = 10000000;
+
+                    currentList.appendChild(currentEdit);
+
+                    edits.push(currentList);
+                }
+
+                edits.push(targetList);
             }
 
             // put all the items in the edit list

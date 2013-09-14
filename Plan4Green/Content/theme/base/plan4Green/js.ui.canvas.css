@@ -213,6 +213,12 @@ ul[id$="bsEditList"] {
             background-color: rgba(255, 255, 255, 0.20);
         }
 
+        ul[id$="bsEditList"] .viewItem li input[type=number] {
+            margin-bottom: 10px;
+            width:100px;
+        }
+
+
         ul[id$="bsEditList"] .viewItem li input[type=date] {
             width: 180px;
             background-color: rgba(255, 255, 255, 0.20);
