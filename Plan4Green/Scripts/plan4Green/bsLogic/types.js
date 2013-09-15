@@ -56,18 +56,54 @@ var bsType = (function () {
     Perspective = function () {
         // set the type to perspective by default
         this.type = "perspective";
+
+        this.currentValue = function () {
+            currentTemp = 0;
+
+            for (var i = 0; i < this.children.length; i++) {
+                currentTemp += this.children[i].currentValue;
+            }
+
+            return currentTemp;
+        }
     },
     
     // bs goal object.
     Goal = function () {
         // set the type to goal by default
         this.type = "goal";
+
+        // goals current value's are calculated as a sum of all measure current values
+        this.currentValue = function () {
+            currentTemp = 0;
+
+            for (var i = 0; i < this.children.length; i++) {
+                currentTemp += this.children[i].currentValue;
+            }
+
+            return currentTemp;
+        }
+
+        // goals target value's are calculated as a sum of all measure target values
+        this.targetValue = function () {
+            targetTemp = 0;
+
+            for (var i = 0; i < this.children.length; i++) {
+                targetTemp += this.children[i].targetValue;
+            }
+
+            return targetTemp;
+        }
+
+        this.completionRatio = ((this.currentValue / this.targetValue) * 100);
     },
 
     // bs measure object.
     Measure = function () {
         // set the type to perspective by default
         this.type = "measure";
+
+        this.completionRatio = ((this.currentValue / this.targetValue) * 100);
     },
 
     // create a perspective object
