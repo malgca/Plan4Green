@@ -26,44 +26,56 @@
 
         // update a BS item div
         updateBSItemInfo = function (bsItem, workingID) {
-            console.log(workingID + '-bsEditList');
             var edits = document.getElementById(workingID + '-bsEditList');
             var views = document.getElementById(workingID + '-bsViewList');
+            console.log(bsItem.type + ': ' + bsItem.name);
 
             if (bsItem.type == 'perspective') {
-                // update bsItem
-                bsItem.name = edits.childNodes[0].firstChild.value;
+                // update name
+                if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
+                    bsItem.name = edits.childNodes[0].firstChild.value;
+                    views.childNodes[0].firstChild.innerHTML = bsItem.name;
+                    edits.childNodes[0].firstChild.style.color = '#2e2e2e';
+                }
+                else {
+                    edits.childNodes[0].firstChild.style.color = '#ff0000';
+                }
+
+                // update description
                 bsItem.description = edits.childNodes[1].firstChild.value;
-                // update views
-                views.childNodes[0].firstChild.innerHTML = bsItem.name;
                 views.childNodes[2].firstChild.innerHTML = bsItem.description;
             }
             else {
+                console.log(bsItem.name);
                 // update bsItem
-                bsItem.name = edits.childNodes[0].firstChild.value;
+                if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
+                    bsItem.name = edits.childNodes[0].firstChild.value;
+                    views.childNodes[0].firstChild.innerHTML = bsItem.name;
+                    edits.childNodes[0].firstChild.style.color = '#2e2e2e';
+                }
+                else {
+                    edits.childNodes[0].firstChild.style.color = '#ff0000';
+                }
+
                 if (bsValidation.validDate(edits.childNodes[1].children[0].children[1].value, edits.childNodes[2].children[0].children[1].value)) {
                     bsItem.startDate = edits.childNodes[1].children[0].children[1].value;
                     bsItem.dueDate = edits.childNodes[2].children[0].children[1].value;
                 }
+
                 bsItem.description = edits.childNodes[3].firstChild.value;
 
-
-                if (bsItem.type == 'goal') {
-                    bsItem.targetValue = bsValidation.validValue(edits.childNodes[4].firstChild.children[1].value, 10000000);
-                    edits.childNodes[4].firstChild.children[1].value = bsItem.targetValue;
-                } else {
-                    bsItem.currentValue = bsValidation.validValue(edits.childNodes[4].firstChild.children[1].value, 10000000)
-                    edits.childNodes[4].firstChild.children[1].value = bsItem.currentValue;
-
+                if (bsItem.type == 'measure') {
                     bsItem.targetValue = bsValidation.validValue(edits.childNodes[5].firstChild.children[1].value, 10000000);
                     edits.childNodes[5].firstChild.children[1].value = bsItem.targetValue;
                 }
 
                 // update views
-                views.childNodes[0].firstChild.innerHTML = bsItem.name;
                 views.childNodes[1].firstChild.innerHTML = 'Due: ' + bsItem.dueDate;
                 views.childNodes[2].firstChild.innerHTML = bsItem.description;
-                views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsItem.targetValue;
+
+                if (bsItem.type == 'goal') {
+                    views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsValidation.validValue(bsItem.targetValue());
+                }
             }
         }
 
@@ -194,8 +206,8 @@
                         editList.style.height = '0px';
 
                         var currentId = editImage.parentElement.parentElement.parentElement.id;
-                        updateBSItemInfo(bsItem, currentId);
 
+                        updateBSItemInfo(bsItem, currentId);
                         isEditing = false;
                     }
                 }
@@ -301,7 +313,12 @@
                 // item target
                 target = document.createElement('p');
                 target.className = 'bsItemDue';
-                target.innerHTML = 'of ' + bsItem.endDate;
+                if (bsItem.type == 'goal') {
+                    target.innerHTML = 'of ' + bsValidation.validValue(bsItem.targetValue());
+                }
+                else {
+                    target.innerHTML = 'of ' + bsItem.targetValue;
+                }
             }
 
             views.push(heading); // heading always goes first
@@ -363,7 +380,7 @@
                 var date = new Date();
                 var dateString;
 
-                dateString = date.getFullYear() + '-' 
+                dateString = date.getFullYear() + '-'
                     + ('0' + (date.getMonth() + 1)).slice(-2) + '-'
                     + ('0' + date.getDate()).slice(-2);
 
@@ -394,7 +411,7 @@
 
             edits.push(descriptionEdit);
 
-            if (bsItem.type != 'perspective') {
+            if (bsItem.type == 'measure') {
                 var targetList = document.createElement('li');
 
                 var targetLabel = document.createElement('label');
@@ -410,24 +427,22 @@
 
                 targetList.appendChild(targetEdit);
 
-                if (bsItem.type == 'measure') {
-                    var currentList = document.createElement('li');
+                var currentList = document.createElement('li');
 
-                    var currentLabel = document.createElement('label');
-                    currentLabel.innerHTML = 'Current';
-                    currentLabel.style.paddingRight = '10px';
+                var currentLabel = document.createElement('label');
+                currentLabel.innerHTML = 'Current';
+                currentLabel.style.paddingRight = '10px';
 
-                    currentList.appendChild(currentLabel);
+                currentList.appendChild(currentLabel);
 
-                    var currentEdit = document.createElement('input');
-                    currentEdit.type = 'number';
-                    currentEdit.value = bsItem.currentValue;
-                    currentEdit.max = 10000000;
+                var currentEdit = document.createElement('input');
+                currentEdit.type = 'number';
+                currentEdit.value = bsItem.currentValue;
+                currentEdit.max = 10000000;
 
-                    currentList.appendChild(currentEdit);
+                currentList.appendChild(currentEdit);
 
-                    edits.push(currentList);
-                }
+                edits.push(currentList);
 
                 edits.push(targetList);
             }

@@ -1,6 +1,6 @@
 ﻿/*Drawing Canvas layout-------------------------------------------------------------------*/
 #drawing-page {
-    background-color: #e2e2e2;
+    background-image: -webkit-linear-gradient(bottom, rgb(115,114,115) 27%, rgb(207,207,207) 100%);
     position: fixed;
     bottom: 30px;
     right: 45px;
@@ -33,6 +33,18 @@ textarea {
 }
 
 /*Page controls--------------------------------------------------------*/
+#current-view-text {
+    left: 46%;
+    position: absolute;
+    bottom: 10px;
+    z-index: 6;
+    background: rgba(0, 0, 0, 0.9);
+    margin: 5px;
+    padding: 5px 25px;
+    border-radius: 20px;
+    font-size: 14pt;
+}
+
 #logout-action {
     background-color: rgba(0, 0, 0, 0.85);
     width: 130px;
@@ -215,7 +227,7 @@ ul[id$="bsEditList"] {
 
         ul[id$="bsEditList"] .viewItem li input[type=number] {
             margin-bottom: 10px;
-            width:100px;
+            width: 100px;
         }
 
 

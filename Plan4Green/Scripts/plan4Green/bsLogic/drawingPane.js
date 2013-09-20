@@ -84,7 +84,16 @@ var drawingPane = (function () {
 
         tableRow.appendChild(entryName);
 
-        if (bsItem.type != "perspective") {
+        if (bsItem.type == 'goal') {
+            // create id entry
+            var entryID = document.createElement('td');
+            entryID.id = bsItem.currentValue;
+            entryID.innerHTML = bsItem.currentValue();
+            entryID.className = 'viewID';
+
+            tableRow.appendChild(entryID);
+        }
+        else if (bsItem.type == 'measure') {
             // create id entry
             var entryID = document.createElement('td');
             entryID.id = bsItem.currentValue;

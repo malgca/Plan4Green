@@ -22,10 +22,30 @@
                 return false;
             }
             return true;
-        }
+        },
 
+        // make sure the name of an object is valid before it is named. Returns true if valid, else returns false.
+        validName = function (bsItem, newName) {
+            if (bsItem.type == 'perspective') {
+                // get the global perspectives and make sure none of them have the name this one is using
+                for (var i = 0; i < global.perspectiveArray.length; i++) {
+                    if (global.perspectiveArray[i].name === newName) {
+                        return false;
+                    }
+                }
+            } else {
+                for (var i = 0; i < bsItem.bsParent.children.length; i++) {
+                    if (bsItem.bsParent.children[i].name === newName) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
     return {
         validValue: validValue,
-        validDate: validDate
+        validDate: validDate,
+        validName: validName
     }
 }())

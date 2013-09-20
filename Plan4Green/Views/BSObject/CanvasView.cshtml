@@ -13,6 +13,7 @@
     }
 
     <img id="viewParentImage" src="~/Images/controls/drawing-page/viewParent.png" />
+
     <div class="instructions">
         <a id="instruction-title" href="#">What to do next...</a>
         <ul>
@@ -21,11 +22,12 @@
         </ul>
     </div>
 
+    <p id="current-view-text">All Perspectives</p>
+
     <div id="drawing-page">
     </div>
 
     <p id="position" class="debug"></p>
-    <p id="status" class="debug"></p>
 
     @Styles.Render("~/Content/theme/base/plan4Green/js.ui.canvas.css")
     @Scripts.Render("~/Scripts/plan4Green/bsLogic/types.js",

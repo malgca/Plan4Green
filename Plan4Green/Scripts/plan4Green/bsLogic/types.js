@@ -18,9 +18,9 @@ var bsType = (function () {
         // bsObjects description.
         this.description = description;
         // bsObjects current value.
-        this.currentValue = currentValue;
+        this.currentValue = Number(currentValue);
         // bsObjects target value.
-        this.targetValue = targetValue;
+        this.targetValue = Number(targetValue);
         // date at which bsObject starts
         this.startDate = startDate;
         // date at which bsObject is due.
@@ -58,10 +58,10 @@ var bsType = (function () {
         this.type = "perspective";
 
         this.currentValue = function () {
-            currentTemp = 0;
+            var currentTemp = Number(0);
 
             for (var i = 0; i < this.children.length; i++) {
-                currentTemp += this.children[i].currentValue;
+                currentTemp += Number(this.children[i].currentValue);
             }
 
             return currentTemp;
@@ -75,10 +75,10 @@ var bsType = (function () {
 
         // goals current value's are calculated as a sum of all measure current values
         this.currentValue = function () {
-            currentTemp = 0;
+            var currentTemp = Number(0);
 
             for (var i = 0; i < this.children.length; i++) {
-                currentTemp += this.children[i].currentValue;
+                currentTemp += Number(this.children[i].currentValue);
             }
 
             return currentTemp;
@@ -86,10 +86,10 @@ var bsType = (function () {
 
         // goals target value's are calculated as a sum of all measure target values
         this.targetValue = function () {
-            targetTemp = 0;
+            var targetTemp = Number(0);
 
             for (var i = 0; i < this.children.length; i++) {
-                targetTemp += this.children[i].targetValue;
+                targetTemp += Number(this.children[i].targetValue);
             }
 
             return targetTemp;

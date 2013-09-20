@@ -4,8 +4,6 @@
 
     // position information element
     position: document.getElementById("position"),
-    // status informaiton element
-    status: document.getElementById("status"),
 
     // dummy count variable
     count: 0
@@ -32,7 +30,15 @@ main = (function () {
     instructionText = document.getElementById("instruction-text"),
     // instructions array
     instructionArray = new Array(),
-
+    // current position in BS views
+    bsCurrentView = document.getElementById("current-view-text"),
+    // background colors for perspectives, goals and measures
+    backgroundColors = {
+        all: '-webkit-linear-gradient(bottom, rgb(115,114,115) 27%, rgb(207,207,207) 100%)',
+        perspective: '-webkit-linear-gradient(bottom, rgb(62,174,189) 27%, rgb(140,204,222) 100%)',
+        goal: '-webkit-linear-gradient(bottom, rgb(145,0,0) 27%, rgb(242,109,109) 100%)'
+    }
+    
     // get the current position of the object in relation to the drawing page
     currentPosition = function (event) {
         // position on the screen.
@@ -62,6 +68,9 @@ main = (function () {
                 for (var i = 0; i < global.perspectiveArray.length; i++) {
                     canvasObject.create(global.perspectiveArray[i]);
                 }
+
+                bsCurrentView.innerHTML = 'All Perspectives';
+                page.style.backgroundImage = backgroundColors.all;
             }
             else if (bsItem.type == 'goal') { // viewing measures
                 clearPage();
@@ -69,6 +78,9 @@ main = (function () {
                 for (var i = 0; i < bsItem.bsParent.children.length; i++) {
                     canvasObject.create(bsItem.bsParent.children[i]);
                 }
+
+                bsCurrentView.innerHTML = bsItem.bsParent.name;
+                page.style.backgroundImage = backgroundColors.perspective;
             }
         }
         else { // viewing children
@@ -76,6 +88,15 @@ main = (function () {
 
             for (var i = 0; i < bsItem.children.length; i++) {
                 canvasObject.create(bsItem.children[i]);
+            }
+
+            bsCurrentView.innerHTML = bsItem.name;
+            
+            if (bsItem.type == 'perspective') {
+                page.style.backgroundImage = backgroundColors.perspective;
+            }
+            else if (bsItem.type == 'goal') {
+                page.style.backgroundImage = backgroundColors.goal;
             }
         }
     },
