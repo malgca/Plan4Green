@@ -28,7 +28,6 @@
         updateBSItemInfo = function (bsItem, workingID) {
             var edits = document.getElementById(workingID + '-bsEditList');
             var views = document.getElementById(workingID + '-bsViewList');
-            console.log(bsItem.type + ': ' + bsItem.name);
 
             if (bsItem.type == 'perspective') {
                 // update name
@@ -67,6 +66,8 @@
                 if (bsItem.type == 'measure') {
                     bsItem.targetValue = bsValidation.validValue(edits.childNodes[5].firstChild.children[1].value, 10000000);
                     edits.childNodes[5].firstChild.children[1].value = bsItem.targetValue;
+                    views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsItem.targetValue;
+                    console.log(bsItem.currentValue);
                 }
 
                 // update views
@@ -74,14 +75,17 @@
                 views.childNodes[2].firstChild.innerHTML = bsItem.description;
 
                 if (bsItem.type == 'goal') {
-                    views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsValidation.validValue(bsItem.targetValue());
+                    views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsValidation.validValue(bsItem.targetValue(), 10000000);
                 }
+
             }
         }
 
         createControls = function () {
-            var controls = new Array();
+            console.log(bsItem.isEditing);
 
+            var controls = new Array();
+                
             var controlList = document.createElement('ul');
             controlList.id = div.id + '-bsControlList';
 
@@ -171,13 +175,18 @@
             controls.push(bsImage);
 
             var editImage = new Image(35, 35);
-            editImage.src = '../../Images/controls/bs-item/save.png';
+            if (bsItem.isEditing) {
+                editImage.src = '../../Images/controls/bs-item/save.png';
+            } else {
+                editImage.src = '../../Images/controls/bs-item/edit.png';
+            }
+
 
             var controlEvents = (function () {
-                isEditing = true;
+                bsItem.isEditing;
 
                 editClick = function (event) {
-                    if (!isEditing) {
+                    if (!bsItem.isEditing) {
                         editImage.src = '../../Images/controls/bs-item/save.png';
 
                         var viewList = document.getElementById(div.id + "-bsViewList");
@@ -190,7 +199,7 @@
                         editList.style.width = '350px';
                         editList.style.height = 'inherit';
 
-                        isEditing = true;
+                        bsItem.isEditing = true;
                     }
                     else {
                         editImage.src = '../../Images/controls/bs-item/edit.png';
@@ -208,7 +217,9 @@
                         var currentId = editImage.parentElement.parentElement.parentElement.id;
 
                         updateBSItemInfo(bsItem, currentId);
-                        isEditing = false;
+
+                        bsItem.isEditing = false;
+                        drawingPane.redrawBSItems(bsItem);
                     }
                 }
 
@@ -308,7 +319,7 @@
                 // item due date
                 dueDate = document.createElement('p');
                 dueDate.className = 'bsItemDue';
-                dueDate.innerHTML = 'Due  ' + bsItem.endDate;
+                dueDate.innerHTML = 'Due  ' + bsItem.dueDate;
 
                 // item target
                 target = document.createElement('p');
@@ -417,6 +428,7 @@
                 var targetLabel = document.createElement('label');
                 targetLabel.innerHTML = 'Target';
                 targetLabel.style.paddingRight = '20px';
+                targetLabel.style.display = 'block';
 
                 targetList.appendChild(targetLabel);
 
@@ -432,6 +444,7 @@
                 var currentLabel = document.createElement('label');
                 currentLabel.innerHTML = 'Current';
                 currentLabel.style.paddingRight = '10px';
+                currentLabel.style.display = 'block';
 
                 currentList.appendChild(currentLabel);
 
@@ -459,6 +472,16 @@
                     edits[i].parentElement.className = 'viewItem';
                 }
 
+                if (bsItem.type == 'measure') {
+                    if (i == 4) {
+                        edits[i].parentElement.style.display = 'inline-block';
+                        edits[i].parentElement.style.marginLeft = '35px';
+                    } else if (i == 5) {
+                        edits[i].parentElement.style.display = 'inline-block';
+                        edits[i].parentElement.style.marginLeft = '55px';
+                    }
+                }
+
                 editList.appendChild(listItem);
             }
 
@@ -468,6 +491,27 @@
         var controlBar = createControls();
         var viewBar = createView();
         var editBar = createEdit();
+
+        // set the correct view based on whether or not the item is being editted.
+        if (bsItem.isEditing) {
+            viewBar.style.visibility = 'collapse';
+            viewBar.style.width = '0px';
+            viewBar.style.height = '0px';
+
+            editBar.style.visibility = 'visible';
+            editBar.style.width = '350px';
+            editBar.style.height = 'inherit';
+
+        }
+        else {
+            viewBar.style.visibility = 'visible';
+            viewBar.style.width = '350px';
+            viewBar.style.height = 'inherit';
+
+            editBar.style.visibility = 'collapse';
+            editBar.style.width = '0px';
+            editBar.style.height = '0px';
+        }
 
         div.appendChild(controlBar);
         div.appendChild(viewBar);
@@ -480,6 +524,7 @@
     // constructor
     create = function (bsItem) {
         drawBSItem(bsItem);
+        drawingPane.redrawBSItems(bsItem);
     };
 
     // expose members

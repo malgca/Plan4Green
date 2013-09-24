@@ -178,7 +178,6 @@ main = (function () {
 
                 if (bsItem != undefined) {
                     canvasObject.create(bsItem);
-                    drawingPane.addBSItem(bsItem);
                 }
             }
 

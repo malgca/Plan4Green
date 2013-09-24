@@ -9,7 +9,7 @@ function Point(xPosition, yPosition) {
 var bsType = (function () {
     var
 
-        defaultDescription = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor...",
+        defaultDescription = "Please add a description to this ",
 
     // bs Object template
     BSObject = function (name, description, currentValue, targetValue, startDate, dueDate, currentPosition) {
@@ -28,6 +28,8 @@ var bsType = (function () {
 
         // the current co-ordinates of the bs object
         this.currentPosition = currentPosition;
+        // flag indicating whether or not a bs object is currently editting
+        this.isEditing = true;
 
         // children belonging to the bsObject.
         this.children = new Array();
@@ -109,7 +111,7 @@ var bsType = (function () {
     // create a perspective object
     createPerspective = function (position) {
         // inherit the BSObject
-        Perspective.prototype = new BSObject("Perspective Name" + debug.count, defaultDescription, null, null, null, null, position);
+        Perspective.prototype = new BSObject("Perspective Name" + debug.count, defaultDescription + 'perspective', null, null, null, null, position);
 
         // create a new perspective object.
         return new Perspective();
@@ -118,7 +120,7 @@ var bsType = (function () {
     // create a goal object
     createGoal = function (position) {
         // inherit the BSObject
-        Goal.prototype = new BSObject("Goal Name" + debug.count, defaultDescription, 0, 1, null, null, position);
+        Goal.prototype = new BSObject("Goal Name" + debug.count, defaultDescription + 'goal', 0, 1, null, null, position);
 
         // create a new goal object.
         return new Goal();
@@ -127,7 +129,7 @@ var bsType = (function () {
     // create a measure object
     createMeasure = function (position) {
         // inherit the BSObject
-        Measure.prototype = new BSObject("Measure Name" + debug.count, defaultDescription, 0, 1, null, null, position);
+        Measure.prototype = new BSObject("Measure Name" + debug.count, defaultDescription + 'measure', 0, 1, null, null, position);
 
         // create a measure goal object.
         return new Measure();

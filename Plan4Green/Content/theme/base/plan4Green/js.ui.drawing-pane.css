@@ -104,22 +104,27 @@
         top: 0px;
     }
 
-        #drawing-pane #tools table tbody tr td img {
-            margin: 20px 10px 0px 10px;
+    #drawing-pane table p {
+        margin-top: -5px;
+        margin-bottom: 0px;
+    }
+
+    #drawing-pane #tools table tbody tr td img {
+        margin: 20px 10px 0px 10px;
+    }
+
+        #drawing-pane #tools table tbody tr td img#control-arrow {
+            margin-bottom: 60px;
         }
 
-            #drawing-pane #tools table tbody tr td img#control-arrow {
-                margin-bottom: 60px;
-            }
+        #drawing-pane #tools table tbody tr td img#perspective {
+            margin-bottom: 90px;
+        }
 
-            #drawing-pane #tools table tbody tr td img#perspective {
-                margin-bottom: 90px;
-            }
+        #drawing-pane #tools table tbody tr td img#goal {
+            margin-bottom: 90px;
+        }
 
-            #drawing-pane #tools table tbody tr td img#goal {
-                margin-bottom: 90px;
-            }
-
-            #drawing-pane #tools table tbody tr td img#measure {
-                margin-bottom: 0px;
-            }
+        #drawing-pane #tools table tbody tr td img#measure {
+            margin-bottom: 0px;
+        }

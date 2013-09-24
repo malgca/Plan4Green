@@ -84,21 +84,18 @@ var drawingPane = (function () {
 
         tableRow.appendChild(entryName);
 
-        if (bsItem.type == 'goal') {
+        if (bsItem.type != 'perspective') {
             // create id entry
             var entryID = document.createElement('td');
             entryID.id = bsItem.currentValue;
-            entryID.innerHTML = bsItem.currentValue();
             entryID.className = 'viewID';
 
-            tableRow.appendChild(entryID);
-        }
-        else if (bsItem.type == 'measure') {
-            // create id entry
-            var entryID = document.createElement('td');
-            entryID.id = bsItem.currentValue;
-            entryID.innerHTML = bsItem.currentValue;
-            entryID.className = 'viewID';
+            if (bsItem.type == 'goal') {
+                entryID.innerHTML = bsItem.currentValue();
+            }
+            else {
+                entryID.innerHTML = bsItem.currentValue;
+            }
 
             tableRow.appendChild(entryID);
         }
@@ -118,10 +115,41 @@ var drawingPane = (function () {
         }
     }
 
-    updateBSItem = function(bsItem) {
+    // clears the BS object pane for a specific type of object
+    clearBSItems = function (type) {
+        if (type == 'perspective') {
+            while (pane.persInfo.childElementCount > 0) {
+                pane.persInfo.removeChild(pane.persInfo.firstChild);
+            }
+        }
+        else if (type == 'goal') {
+            while (pane.goalInfo.childElementCount > 0) {
+                pane.goalInfo.removeChild(pane.goalInfo.firstChild);
+            }
+        }
+        else {
+            while (pane.measInfo.childElementCount > 0) {
+                pane.measInfo.removeChild(pane.measInfo.firstChild);
+            }
+        }
     }
 
-    removeBSItem = function (bsItem) {
+    // re-adds a specific level of bs items on the drawing pane.
+    redrawBSItems = function (bsItem) {
+        // clear the currently existing BS items
+        clearBSItems(bsItem.type);
+
+        // redraw only the section which matters
+        if (bsItem.type == 'perspective') {
+            for (var i = 0; i < global.perspectiveArray.length; i++) {
+                addBSItem(global.perspectiveArray[i]);
+            }
+        }
+        else {
+            for (var i = 0; i < bsItem.bsParent.children.length; i++) {
+                addBSItem(bsItem.bsParent.children[i]);
+            }
+        }
     }
 
     init = function () {
@@ -207,8 +235,6 @@ var drawingPane = (function () {
     window.addEventListener("load", init, false);
 
     return {
-        addBSItem: addBSItem,
-        updateBSItem: updateBSItem,
-        removeBSItem: removeBSItem
+        redrawBSItems:redrawBSItems
     }
 }());

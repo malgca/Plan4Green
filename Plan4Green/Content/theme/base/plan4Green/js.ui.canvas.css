@@ -162,7 +162,6 @@ ul[id$="bsViewList"] {
     color: #151515;
     width: 0px;
     height: 0px;
-    visibility: collapse;
 }
 
     ul[id$="bsViewList"] li {
