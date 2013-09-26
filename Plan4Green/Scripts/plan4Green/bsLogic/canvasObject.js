@@ -18,6 +18,8 @@
 
     // draw a BS Item.
     var drawBSItem = function (bsItem) {
+        bsItem.enableItem();
+
         var
             pos = goal.currentPosition,
             div = createDiv(bsItem),
@@ -73,7 +75,7 @@
                 if (bsItem.type == 'measure') {
                     bsItem.targetValue = bsValidation.validValue(edits.childNodes[5].firstChild.children[1].value, 10000000);
                     edits.childNodes[5].firstChild.children[1].value = bsItem.targetValue;
-                    
+
                     console.log('target: ' + bsItem.targetValue);
 
                     bsItem.currentValue = bsValidation.validValue(edits.childNodes[4].firstChild.children[1].value, bsItem.targetValue);
@@ -97,7 +99,7 @@
 
         createControls = function () {
             var controls = new Array();
-                
+
             var controlList = document.createElement('ul');
             controlList.id = div.id + '-bsControlList';
 
@@ -193,7 +195,6 @@
                 editImage.src = '../../Images/controls/bs-item/edit.png';
             }
 
-
             var controlEvents = (function () {
                 bsItem.isEditing;
 
@@ -253,7 +254,9 @@
 
             editImage.addEventListener('click', controlEvents.editClick, false);
 
-            controls.push(editImage);
+            if (bsItem.isEnabled) {
+                controls.push(editImage);
+            }
 
             if (bsItem.type != 'measure') {
                 var viewImage = new Image(35, 35);
@@ -268,7 +271,9 @@
                 graphImage.src = '../../Images/controls/bs-item/graph.png';
                 graphImage.addEventListener('click', controlEvents.graphClick, false);
 
-                controls.push(graphImage);
+                if (bsItem.isEnabled) {
+                    controls.push(graphImage);
+                }
             }
 
             // create list item nodes and place items inside
@@ -316,48 +321,57 @@
             var heading = document.createElement('h1');
             heading.innerHTML = bsItem.name;
 
+            views.push(heading); // heading always goes first
+
             // create the stoplight indicator for the bsItem
             var stoplight = createStoplight(bsItem);
 
-            // measure description
-            var description = document.createElement('p');
-            description.innerHTML = bsItem.description;
+            if (bsItem.isEnabled) {
+                // measure description
+                var description = document.createElement('p');
+                description.innerHTML = bsItem.description;
 
-            var dueDate,
-                target;
+                var dueDate,
+                    target;
 
-            if (bsItem.type == 'goal' || bsItem.type == 'measure') {
+                if (bsItem.type == 'goal' || bsItem.type == 'measure') {
 
-                // item due date
-                dueDate = document.createElement('p');
-                dueDate.className = 'bsItemDue';
-                dueDate.innerHTML = 'Due  ' + bsItem.dueDate;
+                    // item due date
+                    dueDate = document.createElement('label');
+                    dueDate.className = 'bsItemDue';
+                    dueDate.innerHTML = 'Due  ' + bsItem.dueDate;
 
-                // item target
-                target = document.createElement('p');
-                target.className = 'bsItemDue';
-                if (bsItem.type == 'goal') {
-                    target.innerHTML = 'of ' + bsValidation.validValue(bsItem.targetValue());
-                }
-                else {
-                    target.innerHTML = 'of ' + bsItem.targetValue;
+                    // item target
+                    target = document.createElement('p');
+                    target.className = 'bsItemDue';
+                    if (bsItem.type == 'goal') {
+                        target.innerHTML = 'of ' + bsValidation.validValue(bsItem.targetValue());
+                    }
+                    else {
+                        target.innerHTML = 'of ' + bsItem.targetValue;
+                    }
                 }
             }
-
-            views.push(heading); // heading always goes first
 
             if (bsItem.type == 'perspective') { // perspective stoplight go second
                 views.push(stoplight);
             }
             else { //otherwise, due dates go next
-                views.push(dueDate);
+                if (bsItem.isEnabled) {
+                    views.push(dueDate);
+                }
             }
 
-            views.push(description);
+            if (bsItem.isEnabled) {
+                views.push(description);
+            }
 
             if (bsItem.type != 'perspective') {
                 views.push(stoplight);
-                views.push(target);
+
+                if (bsItem.isEnabled) {
+                    views.push(target);
+                }
             }
 
             // put all the items in the viewList
@@ -527,8 +541,10 @@
 
         div.appendChild(controlBar);
         div.appendChild(viewBar);
-        div.appendChild(editBar);
 
+        if (bsItem.isEnabled) {
+            div.appendChild(editBar);
+        }
         // place the div on the drawing page
         main.page.appendChild(div);
     },

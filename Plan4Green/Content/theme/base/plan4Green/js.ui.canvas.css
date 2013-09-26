@@ -118,13 +118,15 @@ textarea {
     display: inline;
     position: absolute;
     width: 410px;
-    min-height: 150px;
+    min-height: 110px;
     z-index: 3;
     background-color: rgba(178, 178, 178, 0.50);
+    border-radius: 15px;
 }
 
     .canvasObject:hover {
         background-color: rgba(178, 178, 178, 1);
+        border-radius: 15px;
     }
 
 .perspectiveHeading {
