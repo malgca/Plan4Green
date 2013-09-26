@@ -6,12 +6,24 @@ var drawingPane = (function () {
         info: document.getElementById("info"),
         // organisations name
         orgName: document.getElementById("organisation-name"),
+        // div housing info tables on the page
+        infoTables: document.getElementById("info-tables"),
         // perspective info list
         persInfo: document.getElementById("perspective-list"),
         // goal info list
         goalInfo: document.getElementById("goal-list"),
         // measure info list
         measInfo: document.getElementById("measure-list"),
+        // input for the starting of the valid time frame
+        startFrame: document.getElementById("startFrame"),
+        // input for the end of the valid time frame
+        endFrame: document.getElementById("endFrame"),
+        // done button for selecting time frames
+        frameBtn: document.getElementById("frameBtn"),
+        // link to create strategy map
+        mapLink: document.getElementById("mapLink"),
+        // link to view valid time frame
+        timeLink: document.getElementById("timeLink"),
         // pane housing all drawing tools
         tools: document.getElementById("tools"),
         // drawing pane control arrow
@@ -157,6 +169,35 @@ var drawingPane = (function () {
     init = function () {
         // set the organisation information
         setSessionDetails();
+
+        infoEvents = (function () {
+            var
+            // event fired when the done button is clicked.
+            doneClick = function (event) {
+                // iterate through everything, and disable those things which aren't in the valid timeframe, then go back to perspective view
+            },
+
+            // event fired when the strategy map link is clicked
+            mapClick = function (event) {
+                strategyMap.draw();
+            },
+
+            // event fired when the time frame link is clicked
+            frameClick = function (event) {
+                // make navigation invisible, make time frame visible
+            }
+
+            return {
+                doneClick: doneClick,
+                mapClick: mapClick,
+                frameClick: frameClick
+            }
+        }());
+
+        // add info events
+        pane.frameBtn.addEventListener("click", infoEvents.doneClick, false);
+        pane.mapLink.addEventListener("mousedown", infoEvents.mapClick, false);
+        pane.timeLink.addEventListener("mousedown", infoEvents.frameClick, false);
 
         toolEvents = (function () {
             dragstart = function (event) {

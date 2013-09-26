@@ -219,7 +219,6 @@ ul[id$="bsEditList"] {
         ul[id$="bsEditList"] .viewItem li input[type=date] {
             color: #2e2e2e;
             height: 25px;
-            width: 150px;
             font-weight: 400;
             border-radius: 5px;
             margin-top: 0px;
@@ -227,6 +226,7 @@ ul[id$="bsEditList"] {
         }
 
         ul[id$="bsEditList"] .viewItem li input[type=number] {
+            width: 150px;
             margin-bottom: 10px;
             width: 100px;
         }
@@ -234,7 +234,6 @@ ul[id$="bsEditList"] {
 
         ul[id$="bsEditList"] .viewItem li input[type=date] {
             width: 180px;
-            background-color: rgba(255, 255, 255, 0.20);
             font-size: 12pt;
         }
 

@@ -196,8 +196,6 @@
             }
 
             var controlEvents = (function () {
-                bsItem.isEditing;
-
                 editClick = function (event) {
                     if (!bsItem.isEditing) {
                         editImage.src = '../../Images/controls/bs-item/save.png';
@@ -527,7 +525,6 @@
             editBar.style.visibility = 'visible';
             editBar.style.width = '350px';
             editBar.style.height = 'inherit';
-
         }
         else {
             viewBar.style.visibility = 'visible';

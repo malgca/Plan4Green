@@ -68,30 +68,51 @@
             top: 163px;
         }
 
-            #drawing-pane #info #perspective-info li.viewHeader {
-            }
-
-            #drawing-pane #info #perspective-info .viewInfo {
-            }
-
         #drawing-pane #info #goal-info {
             top: 319px;
         }
-
-            #drawing-pane #info #goal-info .viewHeader {
-            }
-
-            #drawing-pane #info #goal-info .viewInfo {
-            }
 
         #drawing-pane #info #measure-info {
             top: 477px;
         }
 
-            #drawing-pane #info #measure-info .viewHeader {
+        #drawing-pane #info #timeframe-info {
+            position: absolute;
+            top: 138px;
+            width: 295px;
+        }
+
+            #drawing-pane #info #timeframe-info input[type=date] {
+                color: #2e2e2e;
+                height: 25px;
+                font-weight: 400;
+                border-radius: 5px;
+                margin-top: 0px;
+                background-color: #e2e2e2;
+                width: 180px;
+                font-size: 12pt;
             }
 
-            #drawing-pane #info #measure-info .viewInfo {
+            #drawing-pane #info #timeframe-info input[type=submit] {
+                color: #2e2e2e;
+                height: 25px;
+                font-weight: 400;
+                border-radius: 5px;
+                margin-top: 0px;
+                width: 180px;
+                font-size: 12pt;
+            }
+
+        #drawing-pane #info #options-div {
+            position: absolute;
+            bottom: 20px;
+            font-size: 12pt;
+            width: 290px;
+        }
+
+            #drawing-pane #info #options-div a {
+                padding: 5px 0px;
+                display: block;
             }
 
     #drawing-pane #tools {

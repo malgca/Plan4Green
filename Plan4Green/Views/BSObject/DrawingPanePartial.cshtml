@@ -7,35 +7,58 @@
             <li id="user-name">Username</li>
         </ul>
 
-        <table id="perspective-info">
-            <thead class="viewHeader">
-                <tr>
-                    <td><p>Perspectives</p></td>
-                </tr>
-            </thead>
-            <tbody id="perspective-list">
-            </tbody>
-        </table>
+        <div id="info-tables" style="visibility:collapse">
+            <table id="perspective-info">
+                <thead class="viewHeader">
+                    <tr>
+                        <td>
+                            <p>Perspectives</p>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody id="perspective-list">
+                </tbody>
+            </table>
 
-        <table id="goal-info">
-            <thead class="viewHeader">
-                <tr>
-                    <td><p>Goals</p></td>
-                </tr>
-            </thead>
-            <tbody id="goal-list">
-            </tbody>
-        </table>
+            <table id="goal-info">
+                <thead class="viewHeader">
+                    <tr>
+                        <td>
+                            <p>Goals</p>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody id="goal-list">
+                </tbody>
+            </table>
 
-        <table id="measure-info">
-            <thead class="viewHeader">
-                <tr>
-                    <td><p>Measures</p></td>
-                </tr>
-            </thead>
-            <tbody id="measure-list">
-            </tbody>
-        </table>
+            <table id="measure-info">
+                <thead class="viewHeader">
+                    <tr>
+                        <td>
+                            <p>Measures</p>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody id="measure-list">
+                </tbody>
+            </table>
+        </div>
+
+        <div id="timeframe-info">
+            <p>Time Frame Start</p>
+            <input id="startFrame" type="date" />
+            <p>Time Frame End</p>
+            <input id="endFrame" type="date" />
+            <br />
+            <br />
+            <input id="frameBtn" type="submit" value="Done" />
+        </div>
+
+        <div id="options-div">
+            <a id="mapLink" href="#">View As Strategy Map</a>
+            <a id="timeLink" href="#">Select Valid Time Frame</a>
+        </div>
 
     </div>
     <div id="tools">
@@ -64,6 +87,5 @@
             </tbody>
         </table>
     </div>
-
-    @Scripts.Render("~/Scripts/plan4Green/siteLogic/ajaxOperations.js", "~/Scripts/plan4Green/bsLogic/drawingPane.js")
+    @Scripts.Render("~/Scripts/plan4Green/siteLogic/ajaxOperations.js", "~/Scripts/plan4Green/bsLogic/timeSlider.js", "~/Scripts/plan4Green/bsLogic/drawingPane.js")
 </section>
