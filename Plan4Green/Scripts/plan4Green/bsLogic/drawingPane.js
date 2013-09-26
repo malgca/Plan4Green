@@ -87,14 +87,16 @@ var drawingPane = (function () {
         if (bsItem.type != 'perspective') {
             // create id entry
             var entryID = document.createElement('td');
-            entryID.id = bsItem.currentValue;
+            entryID.id = bsItem.completionRatio();
             entryID.className = 'viewID';
 
             if (bsItem.type == 'goal') {
                 entryID.innerHTML = bsItem.currentValue();
+                console.log(bsItem.currentValue() + ' / ' + bsItem.targetValue() + ' = ' + bsItem.completionRatio());
             }
             else {
                 entryID.innerHTML = bsItem.currentValue;
+                console.log(bsItem.currentValue + ' / ' + bsItem.targetValue + ' = ' + bsItem.completionRatio());
             }
 
             tableRow.appendChild(entryID);

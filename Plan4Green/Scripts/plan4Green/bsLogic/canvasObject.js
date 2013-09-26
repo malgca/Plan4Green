@@ -45,7 +45,6 @@
                 views.childNodes[2].firstChild.innerHTML = bsItem.description;
             }
             else {
-                console.log(bsItem.name);
                 // update bsItem
                 if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
                     bsItem.name = edits.childNodes[0].firstChild.value;
@@ -59,6 +58,14 @@
                 if (bsValidation.validDate(edits.childNodes[1].children[0].children[1].value, edits.childNodes[2].children[0].children[1].value)) {
                     bsItem.startDate = edits.childNodes[1].children[0].children[1].value;
                     bsItem.dueDate = edits.childNodes[2].children[0].children[1].value;
+
+                    // update views
+                    views.childNodes[1].children[0].style.color = '#151515';
+                    views.childNodes[1].children[0].style.fontWeight = '400';
+                }
+                else {
+                    views.childNodes[1].children[0].style.color = '#ff0000';
+                    views.childNodes[1].children[0].style.fontWeight = '600';
                 }
 
                 bsItem.description = edits.childNodes[3].firstChild.value;
@@ -66,8 +73,16 @@
                 if (bsItem.type == 'measure') {
                     bsItem.targetValue = bsValidation.validValue(edits.childNodes[5].firstChild.children[1].value, 10000000);
                     edits.childNodes[5].firstChild.children[1].value = bsItem.targetValue;
+                    
+                    console.log('target: ' + bsItem.targetValue);
+
+                    bsItem.currentValue = bsValidation.validValue(edits.childNodes[4].firstChild.children[1].value, bsItem.targetValue);
+                    edits.childNodes[4].firstChild.children[1].value = bsItem.currentValue;
+
+                    console.log('current: ' + bsItem.currentValue);
+
+                    // update view
                     views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsItem.targetValue;
-                    console.log(bsItem.currentValue);
                 }
 
                 // update views
@@ -77,13 +92,10 @@
                 if (bsItem.type == 'goal') {
                     views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsValidation.validValue(bsItem.targetValue(), 10000000);
                 }
-
             }
         }
 
         createControls = function () {
-            console.log(bsItem.isEditing);
-
             var controls = new Array();
                 
             var controlList = document.createElement('ul');

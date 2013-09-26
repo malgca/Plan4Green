@@ -37,6 +37,8 @@ var bsType = (function () {
         this.bsParent = undefined;
         // notify if bsObject is currently in strategy map view.
         this.mapView = parent;
+        // notify if bsObject is current enabled
+        this.isEnabled = true;
 
         // add a child object to this bsObject's array.
         this.addChildObject = function (childObject) {
@@ -52,6 +54,16 @@ var bsType = (function () {
                 this.children.splice(childIndex, 1);
             }
         };
+
+        this.enableItem = function () {
+            this.isEditing = true;
+            this.isEnabled = true;
+        }
+
+        this.disableItem = function () {
+            this.isEditing = false;
+            this.isEnabled = false;
+        }
     },
 
     // bs perspective object.
@@ -63,10 +75,24 @@ var bsType = (function () {
             var currentTemp = Number(0);
 
             for (var i = 0; i < this.children.length; i++) {
-                currentTemp += Number(this.children[i].currentValue);
+                currentTemp += Number(this.children[i].currentValue());
             }
 
             return currentTemp;
+        }
+
+        this.targetValue = function () {
+            var targetTemp = Number(0);
+
+            for (var i = 0; i < this.children.length; i++) {
+                targetTemp += Number(this.children[i].targetValue());
+            }
+
+            return targetTemp;
+        }
+
+        this.completionRatio = function () {
+            return ((this.currentValue() / this.targetValue()) * 100);
         }
     },
     
@@ -97,7 +123,9 @@ var bsType = (function () {
             return targetTemp;
         }
 
-        this.completionRatio = ((this.currentValue / this.targetValue) * 100);
+        this.completionRatio = function () {
+            return ((this.currentValue() / this.targetValue()) * 100);
+        }
     },
 
     // bs measure object.
@@ -105,7 +133,9 @@ var bsType = (function () {
         // set the type to perspective by default
         this.type = "measure";
 
-        this.completionRatio = ((this.currentValue / this.targetValue) * 100);
+        this.completionRatio = function () {
+            return ((this.currentValue / this.targetValue) * 100);
+        }
     },
 
     // create a perspective object
