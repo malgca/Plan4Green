@@ -65,10 +65,14 @@ main = (function () {
             if (bsItem.type == 'perspective') {
                 clearPage();
 
+                console.log('perspectives');
+
                 for (var i = 0; i < global.perspectiveArray.length; i++) {
                     canvasObject.create(global.perspectiveArray[i]);
                 }
 
+                global.bsParent = undefined;
+                global.bsLevel = undefined;
                 bsCurrentView.innerHTML = 'All Perspectives';
                 page.style.backgroundImage = backgroundColors.all;
             }
@@ -79,8 +83,22 @@ main = (function () {
                     canvasObject.create(bsItem.bsParent.children[i]);
                 }
 
+                global.bsParent = bsItem.bsParent;
+                global.bsLevel = bsItem.bsParent.type;
                 bsCurrentView.innerHTML = bsItem.bsParent.name;
                 page.style.backgroundImage = backgroundColors.perspective;
+            }
+            else if (bsItem.type == 'measure') {
+                clearPage();
+
+                for (var i = 0; i < bsItem.bsParent.children.length; i++) {
+                    canvasObject.create(bsItem.bsParent.children[i]);
+                }
+
+                global.bsParent = bsItem.bsParent;
+                global.bsLevel = bsItem.bsParent.type;
+                bsCurrentView.innerHTML = bsItem.bsParent.name;
+                page.style.backgroundImage = backgroundColors.goal;
             }
         }
         else { // viewing children
@@ -90,14 +108,17 @@ main = (function () {
                 canvasObject.create(bsItem.children[i]);
             }
 
-            bsCurrentView.innerHTML = bsItem.name;
-            
             if (bsItem.type == 'perspective') {
+                global.bsLevel = 'perspective';
                 page.style.backgroundImage = backgroundColors.perspective;
             }
             else if (bsItem.type == 'goal') {
+                global.bsLevel = 'goal';
                 page.style.backgroundImage = backgroundColors.goal;
             }
+
+            global.bsParent = bsItem;
+            bsCurrentView.innerHTML = bsItem.name;
         }
     },
 
@@ -117,20 +138,6 @@ main = (function () {
             mousedown = function (event) {
                 if (event.target === this) {
                     viewItem(global.bsParent, true);
-                    global.bsParent = bsType.createPerspective();
-
-                    switch (global.bsLevel) {
-                        case ('perspective'):
-                            global.bsLevel = undefined;
-                            break;
-                        case ('goal'):
-                            global.bsLevel = 'perspective';
-                            break;
-                        case ('measure'):
-                            global.bsLevel = 'goal';
-                            break;
-                        default: return;
-                    }
                 }
             },
 
@@ -156,6 +163,7 @@ main = (function () {
                     case ('perspective'):
                         if (global.bsLevel == undefined) {
                             bsItem = bsType.createPerspective(currentPosition(event));
+                            bsItem.bsParent = undefined;
                             global.perspectiveArray.push(bsItem);
                         }
                         break;
@@ -208,6 +216,7 @@ main = (function () {
         init: init,
         page: page,
         currentPosition: currentPosition,
-        viewItem: viewItem
+        viewItem: viewItem,
+        clearPage: clearPage
     };
 }());

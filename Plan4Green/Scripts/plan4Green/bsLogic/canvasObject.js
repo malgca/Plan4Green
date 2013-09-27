@@ -18,8 +18,6 @@
 
     // draw a BS Item.
     var drawBSItem = function (bsItem) {
-        bsItem.enableItem();
-
         var
             pos = goal.currentPosition,
             div = createDiv(bsItem),
@@ -235,12 +233,11 @@
                 }
 
                 viewClick = function (event) {
-                    global.bsParent = bsItem;
-                    global.bsLevel = bsItem.type;
                     main.viewItem(bsItem, false);
                 }
 
                 graphClick = function (event) {
+                    // follow tutorial
                 }
 
                 return {
@@ -420,6 +417,7 @@
                     + ('0' + date.getDate()).slice(-2);
 
                 startDateEdit.value = dateString;
+                bsItem.startDate = dateString;
                 startList.appendChild(startDateLabel);
                 startList.appendChild(startDateEdit);
 
@@ -434,6 +432,7 @@
                 var dueDateEdit = document.createElement('input');
                 dueDateEdit.type = 'date';
                 dueDateEdit.value = dateString;
+                bsItem.dueDate = dateString;
 
                 dueList.appendChild(dueDateLabel);
                 dueList.appendChild(dueDateEdit);

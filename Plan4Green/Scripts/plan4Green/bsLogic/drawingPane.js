@@ -14,6 +14,8 @@ var drawingPane = (function () {
         goalInfo: document.getElementById("goal-list"),
         // measure info list
         measInfo: document.getElementById("measure-list"),
+        // div housing time frame information
+        timeInfo: document.getElementById("timeframe-info"),
         // input for the starting of the valid time frame
         startFrame: document.getElementById("startFrame"),
         // input for the end of the valid time frame
@@ -80,8 +82,7 @@ var drawingPane = (function () {
         anchor.innerHTML = bsItem.name;
 
         anchorClick = function (event) {
-            console.log(bsItem);
-            main.viewItem(bsItem, false);
+            main.viewItem(bsItem, true);
         }
 
         anchor.addEventListener("click", anchorClick, false);
@@ -104,11 +105,9 @@ var drawingPane = (function () {
 
             if (bsItem.type == 'goal') {
                 entryID.innerHTML = bsItem.currentValue();
-                console.log(bsItem.currentValue() + ' / ' + bsItem.targetValue() + ' = ' + bsItem.completionRatio());
             }
             else {
                 entryID.innerHTML = bsItem.currentValue;
-                console.log(bsItem.currentValue + ' / ' + bsItem.targetValue + ' = ' + bsItem.completionRatio());
             }
 
             tableRow.appendChild(entryID);
@@ -175,6 +174,57 @@ var drawingPane = (function () {
             // event fired when the done button is clicked.
             doneClick = function (event) {
                 // iterate through everything, and disable those things which aren't in the valid timeframe, then go back to perspective view
+                var perspectives = global.perspectiveArray;
+
+                if (perspectives.length > 0) {
+                    for (var i = 0; i < perspectives.length; i++) {
+                        var goals = perspectives[i].children;
+
+                        if (goals.length > 0) {
+                            for (var j = 0; j < goals.length; j++) {
+                                var measures = goals[j].children;
+
+                                if (measures.length > 0) {
+                                    for (var k = 0; k < measures.length; k++) {
+
+                                        if (bsValidation.validDate(pane.startFrame.value, measures[k].startDate)
+                                        && bsValidation.validDate(measures[k].dueDate, pane.endFrame.value)) {
+                                            measures[k].enableItem();
+                                        }
+                                        else {
+                                            measures[k].disableItem();
+                                        }
+                                    }
+
+                                    if (goals[j].allChildrenDisabled()) {
+                                        goals[j].disableItem();
+                                    }
+                                    else {
+                                        goals[j].enableItem();
+                                    }
+                                }
+                                else {
+                                    goals[j].disableItem();
+                                }
+                            }
+                        }
+                        else {
+                            perspectives[i].disableItem();
+                        }
+
+                        if (perspectives[i].allChildrenDisabled()) {
+                            perspectives[i].disableItem();
+                        }
+                        else {
+                            perspectives[i].enableItem();
+                        }
+                    }
+                }
+                else {
+                    alert('Please place a perspective on the canvas before attempting to alter time frames.');
+                }
+
+                main.viewItem(perspectives[0], true);
             },
 
             // event fired when the strategy map link is clicked
@@ -185,6 +235,16 @@ var drawingPane = (function () {
             // event fired when the time frame link is clicked
             frameClick = function (event) {
                 // make navigation invisible, make time frame visible
+                if (pane.infoTables.style.visibility == 'visible') {
+                    pane.infoTables.style.visibility = 'collapse';
+                    pane.timeInfo.style.visibility = 'visible';
+                    pane.timeLink.innerHTML = 'View Navigation';
+                }
+                else {
+                    pane.infoTables.style.visibility = 'visible';
+                    pane.timeInfo.style.visibility = 'collapse';
+                    pane.timeLink.innerHTML = 'Select Valid Time Frame';
+                }
             }
 
             return {

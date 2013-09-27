@@ -37,6 +37,10 @@
                 margin: 5px 0px 25px 5px;
             }
 
+    #drawing-pane #info-tables {
+        visibility: visible;
+    }
+
         #drawing-pane #info table {
             position: absolute;
             width: 290px;
@@ -80,6 +84,7 @@
             position: absolute;
             top: 138px;
             width: 295px;
+            visibility: collapse;
         }
 
             #drawing-pane #info #timeframe-info input[type=date] {
