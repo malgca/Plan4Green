@@ -227,8 +227,8 @@
 
                         updateBSItemInfo(bsItem, currentId);
 
-                        bsItem.isEditing = false;
                         drawingPane.redrawBSItems(bsItem);
+                        bsItem.isEditing = false;
                     }
                 }
 

@@ -1,0 +1,2 @@
+Known Bug:
+Dates between goals and measures not synchronized. Dates in measures should only be valid between start and end date for goals. Dates in goals are unlimited 

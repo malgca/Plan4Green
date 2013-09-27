@@ -65,8 +65,6 @@ main = (function () {
             if (bsItem.type == 'perspective') {
                 clearPage();
 
-                console.log('perspectives');
-
                 for (var i = 0; i < global.perspectiveArray.length; i++) {
                     canvasObject.create(global.perspectiveArray[i]);
                 }
