@@ -38,6 +38,8 @@ var bsType = (function () {
         this.mapView = parent;
         // notify if bsObject is current enabled
         this.isEnabled = true;
+        // notify if bsObject is currently being viewed
+        this.isActive = false;
 
         // add a child object to this bsObject's array.
         this.addChildObject = function (childObject) {

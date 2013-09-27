@@ -95,6 +95,10 @@ var drawingPane = (function () {
         entryName.appendChild(anchor);
         entryName.className = 'viewName';
 
+        if (bsItem.isActive) {
+            entryName.style.backgroundColor = '#666600'
+        }
+
         tableRow.appendChild(entryName);
 
         if (bsItem.type != 'perspective') {
@@ -102,6 +106,10 @@ var drawingPane = (function () {
             var entryID = document.createElement('td');
             entryID.id = bsItem.completionRatio();
             entryID.className = 'viewID';
+
+            if (bsItem.isActive) {
+                entryID.style.backgroundColor = '#666600'
+            }
 
             if (bsItem.type == 'goal') {
                 entryID.innerHTML = bsItem.currentValue();
@@ -338,6 +346,7 @@ var drawingPane = (function () {
     window.addEventListener("load", init, false);
 
     return {
+        clearBSItems: clearBSItems,
         redrawBSItems:redrawBSItems
     }
 }());

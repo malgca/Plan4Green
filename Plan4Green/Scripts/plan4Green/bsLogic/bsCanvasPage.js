@@ -67,10 +67,17 @@ main = (function () {
 
                 for (var i = 0; i < global.perspectiveArray.length; i++) {
                     canvasObject.create(global.perspectiveArray[i]);
+
+                    for (var j = 0; j < global.perspectiveArray[i].children.length; j++) {
+                        global.perspectiveArray[i].children[j].isActive = false;
+                        drawingPane.redrawBSItems(global.perspectiveArray[i].children[j]);
+                    }
                 }
 
-                global.bsParent = undefined;
+                bsItem.isActive = false;
                 global.bsLevel = undefined;
+                global.bsParent = undefined;
+                drawingPane.redrawBSItems(bsItem);
                 bsCurrentView.innerHTML = 'All Perspectives';
                 page.style.backgroundImage = backgroundColors.all;
             }
@@ -81,6 +88,9 @@ main = (function () {
                     canvasObject.create(bsItem.bsParent.children[i]);
                 }
 
+                bsItem.isActive = false;
+                drawingPane.redrawBSItems(bsItem);
+                drawingPane.clearBSItems('measure');
                 global.bsParent = bsItem.bsParent;
                 global.bsLevel = bsItem.bsParent.type;
                 bsCurrentView.innerHTML = bsItem.bsParent.name;
@@ -117,6 +127,13 @@ main = (function () {
 
             global.bsParent = bsItem;
             bsCurrentView.innerHTML = bsItem.name;
+
+            if (bsItem.type != 'measure') {
+                bsItem.isActive = true;
+                drawingPane.redrawBSItems(bsItem);
+            }
+            else {
+            }
         }
     },
 
