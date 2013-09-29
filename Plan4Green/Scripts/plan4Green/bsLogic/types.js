@@ -117,6 +117,17 @@ var bsType = (function () {
         // set the type to goal by default
         this.type = "goal";
 
+        // goals target value's are calculated as a sum of all child measure target values
+        this.targetValue = function () {
+            var targetTemp = Number(0);
+
+            for (var i = 0; i < this.children.length; i++) {
+                targetTemp += Number(this.children[i].targetValue);
+            }
+
+            return targetTemp;
+        }
+
         // goals current value's are calculated as a sum of all measure current values
         this.currentValue = function () {
             var currentTemp = Number(0);
@@ -128,21 +139,7 @@ var bsType = (function () {
             return currentTemp;
         }
 
-        // goals target value's are calculated as a sum of all measure target values
-        this.targetValue = function () {
-            var targetTemp = Number(0);
-
-            for (var i = 0; i < this.children.length; i++) {
-                targetTemp += Number(this.children[i].targetValue);
-            }
-
-            return targetTemp;
-        }
-
-        this.completionRatio = function () {
-            return ((this.currentValue() / this.targetValue()) * 100);
-        }
-
+        // find if all children of this goal have been disabled
         this.allChildrenDisabled = function () {
             var childrenDisabled = true;
 
@@ -156,6 +153,17 @@ var bsType = (function () {
 
             return childrenDisabled;
         }
+
+        this.completionRatios = [];
+        this.completionTimes = [];
+
+        // get the completion ratio of the goal, calculated as current values over target value
+        this.calculateCompletionRatio = function () {
+            var ratio = Math.round(((this.currentValue() / this.targetValue()) * 100));
+            this.completionRatios.push(ratio);
+            var timeString = new Date().toLocaleDateString() + '\n' + new Date().toLocaleTimeString();
+            this.completionTimes.push(timeString);
+        }
     },
 
     // bs measure object.
@@ -163,8 +171,15 @@ var bsType = (function () {
         // set the type to perspective by default
         this.type = "measure";
 
-        this.completionRatio = function () {
-            return ((this.currentValue / this.targetValue) * 100);
+        this.completionRatios = [];
+        this.completionTimes = [];
+
+        // get the completion ratio of the goal, calculated as current values over target value
+        this.calculateCompletionRatio = function () {
+            var ratio = Math.round(((this.currentValue / this.targetValue) * 100));
+            this.completionRatios.push(ratio);
+            var timeString = new Date().toLocaleDateString() + ' - ' + new Date().toLocaleTimeString();
+            this.completionTimes.push(timeString);
         }
     },
 

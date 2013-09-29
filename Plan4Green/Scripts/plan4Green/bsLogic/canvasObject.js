@@ -74,12 +74,12 @@
                     bsItem.targetValue = bsValidation.validValue(edits.childNodes[5].firstChild.children[1].value, 10000000);
                     edits.childNodes[5].firstChild.children[1].value = bsItem.targetValue;
 
-                    console.log('target: ' + bsItem.targetValue);
-
                     bsItem.currentValue = bsValidation.validValue(edits.childNodes[4].firstChild.children[1].value, bsItem.targetValue);
                     edits.childNodes[4].firstChild.children[1].value = bsItem.currentValue;
 
-                    console.log('current: ' + bsItem.currentValue);
+                    bsItem.calculateCompletionRatio();
+                    bsItem.bsParent.calculateCompletionRatio();
+                    drawingPane.redrawBSItems(bsItem.bsParent);
 
                     // update view
                     views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsItem.targetValue;
@@ -237,7 +237,50 @@
                 }
 
                 graphClick = function (event) {
-                    // follow tutorial
+                    var prepCanvas = function () {
+                        var canvas = document.getElementById('graph-canvas');
+
+                        canvas.style.display = 'inline-block';
+                        main.page.style.display = 'none';
+                        main.viewParentImage.src = '../../Images/controls/drawing-page/exit-icon.png';
+                        main.currentView.innerHTML = 'Completion Graph: ' + bsItem.name;
+                        global.isGraphing = true;
+                    }
+
+                    if (bsItem.type == 'goal') { // move code to measures
+                        if (bsItem.children.length > 0) {
+                            prepCanvas();
+
+                            var nameArray = [];
+                            var valueArray = [];
+
+                            for (var i = 0; i < bsItem.children.length; i++) {
+                                nameArray.push(bsItem.children[i].name);
+                                valueArray.push(bsItem.children[i].completionRatios[bsItem.children[i].completionRatios.length - 1]);
+                            }
+
+                            graph.setXAxisLabels(nameArray);
+                            graph.setMaxValue(100);
+                            console.log(bsItem.name);
+                            graph.setGraphValues(valueArray);
+                        }
+                        else {
+                            alert('Please place at least one measure within ' + bsItem.name + ' before attempting to draw a graph.');
+                        }
+                    }
+                    else {
+                        if (bsItem.completionRatios.length > 0) {
+                            prepCanvas();
+
+                            graph.setXAxisLabels(bsItem.completionTimes);
+                            graph.setMaxValue(100);
+                            console.log(bsItem.name);
+                            graph.setGraphValues(bsItem.completionRatios);
+                        }
+                        else {
+                            alert('Please enter and save at least one Current and Target value into ' + bsItem.name + ' before attempting to make a graph.');
+                        }
+                    }
                 }
 
                 return {
@@ -289,6 +332,7 @@
 
             var createStoplight = function (bsItem) {
                 var canvas = document.createElement('canvas');
+                canvas.id = div.id + '-stoplight';
                 canvas.style.position = 'absolute';
                 canvas.style.left = '85px';
                 canvas.style.zIndex = '-5'

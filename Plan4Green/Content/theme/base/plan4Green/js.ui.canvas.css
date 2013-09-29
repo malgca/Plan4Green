@@ -10,6 +10,19 @@
     border-style: solid;
     border-width: 5px;
     border-radius: 5px;
+    display: block;
+}
+
+#graph-canvas {
+    background-color: rgb(115,114,115);
+    position: fixed;
+    right: 45px;
+    bottom: 30px;
+    border-radius: 5px;
+    height: 85%;
+    width: 85%;
+    border-style: solid;
+    display: none;
 }
 
 textarea {

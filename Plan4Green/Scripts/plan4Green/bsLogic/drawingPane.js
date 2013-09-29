@@ -104,18 +104,18 @@ var drawingPane = (function () {
         if (bsItem.type != 'perspective') {
             // create id entry
             var entryID = document.createElement('td');
-            entryID.id = bsItem.completionRatio();
+            entryID.id = bsItem.name + 'currentCompletion';
             entryID.className = 'viewID';
 
             if (bsItem.isActive) {
                 entryID.style.backgroundColor = '#666600'
             }
 
-            if (bsItem.type == 'goal') {
-                entryID.innerHTML = bsItem.currentValue();
+            if (bsItem.completionRatios[bsItem.completionRatios.length - 1] != undefined) {
+                entryID.innerHTML = bsItem.completionRatios[bsItem.completionRatios.length - 1].toFixed(0) + '%';
             }
             else {
-                entryID.innerHTML = bsItem.currentValue;
+                entryID.innerHTML = 0 + '%';
             }
 
             tableRow.appendChild(entryID);

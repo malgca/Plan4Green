@@ -216,6 +216,7 @@
     <Content Include="Images\controls\bs-item\graph.png" />
     <Content Include="Images\controls\bs-item\save.png" />
     <Content Include="Images\controls\bs-item\viewChild.png" />
+    <Content Include="Images\controls\drawing-page\exit-icon.png" />
     <Content Include="Images\controls\drawing-page\viewParent.png" />
     <Content Include="Images\controls\drawing-pane\dp-arrow-closed.png" />
     <Content Include="Images\controls\drawing-pane\dp-arrow-open.png" />
@@ -244,6 +245,7 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\plan4Green\bsLogic\bsValidation.js" />
+    <Content Include="Scripts\plan4Green\bsLogic\stoplight.js" />
     <Content Include="Scripts\plan4Green\siteLogic\ajaxOperations.js" />
     <Content Include="Scripts\plan4Green\siteLogic\animation.js" />
     <Content Include="Scripts\plan4Green\bsLogic\canvasObject.js" />

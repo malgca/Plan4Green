@@ -1,7 +1,7 @@
 ﻿/* Full credit to William Malone
 http://www.williammalone.com/articles/html5-canvas-javascript-bar-graph/
 */
-var graph = (function () {
+var stoplight = (function () {
     var context = document.getElementById("graph-canvas").getContext("2d");
 
     var barGraph = new BarGraph(context);
@@ -207,18 +207,18 @@ var graph = (function () {
                     try {
                         var label = that.xAxisLabelArr[i];
 
-                        if (that.xAxisLabelArr.length > 3) {
-                            if (label.length > 6) {
-                                label = label.slice(-8);
-                            }
-                        }
-
-                        if (that.xAxisLabelArr.length > 6) {
+                        if (that.xAxisLabelArr.length > 8) {
                             context.font = 'bold 10px sans-serif';
                         }
 
-                        if (that.xAxisLabelArr.length > 9) {
+                        if (that.xAxisLabelArr.length > 11) {
                             context.font = 'bold 8px sans-serif';
+                        }
+
+                        if (that.xAxisLabelArr.length > 7) {
+                            if (label.length > 6) {
+                                label = label.slice(-8);
+                            }
                         }
 
                         context.fillText(label,

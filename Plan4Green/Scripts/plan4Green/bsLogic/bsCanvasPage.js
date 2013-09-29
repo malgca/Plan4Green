@@ -15,7 +15,9 @@ global = {
     // global bs item reference
     bsParent: undefined,
     // array of existing BS perspectives.
-    perspectiveArray: new Array()
+    perspectiveArray: new Array(),
+    // flag if busy viewing a graph
+    isGraphing: false
 },
 
 main = (function () {
@@ -151,8 +153,21 @@ main = (function () {
         var pageEvents = (function () {
             // mousedown event handler
             mousedown = function (event) {
-                if (event.target === this) {
-                    viewItem(global.bsParent, true);
+                if (!global.isGraphing) {
+                    if (event.target === this) {
+                        viewItem(global.bsParent, true);
+                    }
+                }
+                else {
+                    bsCurrentView.innerHTML = global.bsParent.name;
+                    viewParentImage.src = "../../Images/controls/drawing-page/viewParent.png"
+
+                    var canvas = document.getElementById('graph-canvas');
+
+                    canvas.style.display = 'none';
+                    main.page.style.display = 'inline-block';
+
+                    global.isGraphing = false;
                 }
             },
 
@@ -231,7 +246,9 @@ main = (function () {
         init: init,
         page: page,
         currentPosition: currentPosition,
+        currentView: bsCurrentView,
         viewItem: viewItem,
+        viewParentImage: viewParentImage,
         clearPage: clearPage
     };
 }());
