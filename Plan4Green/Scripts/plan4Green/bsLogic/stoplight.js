@@ -1,4 +1,4 @@
-﻿/* Full credit to William Malone
+﻿/* adapted from graph by William Malone
 http://www.williammalone.com/articles/html5-canvas-javascript-bar-graph/
 */
 var stoplight = (function () {

@@ -13,6 +13,14 @@
 
     // add data to the database using ajax
     ajaxAdd = function (url, item) {
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: url,
+            data: JSON.stringify(item),
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+        });
     }
 
     // update data in the database using ajax

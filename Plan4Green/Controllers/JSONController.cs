@@ -83,9 +83,9 @@ namespace Plan4Green.Controllers
         /// Add a perspective to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult AddPerspective()
+        public JsonResult AddPerspective(string item)
         {
-            return Json("");
+            return Json(item);
         }
 
         /// <summary>
