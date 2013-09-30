@@ -24,7 +24,7 @@ var bsType = (function () {
         this.startDate = startDate;
         // date at which bsObject is due.
         this.dueDate = dueDate;
-
+        
         // the current co-ordinates of the bs object
         this.currentPosition = currentPosition;
         // flag indicating whether or not a bs object is currently editting
@@ -70,6 +70,8 @@ var bsType = (function () {
 
     // bs perspective object.
     Perspective = function () {
+        // store the name of the organisation this perspective belongs to
+        this.organisationName = '';
         // set the type to perspective by default
         this.type = "perspective";
 
@@ -155,14 +157,11 @@ var bsType = (function () {
         }
 
         this.completionRatios = [];
-        this.completionTimes = [];
 
         // get the completion ratio of the goal, calculated as current values over target value
         this.calculateCompletionRatio = function () {
             var ratio = Math.round(((this.currentValue() / this.targetValue()) * 100));
             this.completionRatios.push(ratio);
-            var timeString = new Date().toLocaleDateString() + '\n' + new Date().toLocaleTimeString();
-            this.completionTimes.push(timeString);
         }
     },
 

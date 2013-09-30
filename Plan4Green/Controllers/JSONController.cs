@@ -1,4 +1,7 @@
 ﻿using Plan4Green.Models.ObjectManager;
+using Plan4Green.Models.DB;
+using Plan4Green.Models.ViewModels;
+using System.Collections.Generic;
 using System.IO;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -76,16 +79,32 @@ namespace Plan4Green.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult GetPerspectives()
         {
-            return Json("");
+            UserManager userMan = new UserManager();
+            string organisationalInfo = userMan.GetUserOrganisation(WebSecurity.CurrentUserId);
+
+            PerspectiveManager persMan = new PerspectiveManager();
+            List<Perspective> perspectives = persMan.GetPerspectives(organisationalInfo);
+
+            return Json(perspectives);
         }
 
         /// <summary>
         /// Add a perspective to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult AddPerspective(string item)
+        public JsonResult AddPerspective(PerspectiveViewModel perspectiveViewModel)
         {
-            return Json(item);
+            Perspective newPerspective = new Perspective();
+            newPerspective.Perspective_Name = perspectiveViewModel.PerspectiveName;
+            newPerspective.Organisation_Name = perspectiveViewModel.OrganisationName;
+            newPerspective.Description = perspectiveViewModel.Description;
+            
+
+            PerspectiveManager persMan = new PerspectiveManager();
+            persMan.AddPerspective(
+
+
+            return Json(perspectiveViewModel);
         }
 
         /// <summary>
@@ -114,9 +133,9 @@ namespace Plan4Green.Controllers
         /// Add a perspective to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult AddGoal()
+        public JsonResult AddGoal(GoalViewModel goalViewModel)
         {
-            return Json("");
+            return Json(goalViewModel);
         }
 
         /// <summary>
@@ -145,9 +164,9 @@ namespace Plan4Green.Controllers
         /// Add a perspective to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult AddMeasure()
+        public JsonResult AddMeasure(MeasureViewModel measureViewModel)
         {
-            return Json("");
+            return Json(measureViewModel);
         }
 
         /// <summary>
@@ -176,9 +195,9 @@ namespace Plan4Green.Controllers
         /// Add a perspective to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult AddCompletionScore()
+        public JsonResult AddCompletionScore(CompletionScoreViewModel completionScoreViewModel)
         {
-            return Json("");
+            return Json(completionScoreViewModel);
         }
 
         #endregion

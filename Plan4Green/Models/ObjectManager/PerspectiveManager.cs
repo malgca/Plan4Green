@@ -1,4 +1,5 @@
 ﻿using Plan4Green.Models.DB;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Plan4Green.Models.ObjectManager
@@ -42,6 +43,21 @@ namespace Plan4Green.Models.ObjectManager
         /// <param name="Perspective">The Perspective to be deleted from the Database.</param>
         public void DeletePerspective(Perspective Perspective)
         {
+        }
+
+        /// <summary>
+        /// Get's the perspectives associated with an Organisation from a database.
+        /// </summary>
+        /// <param name="organisationName"></param>
+        public List<Perspective> GetPerspectives(string organisationName)
+        {
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                return (
+                    from perspectives in context.Perspectives
+                    where perspectives.Organisation_Name == organisationName
+                    select perspectives).ToList();
+            }
         }
 
         // Check if a Perspective already exists in the database.

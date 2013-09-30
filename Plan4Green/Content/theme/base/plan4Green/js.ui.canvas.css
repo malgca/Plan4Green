@@ -135,6 +135,8 @@ textarea {
     z-index: 3;
     background-color: rgba(178, 178, 178, 0.50);
     border-radius: 15px;
+    border-color: grey;
+    border-style: solid;
 }
 
     .canvasObject:hover {

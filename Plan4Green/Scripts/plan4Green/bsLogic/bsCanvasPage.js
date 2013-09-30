@@ -194,8 +194,9 @@ main = (function () {
                         if (global.bsLevel == undefined) {
                             bsItem = bsType.createPerspective(currentPosition(event));
                             bsItem.bsParent = undefined;
+                            bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
                             global.perspectiveArray.push(bsItem);
-                            ajax.add('/JSON/AddPerspective', bsItem);
+                            ajax.perspective('/JSON/AddPerspective', bsItem);
                         }
                         break;
                     case ('goal'):
@@ -203,7 +204,8 @@ main = (function () {
                             bsItem = bsType.createGoal(currentPosition(event));
                             bsItem.bsParent = global.bsParent;
                             bsItem.bsParent.addChildObject(bsItem);
-                            ajax.add('/JSON/AddGoal', bsItem);
+                            bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
+                            ajax.goal('/JSON/AddGoal', bsItem);
                         }
                         break;
                     case ('measure'):
@@ -211,7 +213,7 @@ main = (function () {
                             bsItem = bsType.createMeasure(currentPosition(event));
                             bsItem.bsParent = global.bsParent;
                             bsItem.bsParent.addChildObject(bsItem);
-                            ajax.add('/JSON/AddMeasure', bsItem);
+                            ajax.measure('/JSON/AddMeasure', bsItem);
                         }
                         break;
                     default: return;
