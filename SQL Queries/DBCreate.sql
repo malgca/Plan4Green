@@ -32,6 +32,8 @@ CREATE TABLE Perspective
 	Perspective_Name varchar(300) NOT NULL,
 
 	Description text,
+	X_Position int,
+	Y_Position int,
 
 	Organisation_Name varchar(600) NOT NULL
 
@@ -47,7 +49,8 @@ CREATE TABLE Goal
 	Description text,
 	Start_Date date,
 	Due_Date date,
-	Target_Value varchar(100),
+	X_Position int,
+	Y_Position int,
 	
 	Perspective_Name varchar(300),
 	Organisation_Name varchar(600),
@@ -64,6 +67,8 @@ CREATE TABLE Measure
 	Description text,
 	Start_Date date,
 	Due_Date date,
+	X_Position int,
+	Y_Position int,
 
 	Target_Value varchar(100),
 

@@ -40,27 +40,35 @@ var bsType = (function () {
         this.isEnabled = true;
         // notify if bsObject is currently being viewed
         this.isActive = false;
+        // the old reference by which this object was refered, used when changing names
+        this.oldRef = this.name;
 
         // add a child object to this bsObject's array.
         this.addChildObject = function (childObject) {
             // make sure the object isn't in there already
-            if (this.children.indexOf(childObject) == -1) {
-                this.children.push(childObject);
+            for (var i = 0; i < this.children.length; i++) {
+                if (this.children[i].name === childObject.name) {
+                    alert('Please rename and save ' + childObject.name + ' before attempting to add a new ' + childObject.type + ' to the canvas.');
+                    return false;
+                }
             }
+            this.children.push(childObject);
+            return true;
         };
 
-        // remove a child object from this bsObject's array.
-        this.removeChildObject = function (childObject) {
-            if (this.children.indexOf(childObject) == -1) {
-                this.children.splice(childIndex, 1);
-            }
-        };
+        // change the name of the object, keeping the old ref intact
+        this.changeName = function (newName) {
+            this.oldRef = this.name;
+            this.name = newName;
+        }
 
+        // set an item to be enabled for editing
         this.enableItem = function () {
             this.isEditing = true;
             this.isEnabled = true;
         }
 
+        // set an item to be disabled for editing
         this.disableItem = function () {
             console.log('disabling ' + name);
             this.isEditing = false;
@@ -185,7 +193,7 @@ var bsType = (function () {
     // create a perspective object
     createPerspective = function (position) {
         // inherit the BSObject
-        Perspective.prototype = new BSObject("Perspective Name" + debug.count, defaultDescription, null, null, null, null, position);
+        Perspective.prototype = new BSObject("Perspective Name", defaultDescription, null, null, null, null, position);
 
         // create a new perspective object.
         return new Perspective();
@@ -194,7 +202,7 @@ var bsType = (function () {
     // create a goal object
     createGoal = function (position) {
         // inherit the BSObject
-        Goal.prototype = new BSObject("Goal Name" + debug.count, defaultDescription, 0, 1, null, null, position);
+        Goal.prototype = new BSObject("Goal Name", defaultDescription, 0, 1, null, null, position);
 
         // create a new goal object.
         return new Goal();
@@ -203,7 +211,7 @@ var bsType = (function () {
     // create a measure object
     createMeasure = function (position) {
         // inherit the BSObject
-        Measure.prototype = new BSObject("Measure Name" + debug.count, defaultDescription, 0, 1, null, null, position);
+        Measure.prototype = new BSObject("Measure Name", defaultDescription, 0, 1, null, null, position);
 
         // create a measure goal object.
         return new Measure();

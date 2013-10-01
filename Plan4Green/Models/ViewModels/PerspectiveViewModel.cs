@@ -5,7 +5,43 @@ namespace Plan4Green.Models.ViewModels
 {
     public class PerspectiveViewModel
     {
-        public string PerspectiveName { get; set; }
+        private string _perspectiveName;
+        private string _oldReference;
+
+        public string OldReference 
+        {
+            get
+            {
+                if (_oldReference == string.Empty)
+                {
+                    _oldReference = _perspectiveName;
+                }
+
+                return _oldReference;
+            }
+            private set
+            {
+                if (_oldReference != value)
+                {
+                    _oldReference = value;
+                }
+            }
+        }
+        public string PerspectiveName
+        {
+            get
+            {
+                return _perspectiveName;
+            }
+            set 
+            {
+                if (value != _perspectiveName)
+                {
+                    OldReference = _perspectiveName;
+                    _perspectiveName = value;
+                }
+            }
+        }
         public string Description { get; set; }
         public string OrganisationName { get; set; }
         

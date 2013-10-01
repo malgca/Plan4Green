@@ -15,8 +15,5 @@ namespace Plan4Green.Models.ViewModels
         public int yPosition { get; set; }
 
         public string Parent { get; set; }
-
-        public List<object> CompletionRatios { get; set; }
-        public List<object> CompletionTimes { get; set; }
     }
 }

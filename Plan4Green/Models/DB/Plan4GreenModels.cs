@@ -81,7 +81,9 @@ namespace Plan4Green.Models.DB
         public string Perspective_Name { get; set; }
         
         public string Description { get; set; }
-        
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
+
         [Key, Column(Order = 1)]
         [ForeignKey("Assigned_Organisation")]
         public string Organisation_Name { get; set; }
@@ -100,16 +102,15 @@ namespace Plan4Green.Models.DB
         
         [DataType(DataType.Date)]
         public DateTime Start_Date { get; set; }
-        
         [DataType(DataType.Date)]
         public DateTime Due_Date { get; set; }
         
-        public string Target_Value { get; set; }
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
 
         [Key, Column(Order = 1)]
         [ForeignKey("Assigned_Perspective")]
         public string Perspective_Name { get; set; }
-
 
         [ForeignKey("Assigned_Perspective"), Column(Order = 2)]
         public string Organisation_Name { get; set; }
@@ -133,6 +134,8 @@ namespace Plan4Green.Models.DB
         public DateTime Due_Date { get; set; }
 
         public string Target_Value { get; set; }
+        public int X_Position { get; set; }
+        public int Y_Position { get; set; }
         
         [Key, Column(Order = 1)]
         [ForeignKey("Assigned_Goal")]

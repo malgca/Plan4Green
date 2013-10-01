@@ -32,7 +32,7 @@
             if (bsItem.type == 'perspective') {
                 // update name
                 if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
-                    bsItem.name = edits.childNodes[0].firstChild.value;
+                    bsItem.changeName(edits.childNodes[0].firstChild.value);
                     views.childNodes[0].firstChild.innerHTML = bsItem.name;
                     edits.childNodes[0].firstChild.style.color = '#2e2e2e';
                 }
@@ -93,6 +93,21 @@
                     views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsValidation.validValue(bsItem.targetValue(), 10000000);
                 }
             }
+
+            console.log('saving');
+            switch (bsItem.type) {
+                case 'perspective':
+                    ajax.perspective('/JSON/UpdatePerspective', bsItem);
+                    break;
+                case 'goal':
+                    ajax.goal('/JSON/UpdateGoal', bsItem);
+                    break;
+                case 'measure':
+                    ajax.measure('/JSON/UpdateMeasure', bsItem);
+                    break;
+            }
+            console.log('saved');
+
         }
 
         createControls = function () {

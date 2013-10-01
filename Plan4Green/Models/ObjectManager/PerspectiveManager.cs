@@ -1,4 +1,5 @@
 ﻿using Plan4Green.Models.DB;
+using Plan4Green.Models.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,32 +18,51 @@ namespace Plan4Green.Models.ObjectManager
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                Perspective workingPerspective = new Perspective();
-
                 if (!PerspectiveExists(context, newPerspective.Perspective_Name))
                 {
-                    workingPerspective = newPerspective;
+                    context.Perspectives.Add(newPerspective);
+                    context.SaveChanges();
                 }
-
-                context.Perspectives.Add(workingPerspective);
-                context.SaveChanges();
             }
         }
 
         /// <summary>
         /// Updates information on a Perspective in the Database.
         /// </summary>
-        /// <param name="Perspective">The Perspective to be updated in the Database.</param>
-        public void UpdatePerspective(Perspective Perspective)
+        /// <param name="Perspective">The ViewModel containing the Perspective to be updated in the Database.</param>
+        public void UpdatePerspective(PerspectiveViewModel pvm)
         {
-        }
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                // should search by old reference here!
+                if (PerspectiveExists(context, pvm.PerspectiveName))
+                {
+                    // find what's changed and change it
+                    Perspective workingPers = (from perspective in context.Perspectives
+                                               where perspective.Perspective_Name == pvm.PerspectiveName
+                                               select perspective).First();
 
-        /// <summary>
-        /// Deletes a Perspective from the Database.
-        /// </summary>
-        /// <param name="Perspective">The Perspective to be deleted from the Database.</param>
-        public void DeletePerspective(Perspective Perspective)
-        {
+                    workingPers.Perspective_Name = pvm.PerspectiveName;
+                    //if (workingPers.Perspective_Name != pvm.OldReference)
+                    //{
+                    //    workingPers.Perspective_Name = pvm.PerspectiveName;
+                    //}
+                    if (workingPers.Description != pvm.Description)
+                    {
+                        workingPers.Description = pvm.Description;
+                    }
+                    if (workingPers.X_Position != pvm.xPosition)
+                    {
+                        workingPers.X_Position = pvm.xPosition;
+                    }
+                    if (workingPers.Y_Position != pvm.yPosition)
+                    {
+                        workingPers.Y_Position = pvm.yPosition;
+                    }
+
+                    context.SaveChanges();
+                }
+            }
         }
 
         /// <summary>

@@ -149,6 +149,18 @@ main = (function () {
             instructionArray.push("Click on edit to edit the object you just dropped.");
             instructionArray.push("Click on view to view the object you just dropped.");
         }
+        // populate the bsItems from the database
+        var populateItems = function () {
+            var itemContainer
+
+            // get the perspectives
+            ajax.get('/JSON/GetPerspectives', function (newItem) {
+                itemContainer = newItem;
+            });
+
+            console.log(itemContainer);
+
+        }
 
         var pageEvents = (function () {
             // mousedown event handler
@@ -186,40 +198,64 @@ main = (function () {
 
             mousedrop = function (event) {
                 event.preventDefault();
+                var success = false;
                 var data = event.dataTransfer.getData("thumb");
                 var bsItem;
 
                 switch (data) {
                     case ('perspective'):
                         if (global.bsLevel == undefined) {
+                            success = true;
+
                             bsItem = bsType.createPerspective(currentPosition(event));
-                            bsItem.bsParent = undefined;
-                            bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
-                            global.perspectiveArray.push(bsItem);
-                            ajax.perspective('/JSON/AddPerspective', bsItem);
+
+                            for (var i = 0; i < global.perspectiveArray.length; i++) {
+                                if (bsItem.name === global.perspectiveArray[i].name) {
+                                    success = false;
+                                    break;
+                                }
+                            }
+
+                            if (success) {
+                                bsItem.bsParent = undefined;
+                                bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
+                                global.perspectiveArray.push(bsItem);
+                                 //ajax.perspective('/JSON/AddPerspective', bsItem);
+                            }
+                            else {
+                                alert('Please rename and save ' + bsItem.name + ' before attempting to add a new ' + bsItem.type + ' to the canvas.');
+                            }
                         }
                         break;
                     case ('goal'):
                         if (global.bsLevel == 'perspective') {
                             bsItem = bsType.createGoal(currentPosition(event));
                             bsItem.bsParent = global.bsParent;
-                            bsItem.bsParent.addChildObject(bsItem);
-                            bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
-                            ajax.goal('/JSON/AddGoal', bsItem);
+                            success = bsItem.bsParent.addChildObject(bsItem);
+
+                            if (success) {
+                                bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
+                                //ajax.goal('/JSON/AddGoal', bsItem);
+                            }
                         }
                         break;
                     case ('measure'):
                         if (global.bsLevel == 'goal') {
                             bsItem = bsType.createMeasure(currentPosition(event));
                             bsItem.bsParent = global.bsParent;
-                            bsItem.bsParent.addChildObject(bsItem);
-                            ajax.measure('/JSON/AddMeasure', bsItem);
+                            success = bsItem.bsParent.addChildObject(bsItem);
+
+                            if (success) {
+                                //ajax.measure('/JSON/AddMeasure', bsItem);
+                            }
+                            
                         }
                         break;
                     default: return;
                 }
 
-                if (bsItem != undefined) {
+                if (bsItem != undefined &&
+                    success) {
                     canvasObject.create(bsItem);
                 }
             }
@@ -241,6 +277,7 @@ main = (function () {
         viewParentImage.addEventListener("mousedown", pageEvents.mousedown, false);
         // call the poplate instruction array method
         populateInstructions();
+        populateItems();
     }
 
     // initilalize the main.js script when the window loads

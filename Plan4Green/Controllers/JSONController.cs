@@ -6,6 +6,7 @@ using System.IO;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using WebMatrix.WebData;
+using System.Web.Script.Serialization;
 
 namespace Plan4Green.Controllers
 {
@@ -85,7 +86,19 @@ namespace Plan4Green.Controllers
             PerspectiveManager persMan = new PerspectiveManager();
             List<Perspective> perspectives = persMan.GetPerspectives(organisationalInfo);
 
-            return Json(perspectives);
+            var array = perspectives.ToArray();
+            string perspectiveString = string.Empty;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                perspectiveString += array[i].Perspective_Name + "^";
+                perspectiveString += array[i].Description + "^";
+                perspectiveString += array[i].Organisation_Name + "^";
+                perspectiveString += array[i].X_Position + "^";
+                perspectiveString += array[i].Y_Position + "^";
+            }
+
+            return Json(perspectiveString);
         }
 
         /// <summary>
@@ -95,34 +108,30 @@ namespace Plan4Green.Controllers
         public JsonResult AddPerspective(PerspectiveViewModel perspectiveViewModel)
         {
             Perspective newPerspective = new Perspective();
-            newPerspective.Perspective_Name = perspectiveViewModel.PerspectiveName;
-            newPerspective.Organisation_Name = perspectiveViewModel.OrganisationName;
-            newPerspective.Description = perspectiveViewModel.Description;
             
-
+            newPerspective.Perspective_Name = perspectiveViewModel.PerspectiveName;
+            newPerspective.Description = perspectiveViewModel.Description;
+            newPerspective.Organisation_Name = perspectiveViewModel.OrganisationName;
+            newPerspective.X_Position = perspectiveViewModel.xPosition;
+            newPerspective.Y_Position = perspectiveViewModel.yPosition;
+            
             PerspectiveManager persMan = new PerspectiveManager();
-            persMan.AddPerspective(
-
+            persMan.AddPerspective(newPerspective);
 
             return Json(perspectiveViewModel);
-        }
-
-        /// <summary>
-        /// Delete a perspective from the database.
-        /// </summary>
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult DeletePerspective()
-        {
-            return Json("");
         }
 
         /// <summary>
         /// Change a perspective in the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult UpdatePerspective()
+        public JsonResult UpdatePerspective(PerspectiveViewModel perspectiveViewModel)
         {
-            return Json("");
+
+            PerspectiveManager persMan = new PerspectiveManager();
+            persMan.UpdatePerspective(perspectiveViewModel);
+
+            return Json(string.Format("Succesfullly Updated {0}", perspectiveViewModel.PerspectiveName));
         }
 
         #endregion
