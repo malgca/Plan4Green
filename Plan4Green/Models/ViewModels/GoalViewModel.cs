@@ -1,10 +1,12 @@
 ﻿using Plan4Green.Models.DB;
+using System;
 using System.Collections.Generic;
 
 namespace Plan4Green.Models.ViewModels
 {
     public class GoalViewModel
     {
+        public string OldReference { get; set; }
         public string GoalName { get; set; }
         public string Description { get; set; }
 
@@ -14,9 +16,7 @@ namespace Plan4Green.Models.ViewModels
         public int xPosition { get; set; }
         public int yPosition { get; set; }
 
-        public string Parent { get; set; }
+        public string ParentName { get; set; }
         public string OrganisationName { get; set; }
-
-        public List<object> Children { get; set; }
     }
 }

@@ -80,11 +80,11 @@ namespace Plan4Green.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult GetPerspectives()
         {
-            UserManager userMan = new UserManager();
-            string organisationalInfo = userMan.GetUserOrganisation(WebSecurity.CurrentUserId);
+            UserManager um = new UserManager();
+            string organisationName = um.GetUserOrganisation(WebSecurity.CurrentUserId);
 
-            PerspectiveManager persMan = new PerspectiveManager();
-            List<Perspective> perspectives = persMan.GetPerspectives(organisationalInfo);
+            PerspectiveManager pm = new PerspectiveManager();
+            List<Perspective> perspectives = pm.GetPerspectives(organisationName);
 
             var array = perspectives.ToArray();
             string perspectiveString = string.Empty;
@@ -95,7 +95,7 @@ namespace Plan4Green.Controllers
                 perspectiveString += array[i].Description + "^";
                 perspectiveString += array[i].Organisation_Name + "^";
                 perspectiveString += array[i].X_Position + "^";
-                perspectiveString += array[i].Y_Position + "^";
+                perspectiveString += array[i].Y_Position + "|";
             }
 
             return Json(perspectiveString);
@@ -105,33 +105,24 @@ namespace Plan4Green.Controllers
         /// Add a perspective to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult AddPerspective(PerspectiveViewModel perspectiveViewModel)
-        {
-            Perspective newPerspective = new Perspective();
-            
-            newPerspective.Perspective_Name = perspectiveViewModel.PerspectiveName;
-            newPerspective.Description = perspectiveViewModel.Description;
-            newPerspective.Organisation_Name = perspectiveViewModel.OrganisationName;
-            newPerspective.X_Position = perspectiveViewModel.xPosition;
-            newPerspective.Y_Position = perspectiveViewModel.yPosition;
-            
-            PerspectiveManager persMan = new PerspectiveManager();
-            persMan.AddPerspective(newPerspective);
+        public JsonResult AddPerspective(PerspectiveViewModel pvm)
+        {           
+            PerspectiveManager pm = new PerspectiveManager();
+            pm.AddPerspective(pvm);
 
-            return Json(perspectiveViewModel);
+            return Json(pvm);
         }
 
         /// <summary>
         /// Change a perspective in the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult UpdatePerspective(PerspectiveViewModel perspectiveViewModel)
+        public JsonResult UpdatePerspective(PerspectiveViewModel pvm)
         {
+            PerspectiveManager pm = new PerspectiveManager();
+            pm.UpdatePerspective(pvm);
 
-            PerspectiveManager persMan = new PerspectiveManager();
-            persMan.UpdatePerspective(perspectiveViewModel);
-
-            return Json(string.Format("Succesfullly Updated {0}", perspectiveViewModel.PerspectiveName));
+            return Json(string.Format("Succesfullly Updated {0}", pvm.OldReference));
         }
 
         #endregion
@@ -139,30 +130,57 @@ namespace Plan4Green.Controllers
         #region Goal Operations
 
         /// <summary>
-        /// Add a perspective to the database.
+        /// Gets the current goals belonging to an organisation.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult AddGoal(GoalViewModel goalViewModel)
+        public JsonResult GetGoals()
         {
-            return Json(goalViewModel);
+            UserManager um = new UserManager();
+            string organisationName = um.GetUserOrganisation(WebSecurity.CurrentUserId);
+
+            GoalManager gm = new GoalManager();
+            List<Goal> goals = gm.GetGoals(organisationName);
+
+            var array = goals.ToArray();
+            string goalString = string.Empty;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                goalString += array[i].Goal_Name + "^";
+                goalString += array[i].Description + "^";
+                goalString += array[i].Organisation_Name + "^";
+                goalString += array[i].X_Position + "^";
+                goalString += array[i].Y_Position + "^";
+                goalString += array[i].Start_Date + "^";
+                goalString += array[i].Due_Date + "^";
+                goalString += array[i].Perspective_Name + "|";
+            }
+
+            return Json(goalString);
         }
 
         /// <summary>
-        /// Delete a perspective from the database.
+        /// Add a perspective to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult DeleteGoal()
+        public JsonResult AddGoal(GoalViewModel gvm)
         {
-            return Json("");
+            GoalManager gm = new GoalManager();
+            gm.AddGoal(gvm);
+
+            return Json(gvm);
         }
 
         /// <summary>
         /// Change a perspective in the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult UpdateGoal()
+        public JsonResult UpdateGoal(GoalViewModel gvm)
         {
-            return Json("");
+            GoalManager gm = new GoalManager();
+            gm.UpdateGoal(gvm);
+
+            return Json(gvm);
         }
 
         #endregion
@@ -170,30 +188,59 @@ namespace Plan4Green.Controllers
         #region Measure Operations
 
         /// <summary>
-        /// Add a perspective to the database.
+        /// Gets the current measures belonging to an organisation.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult AddMeasure(MeasureViewModel measureViewModel)
+        public JsonResult GetMeasures()
         {
-            return Json(measureViewModel);
+            UserManager um = new UserManager();
+            string organisationName = um.GetUserOrganisation(WebSecurity.CurrentUserId);
+
+            MeasureManager mm = new MeasureManager();
+            List<Measure> measures = mm.GetMeasures(organisationName);
+
+            var array = measures.ToArray();
+            string measureString = string.Empty;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                measureString += array[i].Measure_Name + "^";
+                measureString += array[i].Description + "^";
+                measureString += array[i].Organisation_Name + "^";
+                measureString += array[i].X_Position + "^";
+                measureString += array[i].Y_Position + "^";
+                measureString += array[i].Start_Date + "^";
+                measureString += array[i].Due_Date + "^";
+                measureString += array[i].Perspective_Name + "^";
+                measureString += array[i].Target_Value + "^";
+                measureString += array[i].Goal_Name + "|";
+            }
+
+            return Json(measureString);
         }
 
         /// <summary>
-        /// Delete a perspective from the database.
+        /// Add a perspective to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult DeleteMeasure()
+        public JsonResult AddMeasure(MeasureViewModel mvm)
         {
-            return Json("");
+            MeasureManager mm = new MeasureManager();
+            mm.AddMeasure(mvm);
+
+            return Json(mvm);
         }
 
         /// <summary>
         /// Change a perspective in the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult UpdateMeasure()
+        public JsonResult UpdateMeasure(MeasureViewModel mvm)
         {
-            return Json("");
+            MeasureManager mm = new MeasureManager();
+            mm.UpdateMeasure(mvm);
+
+            return Json(mvm);
         }
 
         #endregion
@@ -204,9 +251,12 @@ namespace Plan4Green.Controllers
         /// Add a perspective to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult AddCompletionScore(CompletionScoreViewModel completionScoreViewModel)
+        public JsonResult AddCompletionScore(CompletionScoreViewModel csvm)
         {
-            return Json(completionScoreViewModel);
+            CompletionScoreManager csm = new CompletionScoreManager();
+            csm.AddCompletionScore(csvm);
+
+            return Json(csvm);
         }
 
         #endregion

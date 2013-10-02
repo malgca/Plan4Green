@@ -42,6 +42,8 @@ var bsType = (function () {
         this.isActive = false;
         // the old reference by which this object was refered, used when changing names
         this.oldRef = this.name;
+        // store the name of the organisation this perspective belongs to
+        this.organisationName = '';
 
         // add a child object to this bsObject's array.
         this.addChildObject = function (childObject) {
@@ -70,7 +72,6 @@ var bsType = (function () {
 
         // set an item to be disabled for editing
         this.disableItem = function () {
-            console.log('disabling ' + name);
             this.isEditing = false;
             this.isEnabled = false;
         }
@@ -78,8 +79,6 @@ var bsType = (function () {
 
     // bs perspective object.
     Perspective = function () {
-        // store the name of the organisation this perspective belongs to
-        this.organisationName = '';
         // set the type to perspective by default
         this.type = "perspective";
 

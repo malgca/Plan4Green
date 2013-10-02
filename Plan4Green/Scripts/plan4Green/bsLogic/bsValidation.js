@@ -7,7 +7,6 @@
             }
 
             if (Number(value) > Number(maxValue)) {
-                console.log(value + ' exceeds max value ' + maxValue);
                 return Number(maxValue);
             }
 

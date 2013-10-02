@@ -1,4 +1,6 @@
 ﻿using Plan4Green.Models.DB;
+using Plan4Green.Models.ViewModels;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Plan4Green.Models.ObjectManager
@@ -9,22 +11,45 @@ namespace Plan4Green.Models.ObjectManager
     public class MeasureManager
     {
         /// <summary>
-        /// Add an organisation to the Database
+        /// Get's the measures associated with an Organisation from a database.
         /// </summary>
-        /// <param name="organisation">The name of the Organisation to be added.</param>
-        public void AddMeasure(Measure newMeasure)
+        /// <param name="organisationName"></param>
+        public List<Measure> GetMeasures(string organisationName)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                Measure workingMeasure = new Measure();
+                return (from measure in context.Measures
+                        where measure.Organisation_Name == organisationName
+                        select measure).ToList();
+            }
+        }
 
-                if (!MeasureExists(context, newMeasure.Measure_Name, newMeasure.Goal_Name))
+        /// <summary>
+        /// Add an organisation to the Database
+        /// </summary>
+        /// <param name="organisation">The name of the Organisation to be added.</param>
+        public void AddMeasure(MeasureViewModel mvm)
+        {
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                if (!MeasureExists(context, mvm.MeasureName, mvm.ParentName))
                 {
-                    workingMeasure = newMeasure;
-                }
+                    Measure newMeasure = new Measure();
 
-                context.Measures.Add(workingMeasure);
-                context.SaveChanges();
+                    newMeasure.Measure_Name = mvm.MeasureName;
+                    newMeasure.Description = mvm.Description;
+                    newMeasure.Start_Date = mvm.StartDate;
+                    newMeasure.Due_Date = mvm.DueDate;
+                    newMeasure.X_Position = mvm.xPosition;
+                    newMeasure.Y_Position = mvm.yPosition;
+                    newMeasure.Target_Value = mvm.targetValue;
+                    newMeasure.Goal_Name = mvm.ParentName;
+                    newMeasure.Perspective_Name = mvm.GrandparentName;
+                    newMeasure.Organisation_Name = mvm.OrganisationName;
+
+                    context.Measures.Add(newMeasure);
+                    context.SaveChanges();
+                }
             }
         }
         
@@ -32,16 +57,63 @@ namespace Plan4Green.Models.ObjectManager
         /// Updates information on a Measure in the Database.
         /// </summary>
         /// <param name="measure">The Measure to be updated in the Database.</param>
-        public void UpdateMeasure(Measure measure)
+        public void UpdateMeasure(MeasureViewModel mvm)
         {
-        }
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                // case for changing names
+                if (MeasureExists(context, mvm.OldReference, mvm.ParentName))
+                {
+                    Measure workingMeasure = (from measure in context.Measures
+                                              where measure.Measure_Name == mvm.OldReference
+                                              select measure).First();
 
-        /// <summary>
-        /// Deletes a Measure from the Database.
-        /// </summary>
-        /// <param name="measure">The Measure to be deleted from the Database.</param>
-        public void DeleteMeasure(Measure measure)
-        {
+                    if (workingMeasure.Measure_Name != mvm.MeasureName)
+                    {
+                        context.Measures.Remove(workingMeasure);
+                        AddMeasure(mvm);
+                        context.SaveChanges();
+                        return;
+                    }
+                }
+                if (MeasureExists(context, mvm.MeasureName, mvm.ParentName))
+                {
+                    Measure workingMeasure = (from measure in context.Measures
+                                           where measure.Measure_Name == mvm.MeasureName
+                                           select measure).First();
+
+                    if (workingMeasure.Description != mvm.Description)
+                    {
+                        workingMeasure.Description = mvm.Description;
+                    }
+                    if (workingMeasure.X_Position != mvm.xPosition)
+                    {
+                        workingMeasure.X_Position = mvm.xPosition;
+                    }
+                    if (workingMeasure.Y_Position != mvm.yPosition)
+                    {
+                        workingMeasure.Y_Position = mvm.yPosition;
+                    }
+                    if (workingMeasure.Start_Date != mvm.StartDate)
+                    {
+                        workingMeasure.Start_Date = mvm.StartDate;
+                    }
+                    if (workingMeasure.Due_Date != mvm.DueDate)
+                    {
+                        workingMeasure.Due_Date = mvm.DueDate;
+                    }
+                    if (workingMeasure.Target_Value != mvm.targetValue)
+                    {
+                        workingMeasure.Target_Value = mvm.targetValue;
+                    }
+                    if (workingMeasure.Organisation_Name != mvm.OrganisationName)
+                    {
+                        workingMeasure.Organisation_Name = mvm.OrganisationName;
+                    }
+                }
+
+                context.SaveChanges();
+            }
         }
 
         // Check if a Measure already exists in the database.

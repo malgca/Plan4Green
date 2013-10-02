@@ -7,6 +7,7 @@
             url: url,
             data: JSON.stringify(url),
             dataType: "json",
+            async: true,
             success: success
         });
     }
@@ -18,19 +19,21 @@
             type: "POST",
             url: url,
             data: JSON.stringify({
+                OldReference: perspective.oldRef,
                 PerspectiveName: perspective.name,
                 Description: perspective.description,
                 OrganisationName: perspective.organisationName,
 
                 xPosition: perspective.currentPosition.x,
                 yPosition: perspective.currentPosition.y,
-
-                Children: perspective.children
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',
             success: function (newItem) {
                 console.log(newItem);
+            },
+            error: function () {
+                console.log('an error has occured');
             }
         });
     }
@@ -42,6 +45,7 @@
             type: "POST",
             url: url,
             data: JSON.stringify({
+                OldReference: goal.oldRef,
                 GoalName: goal.name,
                 Description: goal.description,
 
@@ -51,10 +55,8 @@
                 xPosition: goal.currentPosition.x,
                 yPosition: goal.currentPosition.y,
 
-                Parent: goal.bsParent,
+                ParentName: goal.bsParent.name,
                 OrganisationName: goal.organisationName,
-
-                Children: goal.children
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',
@@ -71,19 +73,43 @@
             type: "POST",
             url: url,
             data: JSON.stringify({
+                OldReference: measure.oldRef,
                 MeasureName: measure.name,
                 Description: measure.description,
+                OrganisationName: measure.organisationName,
                 
                 StartDate: measure.startDate,
                 DueDate: measure.dueDate,
 
                 xPosition: measure.currentPosition.x,
                 yPosition: measure.currentPosition.y,
+                targetValue: measure.targetValue,
 
-                Parent: measure.bsParent,
+                ParentName: measure.bsParent.name,
+                GrandparentName: measure.bsParent.bsParent.name,
 
                 CompletionRatios: measure.completionRatios,
                 CompletionTimes: measure.completionTimes,
+            }),
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            success: function (newItem) {
+                console.log(newItem);
+            }
+        });
+    }
+
+    // add or update completion ratio data to the database using ajax
+    ajaxCompletionRatio = function (url, measure) {
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: url,
+            data: JSON.stringify({
+                CompletionScoreTime: measure.completionTimes[completionTimes.length - 1],
+                CurrentValue: measure.completionRatios[completionRatios.length - 1],
+                ParentName: measure.bsParent.name,
+                GrandparentName: measure.bsParent.bsParent.name
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',

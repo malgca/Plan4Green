@@ -14,12 +14,20 @@ namespace Plan4Green.Models.ObjectManager
         /// Add an organisation to the Database
         /// </summary>
         /// <param name="organisation">The name of the Organisation to be added.</param>
-        public void AddPerspective(Perspective newPerspective)
+        public void AddPerspective(PerspectiveViewModel pvm)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                if (!PerspectiveExists(context, newPerspective.Perspective_Name))
+                if (!PerspectiveExists(context, pvm.PerspectiveName))
                 {
+                    Perspective newPerspective = new Perspective();
+
+                    newPerspective.Perspective_Name = pvm.PerspectiveName;
+                    newPerspective.Description = pvm.Description;
+                    newPerspective.Organisation_Name = pvm.OrganisationName;
+                    newPerspective.X_Position = pvm.xPosition;
+                    newPerspective.Y_Position = pvm.yPosition;
+
                     context.Perspectives.Add(newPerspective);
                     context.SaveChanges();
                 }
@@ -34,19 +42,30 @@ namespace Plan4Green.Models.ObjectManager
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                // should search by old reference here!
-                if (PerspectiveExists(context, pvm.PerspectiveName))
+                // case exists purely for changing names
+                if (PerspectiveExists(context, pvm.OldReference))
+                {
+                    // find what's changed and change it
+                    Perspective workingPers = (from perspective in context.Perspectives
+                                               where perspective.Perspective_Name == pvm.OldReference
+                                               select perspective).First();
+
+                    // have changed the name, which is a key, so must drop item and re-insert with new params
+                    if (workingPers.Perspective_Name != pvm.PerspectiveName)
+                    {
+                        context.Perspectives.Remove(workingPers);
+                        AddPerspective(pvm);
+                        context.SaveChanges();
+                        return;
+                    }
+                }
+                if(PerspectiveExists(context, pvm.PerspectiveName))
                 {
                     // find what's changed and change it
                     Perspective workingPers = (from perspective in context.Perspectives
                                                where perspective.Perspective_Name == pvm.PerspectiveName
                                                select perspective).First();
 
-                    workingPers.Perspective_Name = pvm.PerspectiveName;
-                    //if (workingPers.Perspective_Name != pvm.OldReference)
-                    //{
-                    //    workingPers.Perspective_Name = pvm.PerspectiveName;
-                    //}
                     if (workingPers.Description != pvm.Description)
                     {
                         workingPers.Description = pvm.Description;
@@ -59,9 +78,9 @@ namespace Plan4Green.Models.ObjectManager
                     {
                         workingPers.Y_Position = pvm.yPosition;
                     }
-
-                    context.SaveChanges();
                 }
+
+                context.SaveChanges();
             }
         }
 

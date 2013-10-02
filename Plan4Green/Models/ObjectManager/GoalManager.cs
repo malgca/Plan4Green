@@ -1,4 +1,6 @@
 ﻿using Plan4Green.Models.DB;
+using Plan4Green.Models.ViewModels;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Plan4Green.Models.ObjectManager
@@ -9,22 +11,44 @@ namespace Plan4Green.Models.ObjectManager
     public class GoalManager
     {
         /// <summary>
-        /// Add an organisation to the Database
+        /// Get's the goals associated with an Organisation from a database.
         /// </summary>
-        /// <param name="organisation">The name of the Organisation to be added.</param>
-        public void AddGoal(Goal newGoal)
+        /// <param name="organisationName"></param>
+        public List<Goal> GetGoals(string organisationName)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                Goal workingGoal = new Goal();
+                return (
+                    from goal in context.Goals
+                    where goal.Organisation_Name == organisationName
+                    select goal).ToList();
+            }
+        }
 
-                if (!GoalExists(context, newGoal.Goal_Name, newGoal.Perspective_Name))
+        /// <summary>
+        /// Add an organisation to the Database
+        /// </summary>
+        /// <param name="organisation">The name of the Organisation to be added.</param>
+        public void AddGoal(GoalViewModel gvm)
+        {
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                if (!GoalExists(context, gvm.GoalName, gvm.ParentName))
                 {
-                    workingGoal = newGoal;
-                }
+                    Goal newGoal = new Goal();
 
-                context.Goals.Add(workingGoal);
-                context.SaveChanges();
+                    newGoal.Goal_Name = gvm.GoalName;
+                    newGoal.Description = gvm.Description;
+                    newGoal.Organisation_Name = gvm.OrganisationName;
+                    newGoal.X_Position = gvm.xPosition;
+                    newGoal.Y_Position = gvm.yPosition;
+                    newGoal.Start_Date = gvm.StartDate;
+                    newGoal.Due_Date = gvm.DueDate;
+                    newGoal.Perspective_Name = gvm.ParentName;
+
+                    context.Goals.Add(newGoal);
+                    context.SaveChanges();
+                }
             }
         }
 
@@ -32,16 +56,55 @@ namespace Plan4Green.Models.ObjectManager
         /// Updates information on a Goal in the Database.
         /// </summary>
         /// <param name="Goal">The Goal to be updated in the Database.</param>
-        public void UpdateGoal(Goal Goal)
+        public void UpdateGoal(GoalViewModel gvm)
         {
-        }
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                // case for changing names
+                if (GoalExists(context, gvm.OldReference, gvm.ParentName))
+                {
+                    Goal workingGoal = (from goal in context.Goals
+                                        where goal.Goal_Name == gvm.OldReference
+                                        select goal).First();
 
-        /// <summary>
-        /// Deletes a Goal from the Database.
-        /// </summary>
-        /// <param name="Goal">The Goal to be deleted from the Database.</param>
-        public void DeleteGoal(Goal Goal)
-        {
+                    if (workingGoal.Goal_Name != gvm.GoalName)
+                    {
+                        context.Goals.Remove(workingGoal);
+                        AddGoal(gvm);
+                        context.SaveChanges();
+                        return;
+                    }
+                }
+                if (GoalExists(context, gvm.GoalName, gvm.ParentName))
+                {
+                    Goal workingGoal = (from goal in context.Goals
+                                        where goal.Goal_Name == gvm.GoalName
+                                        select goal).First();
+
+                    if (workingGoal.Description != gvm.Description)
+                    {
+                        workingGoal.Description = gvm.Description;
+                    }
+                    if (workingGoal.X_Position != gvm.xPosition)
+                    {
+                        workingGoal.X_Position = gvm.xPosition;
+                    }
+                    if (workingGoal.Y_Position != gvm.yPosition)
+                    {
+                        workingGoal.Y_Position = gvm.yPosition;
+                    }
+                    if (workingGoal.Start_Date != gvm.StartDate)
+                    {
+                        workingGoal.Start_Date = gvm.StartDate;
+                    }
+                    if (workingGoal.Due_Date != gvm.DueDate)
+                    {
+                        workingGoal.Due_Date = gvm.DueDate;
+                    }
+                }
+
+                context.SaveChanges();
+            }
         }
 
         // Check if a Goal already exists in the database.

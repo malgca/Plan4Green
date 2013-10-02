@@ -100,10 +100,8 @@ namespace Plan4Green.Models.DB
         public string Goal_Name { get; set; }
         public string Description { get; set; }
         
-        [DataType(DataType.Date)]
-        public DateTime Start_Date { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime Due_Date { get; set; }
+        public string Start_Date { get; set; }
+        public string Due_Date { get; set; }
         
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
@@ -127,13 +125,12 @@ namespace Plan4Green.Models.DB
         public string Measure_Name { get; set; }
         public string Description { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime Start_Date { get; set; }
-
-        [DataType(DataType.Date)]
-        public DateTime Due_Date { get; set; }
+        public string Start_Date { get; set; }
+        public string Due_Date { get; set; }
 
         public string Target_Value { get; set; }
+        public string Organisation_Name { get; set; }
+
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
         

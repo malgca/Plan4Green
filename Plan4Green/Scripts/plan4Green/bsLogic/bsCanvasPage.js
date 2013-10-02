@@ -151,15 +151,125 @@ main = (function () {
         }
         // populate the bsItems from the database
         var populateItems = function () {
-            var itemContainer
-
             // get the perspectives
             ajax.get('/JSON/GetPerspectives', function (newItem) {
-                itemContainer = newItem;
+                while (newItem.length > 0) {
+                    var firstIndex = newItem.indexOf('^', 0);
+                    var secIndex = newItem.indexOf('^', firstIndex + 1);
+                    var thirdIndex = newItem.indexOf('^', secIndex + 1);
+                    var fourthIndex = newItem.indexOf('^', thirdIndex + 1);
+                    var fifthIndex = newItem.indexOf('|', fourthIndex + 1);
+
+                    var name = newItem.substring(0, firstIndex);
+                    var description = newItem.substring(firstIndex + 1, secIndex);
+                    var organisationName = newItem.substring(secIndex + 1, thirdIndex);
+                    var x = newItem.substring(thirdIndex + 1, fourthIndex);
+                    var y = newItem.substring(fourthIndex + 1, fifthIndex);
+                    var perspective = bsType.createPerspective(new Point(x, y));
+
+                    perspective.name = name;
+                    perspective.description = description;
+                    perspective.organisationName = organisationName;
+                    perspective.isEditing = false;
+
+                    newItem = newItem.substring(fifthIndex + 1, newItem.length)
+
+                    global.perspectiveArray.push(perspective);
+                    viewItem(perspective, true);
+                }
             });
 
-            console.log(itemContainer);
+            ajax.get('/JSON/GetGoals', function (newItem) {
+                while (newItem.length > 0) {
+                    var firstIndex = newItem.indexOf('^', 0);
+                    var secIndex = newItem.indexOf('^', firstIndex + 1);
+                    var thirdIndex = newItem.indexOf('^', secIndex + 1);
+                    var fourthIndex = newItem.indexOf('^', thirdIndex + 1);
+                    var fifthIndex = newItem.indexOf('^', fourthIndex + 1);
+                    var sixthIndex = newItem.indexOf('^', fifthIndex + 1);
+                    var seventhIndex = newItem.indexOf('^', sixthIndex + 1);
+                    var eigthIndex = newItem.indexOf('|', seventhIndex + 1);
 
+                    var name = newItem.substring(0, firstIndex);
+                    var description = newItem.substring(firstIndex + 1, secIndex);
+                    var organisationName = newItem.substring(secIndex + 1, thirdIndex);
+                    var x = newItem.substring(thirdIndex + 1, fourthIndex);
+                    var y = newItem.substring(fourthIndex + 1, fifthIndex);
+                    var startDate = newItem.substring(fifthIndex + 1, sixthIndex);
+                    var dueDate = newItem.substring(sixthIndex + 1, seventhIndex);
+                    var parentName = newItem.substring(seventhIndex + 1, eigthIndex);
+
+                    var goal = bsType.createGoal(new Point(x, y));
+
+                    goal.name = name;
+                    goal.description = description;
+                    goal.organisationName = organisationName;
+                    goal.startDate = startDate;
+                    goal.dueDate = dueDate;
+                    goal.isEditing = false;
+
+                    for (var i = 0; i < global.perspectiveArray.length; i++) {
+                        if (global.perspectiveArray[i].name === parentName) {
+                            goal.bsParent = global.perspectiveArray[i];
+                            global.perspectiveArray[i].addChildObject(goal);
+                            break;
+                        }
+                    }
+
+                    newItem = newItem.substring(eigthIndex + 1, newItem.length)
+                }
+            });
+
+            ajax.get('/JSON/GetMeasures', function (newItem) {
+                while (newItem.length > 0) {
+                    var firstIndex = newItem.indexOf('^', 0);
+                    var secIndex = newItem.indexOf('^', firstIndex + 1);
+                    var thirdIndex = newItem.indexOf('^', secIndex + 1);
+                    var fourthIndex = newItem.indexOf('^', thirdIndex + 1);
+                    var fifthIndex = newItem.indexOf('^', fourthIndex + 1);
+                    var sixthIndex = newItem.indexOf('^', fifthIndex + 1);
+                    var seventhIndex = newItem.indexOf('^', sixthIndex + 1);
+                    var eigthIndex = newItem.indexOf('^', seventhIndex + 1);
+                    var ninthIndex = newItem.indexOf('^', eigthIndex + 1);
+                    var tenthIndex = newItem.indexOf('|', ninthIndex + 1);
+
+                    var name = newItem.substring(0, firstIndex);
+                    var description = newItem.substring(firstIndex + 1, secIndex);
+                    var organisationName = newItem.substring(secIndex + 1, thirdIndex);
+                    var x = newItem.substring(thirdIndex + 1, fourthIndex);
+                    var y = newItem.substring(fourthIndex + 1, fifthIndex);
+                    var startDate = newItem.substring(fifthIndex + 1, sixthIndex);
+                    var dueDate = newItem.substring(sixthIndex + 1, seventhIndex);
+                    var grandParentName = newItem.substring(seventhIndex + 1, eigthIndex);
+                    var targetValue = newItem.substring(eigthIndex + 1, ninthIndex);
+                    var parentName = newItem.substring(ninthIndex + 1, tenthIndex);
+
+                    var measure = bsType.createGoal(new Point(x, y));
+
+                    measure.name = name;
+                    measure.description = description;
+                    measure.organisationName = organisationName;
+                    measure.startDate = startDate;
+                    measure.dueDate = dueDate;
+                    measure.targetValue = targetValue;
+                    measure.isEditing = false;
+
+                    for (var i = 0; i < global.perspectiveArray.length; i++) {
+                        if (global.perspectiveArray[i].name === grandParentName) {
+                            var parentGoals = global.perspectiveArray[i].children;
+                            for (var j = 0; j < parentGoals.length; j++) {
+                                if (parentGoals[i].name === parentName) {
+                                    measure.bsParent = parentGoals[i];
+                                    parentGoals[i].addChildObject(measure);
+                                    break;
+                                }
+                            }                           
+                        }
+                    }
+
+                    newItem = newItem.substring(tenthIndex + 1, newItem.length)
+                }
+            });
         }
 
         var pageEvents = (function () {
@@ -220,7 +330,7 @@ main = (function () {
                                 bsItem.bsParent = undefined;
                                 bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
                                 global.perspectiveArray.push(bsItem);
-                                 //ajax.perspective('/JSON/AddPerspective', bsItem);
+                                 ajax.perspective('/JSON/AddPerspective', bsItem);
                             }
                             else {
                                 alert('Please rename and save ' + bsItem.name + ' before attempting to add a new ' + bsItem.type + ' to the canvas.');
@@ -235,7 +345,7 @@ main = (function () {
 
                             if (success) {
                                 bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
-                                //ajax.goal('/JSON/AddGoal', bsItem);
+                                ajax.goal('/JSON/AddGoal', bsItem);
                             }
                         }
                         break;
@@ -246,7 +356,8 @@ main = (function () {
                             success = bsItem.bsParent.addChildObject(bsItem);
 
                             if (success) {
-                                //ajax.measure('/JSON/AddMeasure', bsItem);
+                                bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
+                                ajax.measure('/JSON/AddMeasure', bsItem);
                             }
                             
                         }
