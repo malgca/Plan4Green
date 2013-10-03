@@ -35,6 +35,10 @@ textarea {
     color: #2e2e2e;
 }
 
+h1 {
+    font-size: 20pt;
+}
+
 /*Debugging CSS---------------------------------------------*/
 .debug {
     color: #ffffff;
@@ -131,7 +135,7 @@ textarea {
     display: inline;
     position: absolute;
     width: 410px;
-    min-height: 110px;
+    min-height: 150px;
     z-index: 3;
     background-color: rgba(178, 178, 178, 0.50);
     border-radius: 15px;
@@ -177,11 +181,10 @@ ul[id$="bsViewList"] {
     width: 350px;
     margin-left: 60px;
     color: #151515;
-    width: 0px;
-    height: 0px;
 }
 
-    ul[id$="bsViewList"] li {
+    ul[id$="bsViewList"] p {
+        margin-top: 20px;
     }
 
     ul[id$="bsViewList"] .viewHeading {
@@ -199,6 +202,15 @@ ul[id$="bsViewList"] {
             overflow-y: scroll;
             height: 100px;
         }
+
+        ul[id$="bsViewList"] .viewItem .bsItemDue {
+            color: rgb(21, 21, 21);
+            font-weight: 400;
+            margin-top: -10px;
+            position: absolute;
+            margin-left: -50px;
+        }
+
 
 ul[id$="bsEditList"] {
     display: inline-block;
@@ -221,6 +233,7 @@ ul[id$="bsEditList"] {
 
         ul[id$="bsEditList"] .viewHeading input[type=text] {
             color: #2e2e2e;
+            margin-top: 30px;
             font-weight: 600;
         }
 

@@ -214,14 +214,10 @@
                         editImage.src = '../../Images/controls/bs-item/save.png';
 
                         var viewList = document.getElementById(div.id + "-bsViewList");
-                        viewList.style.visibility = 'collapse';
-                        viewList.style.width = '0px';
-                        viewList.style.height = '0px';
+                        viewList.style.display = 'none';
 
                         var editList = document.getElementById(div.id + "-bsEditList");
-                        editList.style.visibility = 'visible';
-                        editList.style.width = '350px';
-                        editList.style.height = 'inherit';
+                        editList.style.display = 'inline-block';
 
                         bsItem.isEditing = true;
                     }
@@ -229,14 +225,10 @@
                         editImage.src = '../../Images/controls/bs-item/edit.png';
 
                         var viewList = document.getElementById(div.id + "-bsViewList");
-                        viewList.style.visibility = 'visible';
-                        viewList.style.width = '350px';
-                        viewList.style.height = 'inherit';
+                        viewList.style.display = 'inline-block';
 
                         var editList = document.getElementById(div.id + "-bsEditList");
-                        editList.style.visibility = 'collapse';
-                        editList.style.width = '0px';
-                        editList.style.height = '0px';
+                        editList.style.display = 'none';
 
                         var currentId = editImage.parentElement.parentElement.parentElement.id;
 
@@ -350,23 +342,6 @@
                 canvas.style.left = '85px';
                 canvas.style.zIndex = '-5'
 
-                if (bsItem.type == 'perspective') {
-                    canvas.height = 10;
-                }
-                else {
-                    canvas.height = 15;
-                }
-
-                // get the canvas context for the gradient
-                var context = canvas.getContext('2d');
-                // fill canvas with gradient color
-                var linearGradient = context.createLinearGradient(0, 0, 0, 50);
-                linearGradient.addColorStop(0.3, "#C0C0C0");
-                linearGradient.addColorStop(0.7, "#000000");
-
-                context.fillStyle = linearGradient;
-                context.fillRect(0, 0, canvas.width, canvas.height);
-
                 return canvas;
             }
 
@@ -396,12 +371,12 @@
 
                     // item target
                     target = document.createElement('p');
-                    target.className = 'bsItemDue';
                     if (bsItem.type == 'goal') {
-                        target.innerHTML = 'of ' + bsValidation.validValue(bsItem.targetValue());
+                        target.style.margin = '25px';
+                        target.innerHTML = 'Target: ' + bsValidation.validValue(bsItem.targetValue());
                     }
                     else {
-                        target.innerHTML = 'of ' + bsItem.targetValue;
+                        target.innerHTML = 'Target: ' + bsItem.targetValue;
                     }
                 }
             }
@@ -575,22 +550,14 @@
 
         // set the correct view based on whether or not the item is being editted.
         if (bsItem.isEditing) {
-            viewBar.style.visibility = 'collapse';
-            viewBar.style.width = '0px';
-            viewBar.style.height = '0px';
+            viewBar.style.display = 'none';
 
-            editBar.style.visibility = 'visible';
-            editBar.style.width = '350px';
-            editBar.style.height = 'inherit';
+            editBar.style.display = 'inline-block';
         }
         else {
-            viewBar.style.visibility = 'visible';
-            viewBar.style.width = '350px';
-            viewBar.style.height = 'inherit';
+            viewBar.style.display = 'inline-block';
 
-            editBar.style.visibility = 'collapse';
-            editBar.style.width = '0px';
-            editBar.style.height = '0px';
+            editBar.style.display = 'none';
         }
 
         div.appendChild(controlBar);

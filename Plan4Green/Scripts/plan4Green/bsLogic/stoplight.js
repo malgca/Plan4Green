@@ -153,15 +153,24 @@ var bsStoplight = (function () {
     var draw = function (bsItem, div) {
         if (bsItem.type == 'perspective') {
             var stopCanvas = div.childNodes[1].children[1].children[0];
+            stopCanvas.height = 10;
         }
         else {
             var stopCanvas = div.childNodes[1].children[3].children[0];
+            stopCanvas.height = 15;
         }
 
         var context = stopCanvas.getContext("2d");
 
         var barGraph = new BarGraph(context);
         barGraph.margin = 0;
+
+        if (bsItem.type == 'perspective') {
+            barGraph.height = 10;
+        }
+        else {
+            barGraph.height = 15;
+        }
 
         barGraph.update(Math.random() * 50)
     }
