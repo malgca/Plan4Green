@@ -45,18 +45,27 @@ namespace Plan4Green.Models.ObjectManager
                 // case exists purely for changing names
                 if (PerspectiveExists(context, pvm.OldReference))
                 {
-                    // find what's changed and change it
-                    Perspective workingPers = (from perspective in context.Perspectives
-                                               where perspective.Perspective_Name == pvm.OldReference
-                                               select perspective).First();
+                    // get a list of items with the old reference.
+                    List<Perspective> perspectives = (from perspective in context.Perspectives
+                                                      where perspective.Perspective_Name == pvm.OldReference
+                                                      select perspective).ToList();
 
-                    // have changed the name, which is a key, so must drop item and re-insert with new params
-                    if (workingPers.Perspective_Name != pvm.PerspectiveName)
+                    for (int i = 0; i < perspectives.Count; i++)
                     {
-                        context.Perspectives.Remove(workingPers);
-                        AddPerspective(pvm);
-                        context.SaveChanges();
-                        return;
+                        if (perspectives[i].Perspective_Name == pvm.PerspectiveName)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            if (pvm.NameHasChanged)
+                            {
+                                context.Perspectives.Remove(perspectives[i]);
+                                AddPerspective(pvm);
+                                context.SaveChanges();
+                                return;
+                            }
+                        }
                     }
                 }
                 if(PerspectiveExists(context, pvm.PerspectiveName))
@@ -78,9 +87,10 @@ namespace Plan4Green.Models.ObjectManager
                     {
                         workingPers.Y_Position = pvm.yPosition;
                     }
-                }
 
-                context.SaveChanges();
+                    context.SaveChanges();
+                    return;
+                }
             }
         }
 
@@ -97,6 +107,23 @@ namespace Plan4Green.Models.ObjectManager
                     where perspectives.Organisation_Name == organisationName
                     select perspectives).ToList();
             }
+        }
+
+        // update a perspectives name.
+        private void UpdateName(PerspectiveViewModel pvm)
+        {
+            // get all perspective measures.
+            // get all perspective goals.
+
+            // remove all perspective measures.
+            // remove all perspective goals.
+
+            // add all perspective measures using new name as parents (may need to create new measure).
+            // add all perspective goal using new name as parents (may need to create new goal).
+
+            // remove the perspective
+            // add under new name
+            // save changes to context
         }
 
         // Check if a Perspective already exists in the database.

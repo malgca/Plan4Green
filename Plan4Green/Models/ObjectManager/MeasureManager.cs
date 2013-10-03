@@ -61,19 +61,26 @@ namespace Plan4Green.Models.ObjectManager
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                // case for changing names
-                if (MeasureExists(context, mvm.OldReference, mvm.ParentName))
-                {
-                    Measure workingMeasure = (from measure in context.Measures
-                                              where measure.Measure_Name == mvm.OldReference
-                                              select measure).First();
+                // get a list of items with the old reference.
+                List<Goal> measures = (from measure in context.Goals
+                                    where measure.Goal_Name == mvm.OldReference
+                                    select measure).ToList();
 
-                    if (workingMeasure.Measure_Name != mvm.MeasureName)
+                for (int i = 0; i < measures.Count; i++)
+                {
+                    if (measures[i].Perspective_Name == mvm.MeasureName)
                     {
-                        context.Measures.Remove(workingMeasure);
-                        AddMeasure(mvm);
-                        context.SaveChanges();
-                        return;
+                        continue;
+                    }
+                    else
+                    {
+                        if (mvm.NameHasChanged)
+                        {
+                            context.Goals.Remove(measures[i]);
+                            AddMeasure(mvm);
+                            context.SaveChanges();
+                            return;
+                        }
                     }
                 }
                 if (MeasureExists(context, mvm.MeasureName, mvm.ParentName))
@@ -110,10 +117,20 @@ namespace Plan4Green.Models.ObjectManager
                     {
                         workingMeasure.Organisation_Name = mvm.OrganisationName;
                     }
-                }
 
-                context.SaveChanges();
+                    context.SaveChanges();
+                    return;
+                }
             }
+        }
+
+        // update a perspectives name.
+        private void UpdateName(GoalViewModel gvm)
+        {
+            // remove the goal
+            // add under new name
+            // change the measure name in completion scores
+            // save changes to context
         }
 
         // Check if a Measure already exists in the database.

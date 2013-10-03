@@ -20,5 +20,7 @@ namespace Plan4Green.Models.ViewModels
         public string targetValue { get; set; }
         public string ParentName { get; set; }
         public string GrandparentName { get; set; }
+
+        public bool NameHasChanged { get; set; }
     }
 }

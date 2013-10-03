@@ -251,7 +251,6 @@
     <Content Include="Scripts\plan4Green\bsLogic\bsValidation.js" />
     <Content Include="Scripts\plan4Green\bsLogic\stoplight.js" />
     <Content Include="Scripts\plan4Green\siteLogic\ajaxOperations.js" />
-    <Content Include="Scripts\plan4Green\siteLogic\animation.js" />
     <Content Include="Scripts\plan4Green\bsLogic\canvasObject.js" />
     <Content Include="Scripts\plan4Green\bsLogic\drawingPane.js" />
     <Content Include="Scripts\plan4Green\bsLogic\graph.js" />

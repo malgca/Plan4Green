@@ -6,8 +6,6 @@ var graph = (function () {
 
     var barGraph = new BarGraph(context);
     barGraph.margin = 2;
-    barGraph.width = 450;
-    barGraph.height = 150;
 
     // set an array for the x axis labels
     this.setXAxisLabels = function (xAxisArray) {
@@ -16,7 +14,6 @@ var graph = (function () {
 
     // set the graph values to be displayed
     this.setGraphValues = function (valueArray) {
-        console.log(valueArray);
         barGraph.update(valueArray);
     }
 
@@ -70,13 +67,13 @@ var graph = (function () {
             var numOfBars = arr.length;
             var barWidth;
             var barHeight;
-            var border = 2;
+            var border = 5;
             var ratio;
             var maxBarHeight;
             var gradient;
             var largestValue;
-            var graphAreaX = 0;
-            var graphAreaY = 0;
+            var graphAreaX = 10;
+            var graphAreaY = 10;
             var graphAreaWidth = that.width;
             var graphAreaHeight = that.height;
             var i;
@@ -94,7 +91,7 @@ var graph = (function () {
 
             // if x axis labes exist, then make room
             if (that.xAxisLabelArr.length) {
-                graphAreaHeight -= 40;
+                graphAreaHeight -= 50;
             }
 
             // calulate the dimensions of the bar
@@ -186,7 +183,7 @@ var graph = (function () {
 
                 // wite bar value
                 context.fillStyle = '#333';
-                context.font = 'bold 12px sans-serif';
+                context.font = 'bold 16px sans-serif';
                 context.textAlign = 'center';
 
                 // use try catch in case of IE 8
@@ -201,7 +198,7 @@ var graph = (function () {
                 if (that.xAxisLabelArr[i]) {
                     // use try catch in case of IE 8
                     context.fillStyle = '#333';
-                    context.font = 'bold 12px sans-serif';
+                    context.font = 'bold 14px sans-serif';
                     context.textAlign = 'center';
 
                     try {
@@ -209,21 +206,13 @@ var graph = (function () {
 
                         if (that.xAxisLabelArr.length > 3) {
                             if (label.length > 6) {
-                                label = label.slice(-8);
+                                label = label.slice(-10);
                             }
-                        }
-
-                        if (that.xAxisLabelArr.length > 6) {
-                            context.font = 'bold 10px sans-serif';
-                        }
-
-                        if (that.xAxisLabelArr.length > 9) {
-                            context.font = 'bold 8px sans-serif';
                         }
 
                         context.fillText(label,
                             i * that.width / numOfBars + (that.width / numOfBars) / 2,
-                            that.height - 10);
+                            that.height - 25);
                     }
                     catch (ex) { }
                 }
@@ -231,8 +220,8 @@ var graph = (function () {
         };
 
         // Public properties and methods
-        this.width = 300;
-        this.height = 150;
+        this.width = screen.width * 85 / 100;
+        this.height = screen.height * 85 / 100;
         this.maxValue;
         this.margin = 5;
         this.colors = ['#FF0000', '#FF3300', '#FF9900', 'D1A319', '#CCCC00', '#99CC00', '#99CC00', '#669900', '#009900'];
@@ -266,6 +255,6 @@ var graph = (function () {
     return {
         setXAxisLabels: setXAxisLabels,
         setGraphValues: setGraphValues,
-        setMaxValue: setMaxValue
+        setMaxValue: setMaxValue,
     }
 }());

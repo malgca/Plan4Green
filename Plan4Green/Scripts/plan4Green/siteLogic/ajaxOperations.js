@@ -7,7 +7,7 @@
             url: url,
             data: JSON.stringify(url),
             dataType: "json",
-            async: true,
+            async: false,
             success: success
         });
     }
@@ -18,6 +18,7 @@
             cache: false,
             type: "POST",
             url: url,
+            async: false,
             data: JSON.stringify({
                 OldReference: perspective.oldRef,
                 PerspectiveName: perspective.name,
@@ -26,6 +27,8 @@
 
                 xPosition: perspective.currentPosition.x,
                 yPosition: perspective.currentPosition.y,
+
+                NameHasChanged: perspective.nameHasChanged
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',
@@ -44,6 +47,7 @@
             cache: false,
             type: "POST",
             url: url,
+            async: false,
             data: JSON.stringify({
                 OldReference: goal.oldRef,
                 GoalName: goal.name,
@@ -57,6 +61,8 @@
 
                 ParentName: goal.bsParent.name,
                 OrganisationName: goal.organisationName,
+
+                NameHasChanged: goal.nameHasChanged
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',
@@ -72,6 +78,7 @@
             cache: false,
             type: "POST",
             url: url,
+            async: false,
             data: JSON.stringify({
                 OldReference: measure.oldRef,
                 MeasureName: measure.name,
@@ -88,8 +95,7 @@
                 ParentName: measure.bsParent.name,
                 GrandparentName: measure.bsParent.bsParent.name,
 
-                CompletionRatios: measure.completionRatios,
-                CompletionTimes: measure.completionTimes,
+                NameHasChanged: measure.nameHasChanged
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',

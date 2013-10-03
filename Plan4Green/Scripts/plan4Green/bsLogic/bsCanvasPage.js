@@ -215,13 +215,13 @@ main = (function () {
                             break;
                         }
                     }
-
                     newItem = newItem.substring(eigthIndex + 1, newItem.length)
                 }
             });
 
             ajax.get('/JSON/GetMeasures', function (newItem) {
                 while (newItem.length > 0) {
+                    setTimeout(1000);
                     var firstIndex = newItem.indexOf('^', 0);
                     var secIndex = newItem.indexOf('^', firstIndex + 1);
                     var thirdIndex = newItem.indexOf('^', secIndex + 1);
@@ -244,7 +244,7 @@ main = (function () {
                     var targetValue = newItem.substring(eigthIndex + 1, ninthIndex);
                     var parentName = newItem.substring(ninthIndex + 1, tenthIndex);
 
-                    var measure = bsType.createGoal(new Point(x, y));
+                    var measure = bsType.createMeasure(new Point(x, y));
 
                     measure.name = name;
                     measure.description = description;
@@ -257,10 +257,11 @@ main = (function () {
                     for (var i = 0; i < global.perspectiveArray.length; i++) {
                         if (global.perspectiveArray[i].name === grandParentName) {
                             var parentGoals = global.perspectiveArray[i].children;
+
                             for (var j = 0; j < parentGoals.length; j++) {
-                                if (parentGoals[i].name === parentName) {
-                                    measure.bsParent = parentGoals[i];
-                                    parentGoals[i].addChildObject(measure);
+                                if (parentGoals[j].name === parentName) {
+                                    measure.bsParent = parentGoals[j];
+                                    parentGoals[j].addChildObject(measure);
                                     break;
                                 }
                             }                           
@@ -330,7 +331,7 @@ main = (function () {
                                 bsItem.bsParent = undefined;
                                 bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
                                 global.perspectiveArray.push(bsItem);
-                                 ajax.perspective('/JSON/AddPerspective', bsItem);
+                                 //ajax.perspective('/JSON/AddPerspective', bsItem);
                             }
                             else {
                                 alert('Please rename and save ' + bsItem.name + ' before attempting to add a new ' + bsItem.type + ' to the canvas.');
@@ -345,7 +346,7 @@ main = (function () {
 
                             if (success) {
                                 bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
-                                ajax.goal('/JSON/AddGoal', bsItem);
+                                //ajax.goal('/JSON/AddGoal', bsItem);
                             }
                         }
                         break;
@@ -357,9 +358,8 @@ main = (function () {
 
                             if (success) {
                                 bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
-                                ajax.measure('/JSON/AddMeasure', bsItem);
+                                //ajax.measure('/JSON/AddMeasure', bsItem);
                             }
-                            
                         }
                         break;
                     default: return;

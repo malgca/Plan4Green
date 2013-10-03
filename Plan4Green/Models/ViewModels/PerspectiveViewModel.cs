@@ -12,5 +12,7 @@ namespace Plan4Green.Models.ViewModels
         
         public int xPosition { get; set; }
         public int yPosition { get; set; }
+
+        public bool NameHasChanged { get; set; }
     }
 }

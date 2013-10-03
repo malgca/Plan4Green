@@ -94,10 +94,10 @@
                 }
             }
 
-            console.log('saving');
             switch (bsItem.type) {
                 case 'perspective':
                     ajax.perspective('/JSON/UpdatePerspective', bsItem);
+
                     break;
                 case 'goal':
                     ajax.goal('/JSON/UpdateGoal', bsItem);
@@ -106,8 +106,8 @@
                     ajax.measure('/JSON/UpdateMeasure', bsItem);
                     break;
             }
-            console.log('saved');
 
+            bsItem.nameHasChanged = false;
         }
 
         createControls = function () {
@@ -275,7 +275,6 @@
                             }
 
                             graph.setXAxisLabels(nameArray);
-                            graph.setMaxValue(100);
                             console.log(bsItem.name);
                             graph.setGraphValues(valueArray);
                         }
@@ -288,7 +287,6 @@
                             prepCanvas();
 
                             graph.setXAxisLabels(bsItem.completionTimes);
-                            graph.setMaxValue(100);
                             console.log(bsItem.name);
                             graph.setGraphValues(bsItem.completionRatios);
                         }
@@ -363,11 +361,12 @@
                 var context = canvas.getContext('2d');
                 // fill canvas with gradient color
                 var linearGradient = context.createLinearGradient(0, 0, 0, 50);
-                linearGradient.addColorStop(0.3, "#ff0000");
+                linearGradient.addColorStop(0.3, "#C0C0C0");
                 linearGradient.addColorStop(0.7, "#000000");
 
                 context.fillStyle = linearGradient;
                 context.fillRect(0, 0, canvas.width, canvas.height);
+
                 return canvas;
             }
 
@@ -600,8 +599,10 @@
         if (bsItem.isEnabled) {
             div.appendChild(editBar);
         }
+        
         // place the div on the drawing page
         main.page.appendChild(div);
+        bsStoplight.draw(bsItem, div);
     },
 
     // constructor

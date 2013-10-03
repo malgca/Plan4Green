@@ -60,19 +60,26 @@ namespace Plan4Green.Models.ObjectManager
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                // case for changing names
-                if (GoalExists(context, gvm.OldReference, gvm.ParentName))
-                {
-                    Goal workingGoal = (from goal in context.Goals
-                                        where goal.Goal_Name == gvm.OldReference
-                                        select goal).First();
+                // get a list of items with the old reference.
+                List<Goal> goals = (from goal in context.Goals
+                                    where goal.Goal_Name == gvm.OldReference
+                                    select goal).ToList();
 
-                    if (workingGoal.Goal_Name != gvm.GoalName)
+                for (int i = 0; i < goals.Count; i++)
+                {
+                    if (goals[i].Perspective_Name == gvm.GoalName)
                     {
-                        context.Goals.Remove(workingGoal);
-                        AddGoal(gvm);
-                        context.SaveChanges();
-                        return;
+                        continue;
+                    }
+                    else
+                    {
+                        if (gvm.NameHasChanged)
+                        {
+                            context.Goals.Remove(goals[i]);
+                            AddGoal(gvm);
+                            context.SaveChanges();
+                            return;
+                        }
                     }
                 }
                 if (GoalExists(context, gvm.GoalName, gvm.ParentName))
@@ -101,11 +108,27 @@ namespace Plan4Green.Models.ObjectManager
                     {
                         workingGoal.Due_Date = gvm.DueDate;
                     }
-                }
 
-                context.SaveChanges();
+                    context.SaveChanges();
+                    return;
+                }
             }
         }
+
+        // update a perspectives name.
+        private void UpdateName(GoalViewModel gvm)
+        {
+            // get all goal measures.
+
+            // remove all goal measures.
+
+            // add all goal measures using new name as parents (may need to create new measure).
+
+            // remove the goal
+            // add under new name
+            // save changes to context
+        }
+
 
         // Check if a Goal already exists in the database.
         private bool GoalExists(Plan4GreenDB context, string goalName, string perspectiveName)

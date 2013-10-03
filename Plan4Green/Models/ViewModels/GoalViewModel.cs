@@ -18,5 +18,7 @@ namespace Plan4Green.Models.ViewModels
 
         public string ParentName { get; set; }
         public string OrganisationName { get; set; }
+
+        public bool NameHasChanged { get; set; }
     }
 }
