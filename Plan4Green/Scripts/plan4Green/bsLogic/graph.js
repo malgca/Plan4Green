@@ -17,11 +17,6 @@ var graph = (function () {
         barGraph.update(valueArray);
     }
 
-    // set the max value of the array
-    this.setMaxValue = function (maxValue) {
-        barGraph.maxValue = maxValue;
-    }
-
     // draws the coloured bar graph onto the screen
     function BarGraph(context) {
         // Private properties and methods
@@ -29,41 +24,8 @@ var graph = (function () {
             that = this,
             startArr,
             endArr,
-            looping = false,
-
-            // loop methods adjusts the height of bar and redraws is necessary
-            loop = function () {
-                var delta;
-                var animationComplete = true;
-
-                // boolean to prevent update function from looping if already looping
-                looping = true;
-
-                // for each bar
-                for (var i = 0; i < endArr.length; i++) {
-                    // change the current bar height toward it's target height
-                    delta = (endArr[i] - startArr[i]) / that.animationSteps;
-                    that.curArr[i] += delta;
-
-                    // if any change is made then flip a switch
-                    if (delta) {
-                        animationComplete = false;
-                    }
-                }
-
-                // if no change was made to any bars then we are done
-                if (animationComplete) {
-                    looping = false;
-                }
-                else {
-                    // draw and call loop again
-                    draw(that.curArr);
-                    setTimeout(loop, that.animationInterval / that.animationSteps);
-                }
-            };
-
         // Draw method updates the canvas with the current display
-        var draw = function (arr) {
+        draw = function (arr) {
             var numOfBars = arr.length;
             var barWidth;
             var barHeight;
@@ -141,37 +103,8 @@ var graph = (function () {
                     // create gradient
                     gradient = context.createLinearGradient(0, 0, 0, graphAreaHeight);
 
-                    switch (true) {
-                        case (Number(arr[i]) == 100):
-                            gradient.addColorStop(1 - ratio, that.colors[8]);
-                            break;
-                        case (Number(arr[i]) > 90):
-                            gradient.addColorStop(1 - ratio, that.colors[7]);
-                            break;
-                        case (Number(arr[i]) > 80):
-                            gradient.addColorStop(1 - ratio, that.colors[6]);
-                            break;
-                        case (Number(arr[i]) > 65):
-                            gradient.addColorStop(1 - ratio, that.colors[5]);
-                            break;
-                        case (Number(arr[i]) > 55):
-                            gradient.addColorStop(1 - ratio, that.colors[4]);
-                            break;
-                        case (Number(arr[i]) > 40):
-                            gradient.addColorStop(1 - ratio, that.colors[3]);
-                            break;
-                        case (Number(arr[i]) > 25):
-                            gradient.addColorStop(1 - ratio, that.colors[2]);
-                            break;
-                        case (Number(arr[i]) > 10):
-                            gradient.addColorStop(1 - ratio, that.colors[1]);
-                            break;
-                        default:
-                            gradient.addColorStop(1 - ratio, that.colors[0]);
-                            break;
-                    }
-
-                    gradient.addColorStop(1, '#ffffff');
+                    gradient.addColorStop(0, '#7acf00');
+                    gradient.addColorStop(1, '#C0C0C0');
 
                     context.fillStyle = gradient;
                     // fill rectangle with gradient
@@ -222,9 +155,8 @@ var graph = (function () {
         // Public properties and methods
         this.width = screen.width * 85 / 100;
         this.height = screen.height * 85 / 100;
-        this.maxValue;
+        this.maxValue = 100;
         this.margin = 5;
-        this.colors = ['#FF0000', '#FF3300', '#FF9900', 'D1A319', '#CCCC00', '#99CC00', '#99CC00', '#669900', '#009900'];
         this.curArr = [];
         this.backroundColor = "rgb(215, 215, 215)";
         this.xAxisLabelArr = [];
@@ -234,27 +166,13 @@ var graph = (function () {
 
         // Update method sets the end bar array and starts the animation
         this.update = function (newArr) {
-            // if length of target and current array is different
-            if (that.curArr.length !== newArr.length) {
-                that.curArr = newArr;
-                draw(newArr);
-            }
-            else {
-                // set the starting array to the current array
-                startArr = that.curArr;
-                // set the target array to the new array
-                endArr = newArr;
-                // animation from the start array ot the end array
-                if (!looping) {
-                    loop();
-                }
-            }
+            that.curArr = newArr;
+            draw(newArr);
         };
     }
 
     return {
         setXAxisLabels: setXAxisLabels,
         setGraphValues: setGraphValues,
-        setMaxValue: setMaxValue,
     }
 }());

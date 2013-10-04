@@ -31,55 +31,71 @@
 
             if (bsItem.type == 'perspective') {
                 // update name
-                if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
-                    bsItem.changeName(edits.childNodes[0].firstChild.value);
-                    views.childNodes[0].firstChild.innerHTML = bsItem.name;
-                    edits.childNodes[0].firstChild.style.color = '#2e2e2e';
-                }
-                else {
-                    edits.childNodes[0].firstChild.style.color = '#ff0000';
+                if (bsItem.name !== edits.childNodes[0].firstChild.value) {
+                    if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
+                        bsItem.changeName(edits.childNodes[0].firstChild.value);
+                        views.childNodes[0].firstChild.innerHTML = bsItem.name;
+                        edits.childNodes[0].firstChild.style.color = '#2e2e2e';
+                    }
+                    else {
+                        edits.childNodes[0].firstChild.style.color = '#ff0000';
+                    }
                 }
 
                 // update description
-                bsItem.description = edits.childNodes[1].firstChild.value;
-                views.childNodes[2].firstChild.innerHTML = bsItem.description;
+                if (bsItem.description !== edits.childNodes[1].firstChild.value) {
+                    bsItem.description = edits.childNodes[1].firstChild.value;
+                    views.childNodes[2].firstChild.innerHTML = bsItem.description;
+                }
             }
             else {
                 // update bsItem
-                if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
-                    bsItem.name = edits.childNodes[0].firstChild.value;
-                    views.childNodes[0].firstChild.innerHTML = bsItem.name;
-                    edits.childNodes[0].firstChild.style.color = '#2e2e2e';
-                }
-                else {
-                    edits.childNodes[0].firstChild.style.color = '#ff0000';
-                }
-
-                if (bsValidation.validDate(edits.childNodes[1].children[0].children[1].value, edits.childNodes[2].children[0].children[1].value)) {
-                    bsItem.startDate = edits.childNodes[1].children[0].children[1].value;
-                    bsItem.dueDate = edits.childNodes[2].children[0].children[1].value;
-
-                    // update views
-                    views.childNodes[1].children[0].style.color = '#151515';
-                    views.childNodes[1].children[0].style.fontWeight = '400';
-                }
-                else {
-                    views.childNodes[1].children[0].style.color = '#ff0000';
-                    views.childNodes[1].children[0].style.fontWeight = '600';
+                if (bsItem.name !== edits.childNodes[0].firstChild.value) {
+                    if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
+                        bsItem.name = edits.childNodes[0].firstChild.value;
+                        views.childNodes[0].firstChild.innerHTML = bsItem.name;
+                        edits.childNodes[0].firstChild.style.color = '#2e2e2e';
+                    }
+                    else {
+                        edits.childNodes[0].firstChild.style.color = '#ff0000';
+                    }
                 }
 
-                bsItem.description = edits.childNodes[3].firstChild.value;
+                if (bsItem.startDate !== edits.childNodes[1].children[0].children[1].value ||
+                    bsItem.dueDate !== edits.childNodes[2].children[0].children[1].value) {
+                    if (bsValidation.validDate(edits.childNodes[1].children[0].children[1].value, edits.childNodes[2].children[0].children[1].value)) {
+                        bsItem.startDate = edits.childNodes[1].children[0].children[1].value;
+                        bsItem.dueDate = edits.childNodes[2].children[0].children[1].value;
+
+                        // update views
+                        views.childNodes[1].children[0].style.color = '#151515';
+                        views.childNodes[1].children[0].style.fontWeight = '400';
+                    }
+                    else {
+                        views.childNodes[1].children[0].style.color = '#ff0000';
+                        views.childNodes[1].children[0].style.fontWeight = '600';
+                    }
+                }
+
+                if (bsItem.description !== edits.childNodes[3].firstChild.value) {
+                    bsItem.description = edits.childNodes[3].firstChild.value;
+                }
 
                 if (bsItem.type == 'measure') {
-                    bsItem.targetValue = bsValidation.validValue(edits.childNodes[5].firstChild.children[1].value, 10000000);
-                    edits.childNodes[5].firstChild.children[1].value = bsItem.targetValue;
+                    if (bsItem.targetValue !== edits.childNodes[5].firstChild.children[1].value) {
+                        bsItem.targetValue = bsValidation.validValue(edits.childNodes[5].firstChild.children[1].value, 10000000);
+                        edits.childNodes[5].firstChild.children[1].value = bsItem.targetValue;
+                    }
 
-                    bsItem.currentValue = bsValidation.validValue(edits.childNodes[4].firstChild.children[1].value, bsItem.targetValue);
-                    edits.childNodes[4].firstChild.children[1].value = bsItem.currentValue;
+                    if (bsItem.currentValue !== edits.childNodes[4].firstChild.children[1].value) {
+                        bsItem.currentValue = bsValidation.validValue(edits.childNodes[4].firstChild.children[1].value, bsItem.targetValue);
+                        edits.childNodes[4].firstChild.children[1].value = bsItem.currentValue;
 
-                    bsItem.calculateCompletionRatio();
-                    bsItem.bsParent.calculateCompletionRatio();
-                    drawingPane.redrawBSItems(bsItem.bsParent);
+                        bsItem.calculateCompletionRatio();
+                        bsItem.bsParent.calculateCompletionRatio();
+                        drawingPane.redrawBSItems(bsItem.bsParent);
+                        bsStoplight.update(bsItem, div);
+                    }
 
                     // update view
                     views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsItem.targetValue;

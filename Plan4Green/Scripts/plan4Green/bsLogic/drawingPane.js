@@ -60,18 +60,6 @@ var drawingPane = (function () {
         ajax.get('/JSON/GetUsername', function (ajaxInfo) {
             document.getElementById("user-name").innerHTML = ajaxInfo;
         });
-
-        //setPerspectives;
-        //ajax.get('/JSON/GetOrganisation', function (ajaxInfo) {
-        //});
-
-        //setGoals;
-        //ajaxGet('/JSON/GetOrganisation', function (ajaxInfo) {
-        //});
-
-        //setMeasures;
-        //ajaxGet('/JSON/GetOrganisation', function (ajaxInfo) {
-        //});
     }
 
     // add BS item information to the drawing pane.
