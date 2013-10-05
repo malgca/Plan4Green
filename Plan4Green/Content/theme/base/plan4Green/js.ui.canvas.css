@@ -23,9 +23,34 @@
 #map-page {
     display: none;
     overflow: scroll;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    overflow-y: auto;
+    overflow-x: auto;
+    text-align:center;
 }
+
+    #map-page .viewName .mapPerspective, .mapGoal, .mapMeasure {
+        border-style: solid;
+        border-color: #fff;
+        border-radius: 70px;
+        padding: 5px 20px 5px 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+        cursor: -webkit-zoom-in;
+    }
+
+    #map-page .viewName .mapPerspective {
+        background-image: -webkit-linear-gradient(bottom, rgb(62,174,189) 27%, rgb(140,204,222) 100%);
+        margin-right: 30px;
+    }
+
+    #map-page .viewName .mapGoal {
+        background-image: -webkit-linear-gradient(bottom, rgb(145,0,0) 27%, rgb(242,109,109) 100%);
+    }
+
+    #map-page .viewName .mapMeasure {
+        background-image: -webkit-linear-gradient(bottom, rgb(92,158,51) 45%, rgb(101,179,55) 73%);
+    }
 
 textarea {
     font-weight: 400;

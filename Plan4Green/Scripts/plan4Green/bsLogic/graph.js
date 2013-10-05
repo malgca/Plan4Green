@@ -103,8 +103,8 @@ var graph = (function () {
                     // create gradient
                     gradient = context.createLinearGradient(0, 0, 0, graphAreaHeight);
 
-                    gradient.addColorStop(0, '#7acf00');
-                    gradient.addColorStop(1, '#C0C0C0');
+                    gradient.addColorStop(0, '#5c9e33');
+                    gradient.addColorStop(1, '#65b337');
 
                     context.fillStyle = gradient;
                     // fill rectangle with gradient
