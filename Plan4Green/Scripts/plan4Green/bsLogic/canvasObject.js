@@ -418,7 +418,6 @@
             }
 
             if (bsItem.type != 'perspective') {
-                console.log('disabled and in');
                 views.push(stoplight);
 
                 if (bsItem.isEnabled) {
