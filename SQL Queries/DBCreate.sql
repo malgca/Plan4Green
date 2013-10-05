@@ -88,7 +88,7 @@ GO
 
 CREATE TABLE Completion_Score
 (
-	Completion_Score_Time datetime NOT NULL,
+	Completion_Score_Time varchar(100) NOT NULL,
 		
 	Current_Value float,
 

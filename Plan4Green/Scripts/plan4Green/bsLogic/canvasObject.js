@@ -18,6 +18,14 @@
 
     // draw a BS Item.
     var drawBSItem = function (bsItem) {
+        // just make sure the completionRatio has been calculated
+        if (bsItem.type == 'perspective') {
+            bsItem.completionRatio();
+        }
+        else if (bsItem.type == 'goal') {
+            bsItem.calculateCompletionRatio();
+        }
+
         var
             pos = goal.currentPosition,
             div = createDiv(bsItem),
@@ -95,6 +103,7 @@
                         bsItem.bsParent.calculateCompletionRatio();
                         drawingPane.redrawBSItems(bsItem.bsParent);
                         bsStoplight.update(bsItem, div);
+                        //ajax.ratio('/JSON/AddCompletionScore', bsItem);
                     }
 
                     // update view
@@ -409,6 +418,7 @@
             }
 
             if (bsItem.type != 'perspective') {
+                console.log('disabled and in');
                 views.push(stoplight);
 
                 if (bsItem.isEnabled) {
@@ -565,12 +575,10 @@
         // set the correct view based on whether or not the item is being editted.
         if (bsItem.isEditing) {
             viewBar.style.display = 'none';
-
             editBar.style.display = 'inline-block';
         }
         else {
             viewBar.style.display = 'inline-block';
-
             editBar.style.display = 'none';
         }
 

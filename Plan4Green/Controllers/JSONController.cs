@@ -248,6 +248,29 @@ namespace Plan4Green.Controllers
         #region Completion_Score Operations
 
         /// <summary>
+        /// Gets the completion scores belonging to a measure.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult GetCompletionScores()
+        {
+            CompletionScoreManager csm = new CompletionScoreManager();
+            List<Completion_Score> completionScores = csm.GetCompletionScores();
+
+            var array = completionScores.ToArray();
+            string completionString = string.Empty;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                completionString += array[i].Completion_Score_Time + "^";
+                completionString += array[i].Current_Value + "^";
+                completionString += array[i].Measure_Name + "^";
+                completionString += array[i].Goal_Name + "|";
+            }
+
+            return Json(completionString);
+        }
+
+        /// <summary>
         /// Add a perspective to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]

@@ -112,10 +112,10 @@
             type: "POST",
             url: url,
             data: JSON.stringify({
-                CompletionScoreTime: measure.completionTimes[completionTimes.length - 1],
-                CurrentValue: measure.completionRatios[completionRatios.length - 1],
-                ParentName: measure.bsParent.name,
-                GrandparentName: measure.bsParent.bsParent.name
+                CompletionScoreTime: measure.completionTimes[measure.completionTimes.length - 1],
+                CurrentValue: measure.currentValue,
+                ParentName: measure.name,
+                GrandparentName: measure.bsParent.name
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',
@@ -130,7 +130,9 @@
 
         perspective: ajaxPerspective,
         goal: ajaxGoal,
-        measure: ajaxMeasure
+        measure: ajaxMeasure,
+
+        ratio: ajaxCompletionRatio
     }
 
 }());

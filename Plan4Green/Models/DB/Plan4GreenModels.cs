@@ -150,7 +150,7 @@ namespace Plan4Green.Models.DB
         [Key]
         [DataType(DataType.DateTime)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
-        public DateTime Completion_Score_Time { get; set; }
+        public string Completion_Score_Time { get; set; }
         public double Current_Value { get; set; }
 
         [ForeignKey("Assigned_Measure"), Column(Order = 0)]

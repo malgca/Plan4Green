@@ -84,7 +84,13 @@ var bsStoplight = (function () {
             stopCanvas.height = 10;
         }
         else {
-            var stopCanvas = div.childNodes[1].children[3].children[0];
+            var stopCanvas;
+            if (bsItem.isEnabled) {
+                stopCanvas = div.childNodes[1].children[3].children[0];
+            }
+            else {
+                stopCanvas = div.childNodes[1].children[1].children[0];
+            }
             stopCanvas.height = 15;
         }
 
@@ -113,7 +119,12 @@ var bsStoplight = (function () {
             var stopCanvas = div.childNodes[1].children[1].children[0];
         }
         else {
-            var stopCanvas = div.childNodes[1].children[3].children[0];
+            if (bsItem.isEnabled) {
+                stopCanvas = div.childNodes[1].children[3].children[0];
+            }
+            else {
+                stopCanvas = div.childNodes[1].children[1].children[0];
+            }
         }
 
         var context = stopCanvas.getContext("2d");
@@ -130,7 +141,6 @@ var bsStoplight = (function () {
             }
         }
     }
-
 
     return {
         draw: draw,

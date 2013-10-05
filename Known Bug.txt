@@ -6,3 +6,5 @@ Graphing doesn't work 100%. What needs to happen is a new graph object should be
 Database not adding and removing items properly. Especially need to recheck changing items with children in them.
 
 Bar graph doesn't look exactly right, need to move things up a bit and add x and y axis.
+
+need to add perspectives to completionscore table. Just to make assurance double sure that you're adding data to the right measure.

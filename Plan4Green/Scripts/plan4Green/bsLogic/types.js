@@ -190,6 +190,12 @@ var bsType = (function () {
             var timeString = new Date().toLocaleDateString() + ' - ' + new Date().toLocaleTimeString();
             this.completionTimes.push(timeString);
         }
+
+        this.updateCompletionRatios = function (timeString) {
+            var ratio = Math.round(((this.currentValue / this.targetValue) * 100));
+            this.completionRatios.push(ratio);
+            this.completionTimes.push(timeString);
+        }
     },
 
     // create a perspective object

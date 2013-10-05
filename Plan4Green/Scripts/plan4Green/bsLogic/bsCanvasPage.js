@@ -23,8 +23,6 @@ main = (function () {
     page = document.getElementById("drawing-page"),
     // the logout button
     viewParentImage = document.getElementById("viewParentImage"),
-    // instructions array
-    instructionArray = new Array(),
     // current position in BS views
     bsCurrentView = document.getElementById("current-view-text"),
     // background colors for perspectives, goals and measures
@@ -160,7 +158,6 @@ main = (function () {
                     newItem = newItem.substring(fifthIndex + 1, newItem.length)
 
                     global.perspectiveArray.push(perspective);
-                    viewItem(perspective, true);
                 }
             });
 
@@ -256,6 +253,42 @@ main = (function () {
                     newItem = newItem.substring(tenthIndex + 1, newItem.length)
                 }
             });
+
+            ajax.get('/JSON/GetCompletionScores', function (newItem) {
+                while (newItem.length > 0) {
+                    var firstIndex = newItem.indexOf('^', 0);
+                    var secIndex = newItem.indexOf('^', firstIndex + 1);
+                    var thirdIndex = newItem.indexOf('^', secIndex + 1);
+                    var fourthIndex = newItem.indexOf('|', thirdIndex + 1);
+
+                    var time = newItem.substring(0, firstIndex);
+                    var currentValue = newItem.substring(firstIndex + 1, secIndex);
+                    var measureName = newItem.substring(secIndex + 1, thirdIndex);
+                    var goalName = newItem.substring(thirdIndex + 1, fourthIndex);
+
+                    for (var i = 0; i < global.perspectiveArray.length; i++) {
+                        var goals = global.perspectiveArray[i].children;
+                        for (var j = 0; j < goals.length; j++) {
+                            if (goals[j].name == goalName) {
+                                var measures = goals[j].children;
+
+                                for (var k = 0; k < measures.length; k++) {
+                                    if (measures[k].name == measureName) {
+                                        measures[k].currentValue = currentValue;
+                                        measures[k].updateCompletionRatios(time);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    newItem = newItem.substring(fourthIndex + 1, newItem.length)
+                }
+            });
+
+            if (global.perspectiveArray.length > 0) {
+                viewItem(global.perspectiveArray[0], true);
+            }
         }
 
         var pageEvents = (function () {

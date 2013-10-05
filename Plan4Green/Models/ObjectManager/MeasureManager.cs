@@ -13,7 +13,6 @@ namespace Plan4Green.Models.ObjectManager
         /// <summary>
         /// Get's the measures associated with an Organisation from a database.
         /// </summary>
-        /// <param name="organisationName"></param>
         public List<Measure> GetMeasures(string organisationName)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
@@ -27,7 +26,6 @@ namespace Plan4Green.Models.ObjectManager
         /// <summary>
         /// Add an organisation to the Database
         /// </summary>
-        /// <param name="organisation">The name of the Organisation to be added.</param>
         public void AddMeasure(MeasureViewModel mvm)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
@@ -56,7 +54,6 @@ namespace Plan4Green.Models.ObjectManager
         /// <summary>
         /// Updates information on a Measure in the Database.
         /// </summary>
-        /// <param name="measure">The Measure to be updated in the Database.</param>
         public void UpdateMeasure(MeasureViewModel mvm)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())

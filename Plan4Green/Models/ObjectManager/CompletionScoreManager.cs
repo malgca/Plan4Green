@@ -1,5 +1,7 @@
 ﻿using Plan4Green.Models.DB;
 using Plan4Green.Models.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Plan4Green.Models.ObjectManager
 {
@@ -9,9 +11,20 @@ namespace Plan4Green.Models.ObjectManager
     public class CompletionScoreManager
     {
         /// <summary>
-        /// Add an organisation to the Database
+        /// Get the completion scores associated with a measure from the database
         /// </summary>
-        /// <param name="organisation">The name of the Organisation to be added.</param>
+        public List<Completion_Score> GetCompletionScores()
+        {
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                return (from completionScores in context.Completion_Scores
+                        select completionScores).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Add a completion score to the Database
+        /// </summary>
         public void AddCompletionScore(CompletionScoreViewModel csvm)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
