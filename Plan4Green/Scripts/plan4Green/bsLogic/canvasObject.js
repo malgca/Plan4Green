@@ -283,7 +283,6 @@
                             }
 
                             graph.setXAxisLabels(nameArray);
-                            console.log(bsItem.name);
                             graph.setGraphValues(valueArray);
                         }
                         else {
@@ -295,7 +294,6 @@
                             prepCanvas();
 
                             graph.setXAxisLabels(bsItem.completionTimes);
-                            console.log(bsItem.name);
                             graph.setGraphValues(bsItem.completionRatios);
                         }
                         else {

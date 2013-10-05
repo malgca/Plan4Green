@@ -2,9 +2,6 @@
     // flag set while creatings site.
     isUnderConstruction: true,
 
-    // position information element
-    position: document.getElementById("position"),
-
     // dummy count variable
     count: 0
 },
@@ -26,10 +23,6 @@ main = (function () {
     page = document.getElementById("drawing-page"),
     // the logout button
     viewParentImage = document.getElementById("viewParentImage"),
-    // the current instruction number
-    instructionNum = document.getElementById("instruction-number"),
-    // the current instruction text
-    instructionText = document.getElementById("instruction-text"),
     // instructions array
     instructionArray = new Array(),
     // current position in BS views
@@ -40,7 +33,7 @@ main = (function () {
         perspective: '-webkit-linear-gradient(bottom, rgb(62,174,189) 27%, rgb(140,204,222) 100%)',
         goal: '-webkit-linear-gradient(bottom, rgb(145,0,0) 27%, rgb(242,109,109) 100%)'
     }
-    
+
     // get the current position of the object in relation to the drawing page
     currentPosition = function (event) {
         // position on the screen.
@@ -141,14 +134,6 @@ main = (function () {
 
     // initialize the bsPage
     init = function () {
-        // populate instruction array
-        var populateInstructions = function () {
-            instructionArray.push("Please drag and drop a Perspective (the blue icon) onto the canvas.");
-            instructionArray.push("Please drag and drop a Goal (the red icon) onto the canvas.");
-            instructionArray.push("Please drag and drop a Measure (the green icon) onto the canvas.");
-            instructionArray.push("Click on edit to edit the object you just dropped.");
-            instructionArray.push("Click on view to view the object you just dropped.");
-        }
         // populate the bsItems from the database
         var populateItems = function () {
             // get the perspectives
@@ -264,7 +249,7 @@ main = (function () {
                                     parentGoals[j].addChildObject(measure);
                                     break;
                                 }
-                            }                           
+                            }
                         }
                     }
 
@@ -282,23 +267,29 @@ main = (function () {
                     }
                 }
                 else {
-                    bsCurrentView.innerHTML = global.bsParent.name;
+                    if (global.bsParent != undefined) {
+                        bsCurrentView.innerHTML = global.bsParent.name;
+                    }
+                    else {
+                        bsCurrentView.innerHTML = 'All Perspectives';
+                    }
+
                     viewParentImage.src = "../../Images/controls/drawing-page/viewParent.png"
 
                     var canvas = document.getElementById('graph-canvas');
+                    var map = document.getElementById('map-page');
 
-                    canvas.style.display = 'none';
-                    main.page.style.display = 'inline-block';
+                    if (canvas.style.display !== 'none') {
+                        canvas.style.display = 'none';
+                    }
+
+                    if (map.style.display !== 'none') {
+                        map.style.display = 'none';
+                    }
+
+                    main.page.style.display = 'block';
 
                     global.isGraphing = false;
-                }
-            },
-
-            // mousemove event handler
-            mousemove = function (event) {
-                if (debug.isUnderConstruction) {
-                    var pos = currentPosition(event);
-                    debug.position.innerHTML = "(x: " + pos.x + " | y: " + pos.y + ")";
                 }
             },
 
@@ -331,7 +322,7 @@ main = (function () {
                                 bsItem.bsParent = undefined;
                                 bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
                                 global.perspectiveArray.push(bsItem);
-                                 //ajax.perspective('/JSON/AddPerspective', bsItem);
+                                //ajax.perspective('/JSON/AddPerspective', bsItem);
                             }
                             else {
                                 alert('Please rename and save ' + bsItem.name + ' before attempting to add a new ' + bsItem.type + ' to the canvas.');
@@ -374,20 +365,16 @@ main = (function () {
             // expose members
             return {
                 mousedown: mousedown,
-                mousemove: mousemove,
                 mousedragover: mousedragover,
                 mousedrop: mousedrop
             }
         }());
 
         // add mouse event listeners to page and drawing pane
-        page.addEventListener("mousemove", pageEvents.mousemove, false);
         page.addEventListener("dragover", pageEvents.mousedragover, false);
         page.addEventListener("drop", pageEvents.mousedrop, false);
 
         viewParentImage.addEventListener("mousedown", pageEvents.mousedown, false);
-        // call the poplate instruction array method
-        populateInstructions();
         populateItems();
     }
 

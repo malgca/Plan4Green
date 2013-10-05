@@ -10,38 +10,9 @@ var bsStoplight = (function () {
             that = this,
             startValue,
             endValue,
-            looping = false,
-
-            // loop methods adjusts the height of bar and redraws is necessary
-            loop = function () {
-                var delta;
-                var animationComplete = true;
-
-                // boolean to prevent update function from looping if already looping
-                looping = true;
-
-                // change the current bar height toward it's target height
-                delta = (endValue - startValue) / that.animationSteps;
-                that.curValue += delta;
-
-                // if any change is made then flip a switch
-                if (delta) {
-                    animationComplete = false;
-                }
-
-                // if no change was made to any bars then we are done
-                if (animationComplete) {
-                    looping = false;
-                }
-                else {
-                    // draw and call loop again
-                    draw(that.curValue);
-                    setTimeout(loop, that.animationInterval / that.animationSteps);
-                }
-            };
 
         // Draw method updates the canvas with the current display
-        var draw = function (value) {
+        draw = function (value) {
             var barWidth;
             var border = 2;
             var gradient;
@@ -103,16 +74,6 @@ var bsStoplight = (function () {
                 that.curValue = newValue;
                 draw(newValue);
             }
-            else {
-                // set the starting array to the current array
-                startValue = that.curValue;
-                // set the target array to the new array
-                endValue = newValue;
-                // animation from the start array ot the end array
-                if (!looping) {
-                    loop();
-                }
-            }
         };
     }
 
@@ -144,7 +105,7 @@ var bsStoplight = (function () {
             else {
                 barGraph.update(0);
             }
-        }       
+        }
     }
 
     var update = function (bsItem, div) {

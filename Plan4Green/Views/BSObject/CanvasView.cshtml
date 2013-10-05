@@ -16,10 +16,6 @@
 
     <div class="instructions">
         <a id="instruction-title" href="#">What to do next...</a>
-        <ul>
-            <li id="instruction-number">1</li>
-            <li id="instruction-text">Please Drag and Drop a Perspective (the blue icon) onto the canvas.</li>
-        </ul>
     </div>
 
     <p id="current-view-text">All Perspectives</p>
@@ -27,10 +23,13 @@
     <div id="drawing-page">
     </div>
 
-    <canvas id="graph-canvas">
-    </canvas>
+    <div id="map-page">
+        <table id="map-table">
 
-    <p id="position" class="debug"></p>
+        </table>
+    </div>
+
+    <canvas id="graph-canvas"></canvas>
 
     @Styles.Render("~/Content/theme/base/plan4Green/js.ui.canvas.css")
     @Scripts.Render("~/Scripts/plan4Green/siteLogic/ajaxOperations.js",

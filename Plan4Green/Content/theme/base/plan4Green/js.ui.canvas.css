@@ -1,4 +1,6 @@
 ﻿/*Drawing Canvas layout-------------------------------------------------------------------*/
+#map-page,
+#graph-canvas,
 #drawing-page {
     background-image: -webkit-linear-gradient(bottom, rgb(115,114,115) 27%, rgb(207,207,207) 100%);
     position: fixed;
@@ -15,14 +17,14 @@
 
 #graph-canvas {
     background-color: rgb(115,114,115);
-    position: fixed;
-    right: 45px;
-    bottom: 30px;
-    border-radius: 5px;
-    height: 85%;
-    width: 85%;
-    border-style: solid;
     display: none;
+}
+
+#map-page {
+    display: none;
+    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 textarea {
@@ -109,7 +111,8 @@ h1 {
         color: #ffffff;
         text-decoration: none;
         font-size: 12pt;
-        padding: 5px 5px 0px 5px;
+        padding: 5px;
+        margin: 25px;
         font-weight: 600;
         display: block;
     }
