@@ -264,7 +264,8 @@ namespace Plan4Green.Controllers
                 completionString += array[i].Completion_Score_Time + "^";
                 completionString += array[i].Current_Value + "^";
                 completionString += array[i].Measure_Name + "^";
-                completionString += array[i].Goal_Name + "|";
+                completionString += array[i].Goal_Name + "^";
+                completionString += array[i].Perspective_Name + "|";
             }
 
             return Json(completionString);

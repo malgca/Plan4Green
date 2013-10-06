@@ -259,30 +259,38 @@ main = (function () {
                     var firstIndex = newItem.indexOf('^', 0);
                     var secIndex = newItem.indexOf('^', firstIndex + 1);
                     var thirdIndex = newItem.indexOf('^', secIndex + 1);
-                    var fourthIndex = newItem.indexOf('|', thirdIndex + 1);
+                    var fourthIndex = newItem.indexOf('^', thirdIndex + 1);
+                    var fifthIndex = newItem.indexOf('|', fourthIndex + 1);
 
                     var time = newItem.substring(0, firstIndex);
                     var currentValue = newItem.substring(firstIndex + 1, secIndex);
                     var measureName = newItem.substring(secIndex + 1, thirdIndex);
                     var goalName = newItem.substring(thirdIndex + 1, fourthIndex);
+                    var perspectiveName = newItem.substring(fourthIndex + 1, fifthIndex);
 
                     for (var i = 0; i < global.perspectiveArray.length; i++) {
-                        var goals = global.perspectiveArray[i].children;
-                        for (var j = 0; j < goals.length; j++) {
-                            if (goals[j].name == goalName) {
-                                var measures = goals[j].children;
+                        if (global.perspectiveArray[i].name == perspectiveName) {
+                            var goals = global.perspectiveArray[i].children;
 
-                                for (var k = 0; k < measures.length; k++) {
-                                    if (measures[k].name == measureName) {
-                                        measures[k].currentValue = currentValue;
-                                        measures[k].updateCompletionRatios(time);
+                            for (var j = 0; j < goals.length; j++) {
+                                if (goals[j].name == goalName) {
+                                    var measures = goals[j].children;
+
+                                    for (var k = 0; k < measures.length; k++) {
+                                        if (measures[k].name == measureName) {
+                                            measures[k].currentValue = currentValue;
+
+                                            measures[k].updateCompletionRatios(time);
+                                            measures[k].bsParent.calculateCompletionRatio();
+                                            measures[k].bsParent.bsParent.completionRatio();
+                                        }
                                     }
                                 }
                             }
                         }
                     }
 
-                    newItem = newItem.substring(fourthIndex + 1, newItem.length)
+                    newItem = newItem.substring(fifthIndex + 1, newItem.length)
                 }
             });
 

@@ -34,7 +34,8 @@ namespace Plan4Green.Models.ObjectManager
                 newScore.Completion_Score_Time = csvm.CompletionScoreTime;
                 newScore.Current_Value = csvm.CurrentValue;
                 newScore.Measure_Name = csvm.ParentName;
-                newScore.Goal_Name = csvm.GrandparentName;               
+                newScore.Goal_Name = csvm.GrandparentName;
+                newScore.Perspective_Name = csvm.GreatGrandparentName;
 
                 context.Completion_Scores.Add(newScore);
                 context.SaveChanges();

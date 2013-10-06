@@ -10,5 +10,6 @@ namespace Plan4Green.Models.ViewModels
         public double CurrentValue { get; set; }
         public string ParentName { get; set; }
         public string GrandparentName { get; set; }
+        public string GreatGrandparentName { get; set; }
     }
 }

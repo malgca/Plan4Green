@@ -1,10 +1,6 @@
 Known Bugs:
-Dates between goals and measures not synchronized. Dates in measures should only be valid between start and end date for goals. Dates in goals are unlimited 
-
-Graphing doesn't work 100%. What needs to happen is a new graph object should be created every time I draw.
-
 Database not adding and removing items properly. Especially need to recheck changing items with children in them.
 
-Bar graph doesn't look exactly right, need to move things up a bit and add x and y axis.
+Dates between goals and measures not synchronized. Dates in measures should only be valid between start and end date for goals. Dates in goals are unlimited 
 
-need to add perspectives to completionscore table. Just to make assurance double sure that you're adding data to the right measure.
+Bar graph doesn't look exactly right, need to move things up a bit and add x and y axis.

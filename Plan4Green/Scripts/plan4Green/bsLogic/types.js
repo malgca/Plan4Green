@@ -44,6 +44,8 @@ var bsType = (function () {
         this.oldRef = this.name;
         // flag notifying if name has changed
         this.nameHasChanged = false;
+        // flag if absolutely anything has changed
+        this.hasChanged = false;
         // store the name of the organisation this perspective belongs to
         this.organisationName = '';
 
@@ -106,7 +108,8 @@ var bsType = (function () {
         }
 
         this.completionRatio = function () {
-            return ((this.currentValue() / this.targetValue()) * 100);
+            ratio = ((this.currentValue() / this.targetValue()) * 100)
+            return Math.round(ratio);
         }
 
         this.allChildrenDisabled = function () {

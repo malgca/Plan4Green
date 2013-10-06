@@ -115,7 +115,8 @@
                 CompletionScoreTime: measure.completionTimes[measure.completionTimes.length - 1],
                 CurrentValue: measure.currentValue,
                 ParentName: measure.name,
-                GrandparentName: measure.bsParent.name
+                GrandparentName: measure.bsParent.name,
+                GreatGrandparentName: measure.bsParent.bsParent.name
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',

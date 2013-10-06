@@ -157,6 +157,7 @@ namespace Plan4Green.Models.DB
         public string Measure_Name { get; set; }
         [ForeignKey("Assigned_Measure"), Column(Order = 1)]
         public string Goal_Name { get; set; }
+        public string Perspective_Name { get; set; }
 
         public virtual Measure Assigned_Measure { get; set; }
     }
