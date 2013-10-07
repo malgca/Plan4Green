@@ -99,7 +99,8 @@ var drawingPane = (function () {
                 entryID.style.backgroundColor = '#666600'
             }
 
-            if (bsItem.completionRatios[bsItem.completionRatios.length - 1] != undefined) {
+            if (bsItem.completionRatios[bsItem.completionRatios.length - 1] != undefined &&
+                !isNaN(bsItem.completionRatios[bsItem.completionRatios.length - 1])) {
                 entryID.innerHTML = bsItem.completionRatios[bsItem.completionRatios.length - 1].toFixed(0) + '%';
             }
             else {
@@ -147,6 +148,7 @@ var drawingPane = (function () {
     redrawBSItems = function (bsItem) {
         // clear the currently existing BS items
         clearBSItems(bsItem.type);
+        console.log(bsItem.type);
 
         // redraw only the section which matters
         if (bsItem.type == 'perspective') {

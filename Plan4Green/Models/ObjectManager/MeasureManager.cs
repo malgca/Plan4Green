@@ -188,6 +188,22 @@ namespace Plan4Green.Models.ObjectManager
             }
         }
 
+        /// <summary>
+        /// Completely remove a measure and it's children from the Database
+        /// </summary>
+        public void RemoveMeasure(MeasureViewModel mvm)
+        {
+            CompletionScoreManager csm = new CompletionScoreManager();
+            List<CompletionScoreViewModel> csvms = csm.GetCompletionScoresByMeasure(mvm, false);
+
+            foreach (CompletionScoreViewModel csvm in csvms)
+            {
+                csm.DeleteCompletionScore(csvm);
+            }
+
+            DeleteMeasure(mvm);
+        }
+
         // Extracts the view model from a given measure in the Database
         private MeasureViewModel ExtractViewModel(Measure measure)
         {
@@ -210,24 +226,21 @@ namespace Plan4Green.Models.ObjectManager
         // update a measures name.
         private void UpdateName(MeasureViewModel mvm, Measure workingMeasure)
         {
-            using (Plan4GreenDB context = new Plan4GreenDB())
+            CompletionScoreManager csm = new CompletionScoreManager();
+            List<CompletionScoreViewModel> csvms = csm.GetCompletionScoresByMeasure(mvm);
+
+            foreach (CompletionScoreViewModel csvm in csvms)
             {
-                CompletionScoreManager csm = new CompletionScoreManager();
-                List<CompletionScoreViewModel> csvms = csm.GetCompletionScoresByMeasure(mvm);
+                csm.DeleteCompletionScore(csvm);
+            }
 
-                foreach (CompletionScoreViewModel csvm in csvms)
-                {
-                    csm.DeleteCompletionScore(csvm);
-                }
+            DeleteMeasure(mvm, true);
+            AddMeasure(mvm);
 
-                DeleteMeasure(mvm, true);
-                AddMeasure(mvm);
-
-                foreach (CompletionScoreViewModel csvm in csvms)
-                {
-                    csvm.ParentName = mvm.MeasureName;
-                    csm.AddCompletionScore(csvm);
-                }
+            foreach (CompletionScoreViewModel csvm in csvms)
+            {
+                csvm.ParentName = mvm.MeasureName;
+                csm.AddCompletionScore(csvm);
             }
         }
 

@@ -1,6 +1,4 @@
 Known Bugs:
-Items need to be deletable
-
 Perspectives need composite keys with organisation.
 Goals need composite keys with perspectives and organisation.
 Measures need composite keys with goals, perspectives and organisation.
@@ -10,3 +8,5 @@ CompletionScoreRatios need to be come out as string of values so as to be drawab
 Dates between goals and measures not synchronized. Dates in measures should only be valid between start and end date for goals. Dates in goals are unlimited 
 
 Bar graph doesn't look exactly right, need to move things up a bit and add x and y axis.
+
+Start and End dates start as null.

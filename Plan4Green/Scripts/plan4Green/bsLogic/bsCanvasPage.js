@@ -363,7 +363,7 @@ main = (function () {
                                 bsItem.bsParent = undefined;
                                 bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
                                 global.perspectiveArray.push(bsItem);
-                                //ajax.perspective('/JSON/AddPerspective', bsItem);
+                                ajax.perspective('/JSON/AddPerspective', bsItem);
                             }
                             else {
                                 alert('Please rename and save ' + bsItem.name + ' before attempting to add a new ' + bsItem.type + ' to the canvas.');
@@ -378,7 +378,7 @@ main = (function () {
 
                             if (success) {
                                 bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
-                                //ajax.goal('/JSON/AddGoal', bsItem);
+                                ajax.goal('/JSON/AddGoal', bsItem);
                             }
                         }
                         break;

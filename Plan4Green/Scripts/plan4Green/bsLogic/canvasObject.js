@@ -34,7 +34,7 @@
                 if (bsItem.name != edits.childNodes[0].firstChild.value) {
                     if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
                         bsItem.changeName(edits.childNodes[0].firstChild.value);
-                        views.childNodes[0].firstChild.innerHTML = bsItem.name;
+                        views.childNodes[1].firstChild.innerHTML = bsItem.name;
                         edits.childNodes[0].firstChild.style.color = '#2e2e2e';
                         bsItem.hasChanged = true;
                     }
@@ -46,7 +46,7 @@
                 // update description
                 if (bsItem.description != edits.childNodes[1].firstChild.value) {
                     bsItem.description = edits.childNodes[1].firstChild.value;
-                    views.childNodes[2].firstChild.innerHTML = bsItem.description;
+                    views.childNodes[3].firstChild.innerHTML = bsItem.description;
                     bsItem.hasChanged = true;
                 }
             }
@@ -55,7 +55,7 @@
                 if (bsItem.name != edits.childNodes[0].firstChild.value) {
                     if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
                         bsItem.changeName(edits.childNodes[0].firstChild.value);
-                        views.childNodes[0].firstChild.innerHTML = bsItem.name;
+                        views.childNodes[1].firstChild.innerHTML = bsItem.name;
                         edits.childNodes[0].firstChild.style.color = '#2e2e2e';
                         bsItem.hasChanged = true;
                     }
@@ -72,12 +72,12 @@
                         bsItem.hasChanged = true;
 
                         // update views
-                        views.childNodes[1].children[0].style.color = '#151515';
-                        views.childNodes[1].children[0].style.fontWeight = '400';
+                        views.childNodes[2].children[0].style.color = '#151515';
+                        views.childNodes[2].children[0].style.fontWeight = '400';
                     }
                     else {
-                        views.childNodes[1].children[0].style.color = '#ff0000';
-                        views.childNodes[1].children[0].style.fontWeight = '600';
+                        views.childNodes[2].children[0].style.color = '#ff0000';
+                        views.childNodes[2].children[0].style.fontWeight = '600';
                     }
                 }
 
@@ -102,19 +102,18 @@
                         bsItem.bsParent.calculateCompletionRatio();
                         drawingPane.redrawBSItems(bsItem.bsParent);
                         bsStoplight.update(bsItem, div);
-                        ajax.ratio('/JSON/AddCompletionScore', bsItem);
                     }
 
                     // update view
-                    views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsItem.targetValue;
+                    views.childNodes[5].firstChild.innerHTML = 'Target: ' + bsItem.targetValue;
                 }
 
                 // update views
-                views.childNodes[1].firstChild.innerHTML = 'Due: ' + bsItem.dueDate;
-                views.childNodes[2].firstChild.innerHTML = bsItem.description;
+                views.childNodes[2].firstChild.innerHTML = 'Due: ' + bsItem.dueDate;
+                views.childNodes[3].firstChild.innerHTML = bsItem.description;
 
                 if (bsItem.type == 'goal') {
-                    views.childNodes[4].firstChild.innerHTML = 'Target: ' + bsValidation.validValue(bsItem.targetValue(), 10000000);
+                    views.childNodes[5].firstChild.innerHTML = 'Target: ' + bsValidation.validValue(bsItem.targetValue(), 10000000);
                 }
             }
 
@@ -132,6 +131,10 @@
                 case 'measure':
                     if (bsItem.hasChanged) {
                         ajax.measure('/JSON/UpdateMeasure', bsItem);
+
+                        if (bsItem.completionRatios[bsItem.completionRatios.length - 1] != bsItem.completionRatios[bsItem.completionRatios.length - 2]) {
+                            ajax.ratio('/JSON/AddCompletionScore', bsItem);
+                        }
                     }
                     break;
             }
@@ -381,6 +384,48 @@
             // create the stoplight indicator for the bsItem
             var stoplight = createStoplight(bsItem);
 
+            var closeLink = document.createElement('a');
+            closeLink.innerHTML = 'x';
+            closeLink.className = 'closeLink';
+
+            closeLink.addEventListener('click', function () {
+                switch (bsItem.type) {
+                    case 'perspective':
+                        for (var i = 0; i < global.perspectiveArray.length; i++) {
+                            if (global.perspectiveArray[i].name == bsItem.name) {
+                                global.perspectiveArray.splice(i, 1);
+                                ajax.perspective('/JSON/DeletePerspective', bsItem);
+
+                                main.viewItem(bsItem, true);
+                                break;
+                            }
+                        }
+
+                        break;
+                    case 'goal':
+                        bsItem.bsParent.removeChildObject(bsItem);
+                        ajax.goal('/JSON/DeleteGoal', bsItem);
+
+                        main.viewItem(bsItem, true);
+                        drawingPane.redrawBSItems(bsItem);
+
+                        break;
+                    case 'measure':
+                        bsItem.bsParent.removeChildObject(bsItem);
+                        ajax.measure('/JSON/DeleteMeasure', bsItem);
+
+                        main.viewItem(bsItem, true);
+                        drawingPane.redrawBSItems(bsItem);
+
+                        bsItem.bsParent.calculateCompletionRatio();
+                        drawingPane.redrawBSItems(bsItem.bsParent);
+
+                        break;
+                }
+            }, false);
+
+            viewList.appendChild(closeLink);
+
             if (bsItem.isEnabled) {
                 // measure description
                 var description = document.createElement('p');
@@ -591,7 +636,7 @@
         if (bsItem.isEnabled) {
             div.appendChild(editBar);
         }
-        
+
         // place the div on the drawing page
         main.page.appendChild(div);
         bsStoplight.draw(bsItem, div);

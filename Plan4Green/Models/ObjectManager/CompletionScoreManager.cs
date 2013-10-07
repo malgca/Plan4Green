@@ -26,16 +26,27 @@ namespace Plan4Green.Models.ObjectManager
         /// <summary>
         /// Get the completion scores associated with a perspective from the database
         /// </summary>
-        public List<CompletionScoreViewModel> GetCompletionScoresByPerspective(PerspectiveViewModel pvm)
+        public List<CompletionScoreViewModel> GetCompletionScoresByPerspective(PerspectiveViewModel pvm, bool useOldReference = true)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                List<Completion_Score> scores = (from completionScores in context.Completion_Scores
-                        where completionScores.Perspective_Name == pvm.OldReference
-                        && completionScores.Organisation_Name == pvm.OrganisationName
-                        select completionScores).ToList();
-
+                List<Completion_Score> scores;
                 List<CompletionScoreViewModel> csvm = new List<CompletionScoreViewModel>();
+
+                if (useOldReference)
+                {
+                    scores = (from completionScores in context.Completion_Scores
+                              where completionScores.Perspective_Name == pvm.OldReference
+                              && completionScores.Organisation_Name == pvm.OrganisationName
+                              select completionScores).ToList();
+                }
+                else
+                {
+                    scores = (from completionScores in context.Completion_Scores
+                              where completionScores.Perspective_Name == pvm.PerspectiveName
+                              && completionScores.Organisation_Name == pvm.OrganisationName
+                              select completionScores).ToList();
+                }
 
                 foreach (Completion_Score score in scores)
                 {
@@ -49,17 +60,29 @@ namespace Plan4Green.Models.ObjectManager
         /// <summary>
         /// Get the completion scores associated with a goal from the database
         /// </summary>
-        public List<CompletionScoreViewModel> GetCompletionScoresByGoal(GoalViewModel gvm)
+        public List<CompletionScoreViewModel> GetCompletionScoresByGoal(GoalViewModel gvm, bool useOldReference = true)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                List<Completion_Score> scores = (from completionScores in context.Completion_Scores
-                        where completionScores.Perspective_Name == gvm.ParentName
-                        && completionScores.Goal_Name == gvm.OldReference
-                        && completionScores.Organisation_Name == gvm.OrganisationName
-                        select completionScores).ToList();
-
+                List<Completion_Score> scores;
                 List<CompletionScoreViewModel> csvm = new List<CompletionScoreViewModel>();
+
+                if (useOldReference)
+                {
+                    scores = (from completionScores in context.Completion_Scores
+                              where completionScores.Perspective_Name == gvm.ParentName
+                              && completionScores.Goal_Name == gvm.OldReference
+                              && completionScores.Organisation_Name == gvm.OrganisationName
+                              select completionScores).ToList();
+                }
+                else
+                {
+                    scores = (from completionScores in context.Completion_Scores
+                              where completionScores.Perspective_Name == gvm.ParentName
+                              && completionScores.Goal_Name == gvm.GoalName
+                              && completionScores.Organisation_Name == gvm.OrganisationName
+                              select completionScores).ToList();
+                }
 
                 foreach (Completion_Score score in scores)
                 {
@@ -73,18 +96,31 @@ namespace Plan4Green.Models.ObjectManager
         /// <summary>
         /// Get the view models of completion scores associated with a measure from the database
         /// </summary>
-        public List<CompletionScoreViewModel> GetCompletionScoresByMeasure(MeasureViewModel mvm)
+        public List<CompletionScoreViewModel> GetCompletionScoresByMeasure(MeasureViewModel mvm, bool useOldReference = true)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                List<Completion_Score> scores = (from completionScores in context.Completion_Scores
-                        where completionScores.Perspective_Name == mvm.GrandparentName
-                        && completionScores.Goal_Name == mvm.ParentName
-                        && completionScores.Measure_Name == mvm.OldReference
-                        && completionScores.Organisation_Name == mvm.OrganisationName
-                        select completionScores).ToList();
-
+                List<Completion_Score> scores;
                 List<CompletionScoreViewModel> csvm = new List<CompletionScoreViewModel>();
+
+                if (useOldReference)
+                {
+                    scores = (from completionScores in context.Completion_Scores
+                              where completionScores.Perspective_Name == mvm.GrandparentName
+                              && completionScores.Goal_Name == mvm.ParentName
+                              && completionScores.Measure_Name == mvm.OldReference
+                              && completionScores.Organisation_Name == mvm.OrganisationName
+                              select completionScores).ToList();
+                }
+                else
+                {
+                    scores = (from completionScores in context.Completion_Scores
+                              where completionScores.Perspective_Name == mvm.GrandparentName
+                              && completionScores.Goal_Name == mvm.ParentName
+                              && completionScores.Measure_Name == mvm.MeasureName
+                              && completionScores.Organisation_Name == mvm.OrganisationName
+                              select completionScores).ToList();
+                }
 
                 foreach (Completion_Score score in scores)
                 {

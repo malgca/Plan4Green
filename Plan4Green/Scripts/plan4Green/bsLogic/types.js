@@ -60,6 +60,14 @@ var bsType = (function () {
             return true;
         };
 
+        this.removeChildObject = function (childObject) {
+            for (var i = 0; i < this.children.length; i++) {
+                if (this.children[i].name === childObject.name) {
+                    this.children.splice(i, 1);
+                }
+            }
+        };
+
         // change the name of the object, keeping the old ref intact
         this.changeName = function (newName) {
             this.oldRef = this.name;

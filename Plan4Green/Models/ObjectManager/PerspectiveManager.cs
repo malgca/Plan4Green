@@ -130,6 +130,40 @@ namespace Plan4Green.Models.ObjectManager
             }
         }
 
+        /// <summary>
+        /// Completely remove a perspective and all its children from the database
+        /// </summary>
+        public void RemovePerspective(PerspectiveViewModel pvm)
+        {
+            GoalManager gm = new GoalManager();
+            MeasureManager mm = new MeasureManager();
+            CompletionScoreManager csm = new CompletionScoreManager();
+
+            List<GoalViewModel> gvms = gm.GetGoalsByPerspective(pvm, false);
+            List<MeasureViewModel> mvms = new List<MeasureViewModel>();
+            List<CompletionScoreViewModel> csvms = csm.GetCompletionScoresByPerspective(pvm, false);
+
+            foreach (CompletionScoreViewModel csvm in csvms)
+            {
+                csm.DeleteCompletionScore(csvm);
+            }
+
+            foreach (GoalViewModel gvm in gvms)
+            {
+                List<MeasureViewModel> measures = mm.GetMeasuresByGoal(gvm, false);
+
+                foreach (MeasureViewModel measure in measures)
+                {
+                    mvms.Add(measure);
+                    mm.DeleteMeasure(measure);
+                }
+
+                gm.DeleteGoal(gvm);
+            }
+
+            DeletePerspective(pvm);
+        }
+
         // Extracts the view model from a given perspective in the Database
         private PerspectiveViewModel ExtractViewModel(Perspective perspective)
         {

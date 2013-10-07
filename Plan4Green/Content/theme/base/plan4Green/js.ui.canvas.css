@@ -25,7 +25,7 @@
     overflow: scroll;
     overflow-y: auto;
     overflow-x: auto;
-    text-align:center;
+    text-align: center;
 }
 
     #map-page .viewName .mapPerspective, .mapGoal, .mapMeasure {
@@ -109,6 +109,7 @@ h1 {
     z-index: 16;
     height: 60px;
     width: 60px;
+    cursor: pointer;
 }
 
 .instructions {
@@ -199,7 +200,8 @@ ul[id$="bsControlList"] {
 
     ul[id$="bsControlList"] li {
         text-align: center;
-        padding-bottom: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
     }
 
 ul[id$="bsViewList"] {
@@ -214,6 +216,13 @@ ul[id$="bsViewList"] {
 
     ul[id$="bsViewList"] p {
         margin-top: 20px;
+    }
+
+    ul[id$="bsViewList"] .closeLink {
+        position: absolute;
+        right: 15px;
+        font-size: 14pt;
+        cursor: pointer;
     }
 
     ul[id$="bsViewList"] .viewHeading {

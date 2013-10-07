@@ -119,6 +119,18 @@ namespace Plan4Green.Controllers
             return Json(string.Format("Succesfullly Updated {0}", pvm.OldReference));
         }
 
+        /// <summary>
+        /// Delete a perspective from the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult DeletePerspective(PerspectiveViewModel pvm)
+        {
+            PerspectiveManager pm = new PerspectiveManager();
+            pm.RemovePerspective(pvm);
+
+            return Json(pvm);
+        }
+
         #endregion
 
         #region Goal Operations
@@ -154,7 +166,7 @@ namespace Plan4Green.Controllers
         }
 
         /// <summary>
-        /// Add a perspective to the database.
+        /// Add a goal to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult AddGoal(GoalViewModel gvm)
@@ -166,13 +178,25 @@ namespace Plan4Green.Controllers
         }
 
         /// <summary>
-        /// Change a perspective in the database.
+        /// Change a goal in the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult UpdateGoal(GoalViewModel gvm)
         {
             GoalManager gm = new GoalManager();
             gm.UpdateGoal(gvm);
+
+            return Json(gvm);
+        }
+
+        /// <summary>
+        /// Delete a goal from the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult DeleteGoal(GoalViewModel gvm)
+        {
+            GoalManager gm = new GoalManager();
+            gm.RemoveGoal(gvm);
 
             return Json(gvm);
         }
@@ -214,7 +238,7 @@ namespace Plan4Green.Controllers
         }
 
         /// <summary>
-        /// Add a perspective to the database.
+        /// Add a measure to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult AddMeasure(MeasureViewModel mvm)
@@ -226,13 +250,25 @@ namespace Plan4Green.Controllers
         }
 
         /// <summary>
-        /// Change a perspective in the database.
+        /// Change a measure in the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult UpdateMeasure(MeasureViewModel mvm)
         {
             MeasureManager mm = new MeasureManager();
             mm.UpdateMeasure(mvm);
+
+            return Json(mvm);
+        }
+
+        /// <summary>
+        /// Change a measure in the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult DeleteMeasure(MeasureViewModel mvm)
+        {
+            MeasureManager mm = new MeasureManager();
+            mm.RemoveMeasure(mvm);
 
             return Json(mvm);
         }
@@ -269,7 +305,7 @@ namespace Plan4Green.Controllers
         }
 
         /// <summary>
-        /// Add a perspective to the database.
+        /// Add a completion score to the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult AddCompletionScore(CompletionScoreViewModel csvm)

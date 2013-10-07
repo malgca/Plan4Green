@@ -80,16 +80,16 @@ var bsStoplight = (function () {
     // draws the stoplight on an already existing canvas
     var draw = function (bsItem, div) {
         if (bsItem.type == 'perspective') {
-            var stopCanvas = div.childNodes[1].children[1].children[0];
+            var stopCanvas = div.childNodes[1].children[2].children[0];
             stopCanvas.height = 10;
         }
         else {
             var stopCanvas;
             if (bsItem.isEnabled) {
-                stopCanvas = div.childNodes[1].children[3].children[0];
+                stopCanvas = div.childNodes[1].children[4].children[0];
             }
             else {
-                stopCanvas = div.childNodes[1].children[1].children[0];
+                stopCanvas = div.childNodes[1].children[2].children[0];
             }
             stopCanvas.height = 15;
         }
@@ -116,14 +116,14 @@ var bsStoplight = (function () {
 
     var update = function (bsItem, div) {
         if (bsItem.type == 'perspective') {
-            var stopCanvas = div.childNodes[1].children[1].children[0];
+            var stopCanvas = div.childNodes[1].children[2].children[0];
         }
         else {
             if (bsItem.isEnabled) {
-                stopCanvas = div.childNodes[1].children[3].children[0];
+                stopCanvas = div.childNodes[1].children[4].children[0];
             }
             else {
-                stopCanvas = div.childNodes[1].children[1].children[0];
+                stopCanvas = div.childNodes[1].children[2].children[0];
             }
         }
 

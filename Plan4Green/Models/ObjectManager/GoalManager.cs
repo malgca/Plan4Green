@@ -27,16 +27,27 @@ namespace Plan4Green.Models.ObjectManager
         /// <summary>
         /// Get the List of Goals belonging to a single Perspective.
         /// </summary>
-        public List<GoalViewModel> GetGoalsByPerspective(PerspectiveViewModel pvm)
+        public List<GoalViewModel> GetGoalsByPerspective(PerspectiveViewModel pvm, bool useOldReference = true)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                List<Goal> goals = (from goal in context.Goals
-                                                  where goal.Perspective_Name == pvm.OldReference
-                                                  && goal.Organisation_Name == pvm.OrganisationName
-                                                  select goal).ToList();
-
+                List<Goal> goals;
                 List<GoalViewModel> gvms = new List<GoalViewModel>();
+
+                if (useOldReference)
+                {
+                    goals = (from goal in context.Goals
+                             where goal.Perspective_Name == pvm.OldReference
+                             && goal.Organisation_Name == pvm.OrganisationName
+                             select goal).ToList();
+                }
+                else
+                {
+                    goals = (from goal in context.Goals
+                             where goal.Perspective_Name == pvm.PerspectiveName
+                             && goal.Organisation_Name == pvm.OrganisationName
+                             select goal).ToList();
+                }
 
                 foreach (Goal goal in goals)
                 {
@@ -164,6 +175,30 @@ namespace Plan4Green.Models.ObjectManager
             }
         }
 
+        /// <summary>
+        /// Completely remove a goal and it's children from the Database
+        /// </summary>
+        public void RemoveGoal(GoalViewModel gvm)
+        {
+            MeasureManager mm = new MeasureManager();
+            CompletionScoreManager csm = new CompletionScoreManager();
+
+            List<MeasureViewModel> mvms = mm.GetMeasuresByGoal(gvm, false);
+            List<CompletionScoreViewModel> csvms = csm.GetCompletionScoresByGoal(gvm, false);
+
+            foreach (CompletionScoreViewModel csvm in csvms)
+            {
+                csm.DeleteCompletionScore(csvm);
+            }
+
+            foreach (MeasureViewModel mvm in mvms)
+            {
+                mm.DeleteMeasure(mvm);
+            }
+
+            DeleteGoal(gvm);
+        }
+
         // Extracts the view model from a given measure in the Database
         private GoalViewModel ExtractViewModel(Goal goal)
         {
@@ -184,38 +219,35 @@ namespace Plan4Green.Models.ObjectManager
         // update a perspectives name.
         private void UpdateName(GoalViewModel gvm, Goal workingGoal)
         {
-            using (Plan4GreenDB context = new Plan4GreenDB())
+            MeasureManager mm = new MeasureManager();
+            CompletionScoreManager csm = new CompletionScoreManager();
+
+            List<MeasureViewModel> mvms = mm.GetMeasuresByGoal(gvm);
+            List<CompletionScoreViewModel> csvms = csm.GetCompletionScoresByGoal(gvm);
+
+            foreach (CompletionScoreViewModel csvm in csvms)
             {
-                MeasureManager mm = new MeasureManager();
-                CompletionScoreManager csm = new CompletionScoreManager();
+                csm.DeleteCompletionScore(csvm);
+            }
 
-                List<MeasureViewModel> mvms = mm.GetMeasuresByGoal(gvm);
-                List<CompletionScoreViewModel> csvms = csm.GetCompletionScoresByGoal(gvm);
+            foreach (MeasureViewModel mvm in mvms)
+            {
+                mm.DeleteMeasure(mvm);
+            }
 
-                foreach (CompletionScoreViewModel csvm in csvms)
-                {
-                    csm.DeleteCompletionScore(csvm);
-                }
+            DeleteGoal(gvm, true);
+            AddGoal(gvm);
 
-                foreach (MeasureViewModel mvm in mvms)
-                {
-                    mm.DeleteMeasure(mvm);
-                }
+            foreach (MeasureViewModel mvm in mvms)
+            {
+                mvm.ParentName = gvm.GoalName;
+                mm.AddMeasure(mvm);
+            }
 
-                DeleteGoal(gvm, true);
-                AddGoal(gvm);
-
-                foreach (MeasureViewModel mvm in mvms)
-                {
-                    mvm.ParentName = gvm.GoalName;
-                    mm.AddMeasure(mvm);
-                }
-
-                foreach (CompletionScoreViewModel csvm in csvms)
-                {
-                    csvm.GrandparentName = gvm.GoalName;
-                    csm.AddCompletionScore(csvm);
-                }
+            foreach (CompletionScoreViewModel csvm in csvms)
+            {
+                csvm.GrandparentName = gvm.GoalName;
+                csm.AddCompletionScore(csvm);
             }
         }
 
