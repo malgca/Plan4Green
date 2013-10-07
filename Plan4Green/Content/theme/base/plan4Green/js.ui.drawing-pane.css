@@ -157,12 +157,15 @@
 
         #drawing-pane #tools table tbody tr td img#perspective {
             margin-bottom: 90px;
+            visibility: visible;
         }
 
         #drawing-pane #tools table tbody tr td img#goal {
             margin-bottom: 90px;
+            visibility: hidden;
         }
 
         #drawing-pane #tools table tbody tr td img#measure {
             margin-bottom: 0px;
+            visibility: hidden;
         }
