@@ -1,6 +1,10 @@
 Known Bugs:
 Database not adding and removing items properly. Especially need to recheck changing items with children in them.
 
+Need to add an organisation to all tables and make sure to check data based on that. This is in case you work with multiple organisations.
+
+CompletionScoreRatios need to be come out as string of values so as to be drawable from the first. Right now only one value at a time. The code is generally right, this just needs to be fixed when loading the item.
+
 Dates between goals and measures not synchronized. Dates in measures should only be valid between start and end date for goals. Dates in goals are unlimited 
 
 Bar graph doesn't look exactly right, need to move things up a bit and add x and y axis.

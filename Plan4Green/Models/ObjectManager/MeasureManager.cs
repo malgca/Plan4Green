@@ -13,7 +13,7 @@ namespace Plan4Green.Models.ObjectManager
         /// <summary>
         /// Get's the measures associated with an Organisation from a database.
         /// </summary>
-        public List<Measure> GetMeasures(string organisationName)
+        public List<Measure> GetMeasuresByOrganisation(string organisationName)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
@@ -24,13 +24,37 @@ namespace Plan4Green.Models.ObjectManager
         }
 
         /// <summary>
+        /// Get the List of Measures belonging to a single Goal.
+        /// </summary>
+        public List<MeasureViewModel> GetMeasuresByGoal(GoalViewModel gvm)
+        {
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                List<Measure> measures = (from measure in context.Measures
+                                          where measure.Goal_Name == gvm.OldReference
+                                          && measure.Perspective_Name == gvm.ParentName
+                                          && measure.Organisation_Name == gvm.OrganisationName
+                                          select measure).ToList();
+
+                List<MeasureViewModel> mvms = new List<MeasureViewModel>();
+
+                foreach (Measure measure in measures)
+                {
+                    mvms.Add(ExtractViewModel(measure));
+                }
+
+                return mvms;
+            }
+        }
+
+        /// <summary>
         /// Add an organisation to the Database
         /// </summary>
         public void AddMeasure(MeasureViewModel mvm)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                if (!MeasureExists(context, mvm.MeasureName, mvm.ParentName))
+                if (!MeasureExists(context, mvm))
                 {
                     Measure newMeasure = new Measure();
 
@@ -50,7 +74,7 @@ namespace Plan4Green.Models.ObjectManager
                 }
             }
         }
-        
+
         /// <summary>
         /// Updates information on a Measure in the Database.
         /// </summary>
@@ -58,33 +82,12 @@ namespace Plan4Green.Models.ObjectManager
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                // get a list of items with the old reference.
-                List<Goal> measures = (from measure in context.Goals
-                                    where measure.Goal_Name == mvm.OldReference
-                                    select measure).ToList();
-
-                for (int i = 0; i < measures.Count; i++)
-                {
-                    if (measures[i].Perspective_Name == mvm.MeasureName)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        if (mvm.NameHasChanged)
-                        {
-                            context.Goals.Remove(measures[i]);
-                            AddMeasure(mvm);
-                            context.SaveChanges();
-                            return;
-                        }
-                    }
-                }
-                if (MeasureExists(context, mvm.MeasureName, mvm.ParentName))
+                if (MeasureExists(context, mvm))
                 {
                     Measure workingMeasure = (from measure in context.Measures
-                                           where measure.Measure_Name == mvm.MeasureName
-                                           select measure).First();
+                                              where measure.Measure_Name == mvm.MeasureName
+                                              && measure.Organisation_Name == mvm.OrganisationName
+                                              select measure).First();
 
                     if (workingMeasure.Description != mvm.Description)
                     {
@@ -118,25 +121,113 @@ namespace Plan4Green.Models.ObjectManager
                     context.SaveChanges();
                     return;
                 }
+                else
+                {
+                    // get a list of items with the old reference.
+                    Measure workingMeasure = (from measure in context.Measures
+                                              where measure.Measure_Name == mvm.OldReference
+                                              && measure.Goal_Name == mvm.ParentName
+                                              && measure.Perspective_Name == mvm.GrandparentName
+                                              && measure.Organisation_Name == mvm.OrganisationName
+                                              select measure).FirstOrDefault();
+
+                    if (workingMeasure != default(Measure))
+                    {
+                        UpdateName(mvm, workingMeasure);
+                    }
+                    return;
+                }
             }
         }
 
-        // update a perspectives name.
-        private void UpdateName(GoalViewModel gvm)
+        /// <summary>
+        /// Deletes a measure from the Database
+        /// </summary>
+        public void DeleteMeasure(MeasureViewModel mvm, bool deleteByOldReference = false)
         {
-            // remove the goal
-            // add under new name
-            // change the measure name in completion scores
-            // save changes to context
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                Measure deleteMeasure;
+
+                if (deleteByOldReference)
+                {
+                    deleteMeasure = (from measure in context.Measures
+                                     where measure.Measure_Name == mvm.OldReference
+                                     && measure.Goal_Name == mvm.ParentName
+                                     && measure.Perspective_Name == mvm.GrandparentName
+                                     && measure.Organisation_Name == mvm.OrganisationName
+                                     select measure).FirstOrDefault();
+                }
+                else
+                {
+                    deleteMeasure = (from measure in context.Measures
+                                     where measure.Measure_Name == mvm.MeasureName
+                                     && measure.Goal_Name == mvm.ParentName
+                                     && measure.Perspective_Name == mvm.GrandparentName
+                                     && measure.Organisation_Name == mvm.OrganisationName
+                                     select measure).FirstOrDefault();
+                }
+
+                if (deleteMeasure != default(Measure))
+                {
+                    context.Measures.Remove(deleteMeasure);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        // Extracts the view model from a given measure in the Database
+        private MeasureViewModel ExtractViewModel(Measure measure)
+        {
+            MeasureViewModel mvm = new MeasureViewModel();
+
+            mvm.MeasureName = measure.Measure_Name;
+            mvm.OrganisationName = measure.Organisation_Name;
+            mvm.ParentName = measure.Goal_Name;
+            mvm.GrandparentName = measure.Perspective_Name;
+            mvm.StartDate = measure.Start_Date;
+            mvm.DueDate = measure.Due_Date;
+            mvm.Description = measure.Description;
+            mvm.targetValue = measure.Target_Value;
+            mvm.xPosition = measure.X_Position;
+            mvm.yPosition = measure.Y_Position;
+
+            return mvm;
+        }
+
+        // update a measures name.
+        private void UpdateName(MeasureViewModel mvm, Measure workingMeasure)
+        {
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                CompletionScoreManager csm = new CompletionScoreManager();
+                List<CompletionScoreViewModel> csvms = csm.GetCompletionScoresByMeasure(mvm);
+
+                foreach (CompletionScoreViewModel csvm in csvms)
+                {
+                    csm.DeleteCompletionScore(csvm);
+                }
+
+                DeleteMeasure(mvm, true);
+                AddMeasure(mvm);
+
+                foreach (CompletionScoreViewModel csvm in csvms)
+                {
+                    csvm.ParentName = mvm.MeasureName;
+                    csm.AddCompletionScore(csvm);
+                }
+            }
         }
 
         // Check if a Measure already exists in the database.
-        private bool MeasureExists(Plan4GreenDB context, string measureName, string goalName)
+        private bool MeasureExists(Plan4GreenDB context, MeasureViewModel mvm)
         {
             return (
                 from measure in context.Measures
-                where measure.Measure_Name.Equals(measureName)
-                && measure.Goal_Name.Equals(goalName)
+                where measure.Measure_Name == mvm.MeasureName
+                && measure.Goal_Name == mvm.ParentName
+                && measure.Perspective_Name == mvm.GrandparentName
+                && measure.Organisation_Name == mvm.OrganisationName
                 select measure).Any();
         }
     }

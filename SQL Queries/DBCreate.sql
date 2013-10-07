@@ -94,7 +94,9 @@ CREATE TABLE Completion_Score
 
 	Measure_Name varchar(450) NOT NULL,
 	Goal_Name varchar(450) NOT NULL,
-	Perspective_Name varchar(100) NOT NULL
+	Perspective_Name varchar(100) NOT NULL,
+
+	Organisation_Name varchar(600) NOT NULL
 
 	PRIMARY KEY(Completion_Score_Time),
 	FOREIGN KEY (Measure_Name, Goal_Name) REFERENCES Measure(Measure_Name, Goal_Name)

@@ -27,8 +27,6 @@
 
                 xPosition: perspective.currentPosition.x,
                 yPosition: perspective.currentPosition.y,
-
-                NameHasChanged: perspective.nameHasChanged
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',
@@ -61,8 +59,6 @@
 
                 ParentName: goal.bsParent.name,
                 OrganisationName: goal.organisationName,
-
-                NameHasChanged: goal.nameHasChanged
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',
@@ -94,8 +90,6 @@
 
                 ParentName: measure.bsParent.name,
                 GrandparentName: measure.bsParent.bsParent.name,
-
-                NameHasChanged: measure.nameHasChanged
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',
@@ -114,9 +108,12 @@
             data: JSON.stringify({
                 CompletionScoreTime: measure.completionTimes[measure.completionTimes.length - 1],
                 CurrentValue: measure.currentValue,
+
                 ParentName: measure.name,
                 GrandparentName: measure.bsParent.name,
-                GreatGrandparentName: measure.bsParent.bsParent.name
+                GreatGrandparentName: measure.bsParent.bsParent.name,
+
+                OrganisationName: measure.organisationName
             }),
             dataType: "json",
             contentType: 'application/json; charset=utf-8',

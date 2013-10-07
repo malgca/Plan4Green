@@ -11,6 +11,21 @@ namespace Plan4Green.Models.ObjectManager
     public class PerspectiveManager
     {
         /// <summary>
+        /// Get's the perspectives associated with an Organisation from a database.
+        /// </summary>
+        /// <param name="organisationName"></param>
+        public List<Perspective> GetPerspectivesByOrganisation(string organisationName)
+        {
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                return (
+                    from perspectives in context.Perspectives
+                    where perspectives.Organisation_Name == organisationName
+                    select perspectives).ToList();
+            }
+        }
+
+        /// <summary>
         /// Add an organisation to the Database
         /// </summary>
         /// <param name="organisation">The name of the Organisation to be added.</param>
@@ -18,7 +33,7 @@ namespace Plan4Green.Models.ObjectManager
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                if (!PerspectiveExists(context, pvm.PerspectiveName))
+                if (!PerspectiveExists(context, pvm))
                 {
                     Perspective newPerspective = new Perspective();
 
@@ -42,37 +57,12 @@ namespace Plan4Green.Models.ObjectManager
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                // case exists purely for changing names
-                if (PerspectiveExists(context, pvm.OldReference))
-                {
-                    // get a list of items with the old reference.
-                    List<Perspective> perspectives = (from perspective in context.Perspectives
-                                                      where perspective.Perspective_Name == pvm.OldReference
-                                                      select perspective).ToList();
-
-                    for (int i = 0; i < perspectives.Count; i++)
-                    {
-                        if (perspectives[i].Perspective_Name == pvm.PerspectiveName)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            if (pvm.NameHasChanged)
-                            {
-                                context.Perspectives.Remove(perspectives[i]);
-                                AddPerspective(pvm);
-                                context.SaveChanges();
-                                return;
-                            }
-                        }
-                    }
-                }
-                if(PerspectiveExists(context, pvm.PerspectiveName))
+                if(PerspectiveExists(context, pvm))
                 {
                     // find what's changed and change it
                     Perspective workingPers = (from perspective in context.Perspectives
                                                where perspective.Perspective_Name == pvm.PerspectiveName
+                                               && perspective.Organisation_Name == pvm.OrganisationName
                                                select perspective).First();
 
                     if (workingPers.Description != pvm.Description)
@@ -91,47 +81,76 @@ namespace Plan4Green.Models.ObjectManager
                     context.SaveChanges();
                     return;
                 }
-            }
-        }
+                // case exists purely for changing names
+                else
+                {
+                    // get a list of items with the old reference.
+                    Perspective workingPerspective = (from perspective in context.Perspectives
+                                                      where perspective.Perspective_Name == pvm.OldReference
+                                                      select perspective).FirstOrDefault();
 
-        /// <summary>
-        /// Get's the perspectives associated with an Organisation from a database.
-        /// </summary>
-        /// <param name="organisationName"></param>
-        public List<Perspective> GetPerspectives(string organisationName)
-        {
-            using (Plan4GreenDB context = new Plan4GreenDB())
-            {
-                return (
-                    from perspectives in context.Perspectives
-                    where perspectives.Organisation_Name == organisationName
-                    select perspectives).ToList();
+                    if (workingPerspective != default(Perspective))
+                    {
+                        UpdateName(pvm, workingPerspective);
+                    }
+                    return;
+                }
             }
         }
 
         // update a perspectives name.
-        private void UpdateName(PerspectiveViewModel pvm)
+        private void UpdateName(PerspectiveViewModel pvm, Perspective workingPerspective)
         {
-            // get all perspective measures.
-            // get all perspective goals.
+            //TODO: Fix this method
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                GoalManager gm = new GoalManager();
+                MeasureManager mm = new MeasureManager();
+                CompletionScoreManager csm = new CompletionScoreManager();
 
-            // remove all perspective measures.
-            // remove all perspective goals.
+                List<GoalViewModel> gvms = gm.GetGoalsByPerspective(pvm);
 
-            // add all perspective measures using new name as parents (may need to create new measure).
-            // add all perspective goal using new name as parents (may need to create new goal).
+                List<MeasureViewModel> mvms = new List<MeasureViewModel>();
 
-            // remove the perspective
-            // add under new name
-            // save changes to context
+                foreach (GoalViewModel gvm in gvms)
+                {
+                    List<MeasureViewModel> measures = mm.GetMeasuresByGoal(gvm);
+
+                    foreach (MeasureViewModel measure in measures)
+                    {
+                        mvms.Add(measure);
+                        mm.DeleteMeasure(measure);
+                    }
+
+                    gm.DeleteGoal(gvm);                    
+                }
+
+                context.Perspectives.Remove(workingPerspective);
+                AddPerspective(pvm);
+
+                foreach (GoalViewModel gvm in gvms)
+                {
+                    gvm.ParentName = pvm.PerspectiveName;
+                    gm.AddGoal(gvm);
+                }
+
+                foreach (MeasureViewModel mvm in mvms)
+                {
+                    mvm.GrandparentName = pvm.PerspectiveName;
+                    mm.AddMeasure(mvm);
+                }
+
+                context.SaveChanges();
+            }
         }
 
         // Check if a Perspective already exists in the database.
-        private bool PerspectiveExists(Plan4GreenDB context, string perspectiveName)
+        private bool PerspectiveExists(Plan4GreenDB context, PerspectiveViewModel pvm)
         {
             return (
                 from perspective in context.Perspectives
-                where perspective.Perspective_Name == perspectiveName
+                where perspective.Perspective_Name == pvm.PerspectiveName
+                && perspective.Organisation_Name == pvm.OrganisationName
                 select perspective).Any();
         }
     }

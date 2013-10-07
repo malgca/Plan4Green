@@ -19,6 +19,18 @@ namespace Plan4Green.Controllers
         #region Misc Operations
 
         /// <summary>
+        /// Get the current user's organisation from the database.
+        /// </summary>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult GetUsername()
+        {
+            UserManager um = new UserManager();
+            string userName = um.GetUsername(WebSecurity.CurrentUserId);
+
+            return Json(userName);
+        }
+
+        /// <summary>
         /// Converts list of background images from the local serve to JSON.
         /// </summary>
         /// <remarks>Images URL: ~/Images/background-images</remarks>
@@ -40,36 +52,18 @@ namespace Plan4Green.Controllers
             return Json(imagePaths);
         }
 
-        #endregion
-
-        #region User Operations
-
-        /// <summary>
-        /// Get the current user's organisation from the database.
-        /// </summary>
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult GetUsername()
-        {
-            UserManager userMan = new UserManager();
-            string usernameInfo = userMan.GetUsername(WebSecurity.CurrentUserId);
-            return Json(usernameInfo);
-        }
-
-        #endregion
-
-        #region Organisation Operations
-
         /// <summary>
         /// Get the current user's organisation from the database.
         /// </summary>
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult GetOrganisation()
         {
-            UserManager userMan = new UserManager();
-            string organisationalInfo = userMan.GetUserOrganisation(WebSecurity.CurrentUserId);
-            return Json(organisationalInfo);
+            UserManager um = new UserManager();
+            string organisationName = um.GetUserOrganisation(WebSecurity.CurrentUserId);
+
+            return Json(organisationName);
         }
-        
+
         #endregion
 
         #region Perspective Operations
@@ -84,7 +78,7 @@ namespace Plan4Green.Controllers
             string organisationName = um.GetUserOrganisation(WebSecurity.CurrentUserId);
 
             PerspectiveManager pm = new PerspectiveManager();
-            List<Perspective> perspectives = pm.GetPerspectives(organisationName);
+            List<Perspective> perspectives = pm.GetPerspectivesByOrganisation(organisationName);
 
             var array = perspectives.ToArray();
             string perspectiveString = string.Empty;
@@ -139,7 +133,7 @@ namespace Plan4Green.Controllers
             string organisationName = um.GetUserOrganisation(WebSecurity.CurrentUserId);
 
             GoalManager gm = new GoalManager();
-            List<Goal> goals = gm.GetGoals(organisationName);
+            List<Goal> goals = gm.GetGoalsByOrganisation(organisationName);
 
             var array = goals.ToArray();
             string goalString = string.Empty;
@@ -197,7 +191,7 @@ namespace Plan4Green.Controllers
             string organisationName = um.GetUserOrganisation(WebSecurity.CurrentUserId);
 
             MeasureManager mm = new MeasureManager();
-            List<Measure> measures = mm.GetMeasures(organisationName);
+            List<Measure> measures = mm.GetMeasuresByOrganisation(organisationName);
 
             var array = measures.ToArray();
             string measureString = string.Empty;
@@ -253,8 +247,11 @@ namespace Plan4Green.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult GetCompletionScores()
         {
+            UserManager um = new UserManager();
+            string organisationName = um.GetUserOrganisation(WebSecurity.CurrentUserId);
+
             CompletionScoreManager csm = new CompletionScoreManager();
-            List<Completion_Score> completionScores = csm.GetCompletionScores();
+            List<Completion_Score> completionScores = csm.GetCompletionScoresByOrganisation(organisationName);
 
             var array = completionScores.ToArray();
             string completionString = string.Empty;
@@ -284,6 +281,5 @@ namespace Plan4Green.Controllers
         }
 
         #endregion
-
     }
 }

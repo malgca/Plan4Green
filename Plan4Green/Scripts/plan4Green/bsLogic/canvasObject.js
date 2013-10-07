@@ -54,7 +54,7 @@
                 // update bsItem
                 if (bsItem.name != edits.childNodes[0].firstChild.value) {
                     if (bsValidation.validName(bsItem, edits.childNodes[0].firstChild.value)) {
-                        bsItem.name = edits.childNodes[0].firstChild.value;
+                        bsItem.changeName(edits.childNodes[0].firstChild.value);
                         views.childNodes[0].firstChild.innerHTML = bsItem.name;
                         edits.childNodes[0].firstChild.style.color = '#2e2e2e';
                         bsItem.hasChanged = true;
@@ -102,7 +102,7 @@
                         bsItem.bsParent.calculateCompletionRatio();
                         drawingPane.redrawBSItems(bsItem.bsParent);
                         bsStoplight.update(bsItem, div);
-                        //ajax.ratio('/JSON/AddCompletionScore', bsItem);
+                        ajax.ratio('/JSON/AddCompletionScore', bsItem);
                     }
 
                     // update view
@@ -136,7 +136,7 @@
                     break;
             }
 
-            bsItem.nameHasChanged = false;
+            bsItem.hasChanged = false;
         }
 
         createControls = function () {

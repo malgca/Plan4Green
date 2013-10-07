@@ -42,8 +42,6 @@ var bsType = (function () {
         this.isActive = false;
         // the old reference by which this object was refered, used when changing names
         this.oldRef = this.name;
-        // flag notifying if name has changed
-        this.nameHasChanged = false;
         // flag if absolutely anything has changed
         this.hasChanged = false;
         // store the name of the organisation this perspective belongs to
@@ -66,7 +64,6 @@ var bsType = (function () {
         this.changeName = function (newName) {
             this.oldRef = this.name;
             this.name = newName;
-            this.nameHasChanged = true;
         }
 
         // set an item to be enabled for editing
