@@ -17,6 +17,15 @@
         text-align: center;
     }
 
+        #drawing-pane #info #area {
+            font-size: 15pt;
+            background: #1C1C1C;
+            position: absolute;
+            display: block;
+            top: 130px;
+            width: 300px;
+        }
+
         #drawing-pane #info ul {
             margin: 0px;
             padding: 0px;
@@ -41,84 +50,86 @@
         visibility: visible;
     }
 
-        #drawing-pane #info table {
-            position: absolute;
-            width: 290px;
-        }
+    #drawing-pane #info table {
+        position: absolute;
+        width: 290px;
+    }
 
-            #drawing-pane #info table tbody {
-                font-size: 12pt;
-                text-align: left;
-                overflow-x: hidden;
-                overflow-y: visible;
-                display: block;
-                max-height: 105px;
-            }
-
-                #drawing-pane #info table tbody tr td.viewName {
-                    margin-left: 15px;
-                    background-color: #2b2b2b;
-                    width: 220px;
-                }
-
-                #drawing-pane #info table tbody tr td.viewID {
-                    margin-left: 15px;
-                    background-color: #2b2b2b;
-                    width: 40px;
-                }
-
-
-        #drawing-pane #info #perspective-info {
-            top: 163px;
-        }
-
-        #drawing-pane #info #goal-info {
-            top: 319px;
-        }
-
-        #drawing-pane #info #measure-info {
-            top: 477px;
-        }
-
-        #drawing-pane #info #timeframe-info {
-            position: absolute;
-            top: 138px;
-            width: 295px;
-            visibility: collapse;
-        }
-
-            #drawing-pane #info #timeframe-info input[type=date] {
-                color: #2e2e2e;
-                height: 25px;
-                font-weight: 400;
-                border-radius: 5px;
-                margin-top: 0px;
-                background-color: #e2e2e2;
-                width: 180px;
-                font-size: 12pt;
-            }
-
-            #drawing-pane #info #timeframe-info input[type=submit] {
-                color: #2e2e2e;
-                height: 25px;
-                font-weight: 400;
-                border-radius: 5px;
-                margin-top: 0px;
-                width: 180px;
-                font-size: 12pt;
-            }
-
-        #drawing-pane #info #options-div {
-            position: absolute;
-            bottom: 20px;
+        #drawing-pane #info table tbody {
             font-size: 12pt;
-            width: 290px;
+            text-align: left;
+            overflow-x: hidden;
+            overflow-y: visible;
+            display: block;
+            max-height: 105px;
         }
 
-            #drawing-pane #info #options-div a {
-                padding: 5px 0px;
-                display: block;
+            #drawing-pane #info table tbody tr td.viewName, td.viewName label {
+                margin-left: 15px;
+                background-color: #2b2b2b;
+                width: 220px;
+                cursor: pointer;
             }
+
+            #drawing-pane #info table tbody tr td.viewID, td.viewID label {
+                margin-left: 15px;
+                background-color: #2b2b2b;
+                width: 40px;
+                cursor: pointer;
+            }
+
+
+    #drawing-pane #info #perspective-info {
+        top: 163px;
+    }
+
+    #drawing-pane #info #goal-info {
+        top: 319px;
+    }
+
+    #drawing-pane #info #measure-info {
+        top: 477px;
+    }
+
+    #drawing-pane #info #timeframe-info {
+        position: absolute;
+        top: 138px;
+        width: 295px;
+        visibility: collapse;
+    }
+
+        #drawing-pane #info #timeframe-info input[type=date] {
+            color: #2e2e2e;
+            height: 25px;
+            font-weight: 400;
+            border-radius: 5px;
+            margin-top: 0px;
+            background-color: #e2e2e2;
+            width: 180px;
+            font-size: 12pt;
+        }
+
+        #drawing-pane #info #timeframe-info input[type=submit] {
+            color: #2e2e2e;
+            height: 25px;
+            font-weight: 400;
+            border-radius: 5px;
+            margin-top: 0px;
+            width: 180px;
+            font-size: 12pt;
+        }
+
+    #drawing-pane #info #options-div {
+        position: absolute;
+        bottom: 20px;
+        font-size: 12pt;
+        width: 290px;
+    }
+
+        #drawing-pane #info #options-div a {
+            padding: 5px 0px;
+            display: block;
+        }
 
     #drawing-pane #tools {
         background-color: rgba(0, 0, 0, 0.90);
@@ -141,6 +152,7 @@
 
         #drawing-pane #tools table tbody tr td img#control-arrow {
             margin-bottom: 60px;
+            cursor: pointer;
         }
 
         #drawing-pane #tools table tbody tr td img#perspective {

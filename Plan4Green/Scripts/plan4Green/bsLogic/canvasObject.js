@@ -215,6 +215,7 @@
 
             bsImage.draggable = false;
             bsImage.className = 'bsImage';
+            bsImage.title = bsItem.type + ': ' + bsItem.name;
 
             if (bsItem.type == 'perspective') {
                 bsImage.src = "../../Images/controls/drawing-pane/perspective-active.png";
@@ -236,14 +237,17 @@
             var editImage = new Image(35, 35);
             if (bsItem.isEditing) {
                 editImage.src = '../../Images/controls/bs-item/save.png';
+                editImage.title = 'Save ' + bsItem.name;
             } else {
                 editImage.src = '../../Images/controls/bs-item/edit.png';
+                editImage.title = 'Edit ' + bsItem.name;
             }
 
             var controlEvents = (function () {
                 editClick = function (event) {
                     if (!bsItem.isEditing) {
                         editImage.src = '../../Images/controls/bs-item/save.png';
+                        editImage.title = 'Save ' + bsItem.name;
 
                         var viewList = document.getElementById(div.id + "-bsViewList");
                         viewList.style.display = 'none';
@@ -255,6 +259,7 @@
                     }
                     else {
                         editImage.src = '../../Images/controls/bs-item/edit.png';
+                        editImage.title = 'Edit ' + bsItem.name;
 
                         var viewList = document.getElementById(div.id + "-bsViewList");
                         viewList.style.display = 'inline-block';
@@ -334,6 +339,7 @@
             if (bsItem.type != 'measure') {
                 var viewImage = new Image(35, 35);
                 viewImage.src = '../../Images/controls/bs-item/viewChild.png';
+                viewImage.title = 'Drill into ' + bsItem.name;
                 viewImage.addEventListener('click', controlEvents.viewClick, false);
 
                 controls.push(viewImage);
@@ -343,6 +349,7 @@
                 var graphImage = new Image(35, 35);
                 graphImage.src = '../../Images/controls/bs-item/graph.png';
                 graphImage.addEventListener('click', controlEvents.graphClick, false);
+                graphImage.title = 'View graph of ' + bsItem.name;
 
                 if (bsItem.isEnabled) {
                     controls.push(graphImage);
@@ -502,6 +509,16 @@
             headingEdit.type = 'text';
             headingEdit.value = bsItem.name;
 
+            headingEdit.addEventListener('focus', function (event) {
+                headingEdit.value = '';
+            }, false);
+
+            headingEdit.addEventListener('blur', function (event) {
+                if (headingEdit.value == '') {
+                    headingEdit.value = bsItem.name;
+                }
+            }, false);
+
             edits.push(headingEdit);
 
             if (bsItem.type != 'perspective') {
@@ -548,6 +565,16 @@
             var descriptionEdit = document.createElement('textarea');
             descriptionEdit.value = bsItem.description;
 
+            descriptionEdit.addEventListener('focus', function (event) {
+                descriptionEdit.value = '';
+            }, false);
+
+            descriptionEdit.addEventListener('blur', function (event) {
+                if (descriptionEdit.value == '') {
+                    descriptionEdit.value = bsItem.description;
+                }
+            }, false);
+
             edits.push(descriptionEdit);
 
             if (bsItem.type == 'measure') {
@@ -565,6 +592,16 @@
                 targetEdit.value = bsItem.targetValue;
                 targetEdit.max = 10000000;
 
+                targetEdit.addEventListener('focus', function (event) {
+                    targetEdit.value = '';
+                }, false);
+
+                targetEdit.addEventListener('blur', function (event) {
+                    if (targetEdit.value == '') {
+                        targetEdit.value = bsItem.targetValue;
+                    }
+                }, false);
+
                 targetList.appendChild(targetEdit);
 
                 var currentList = document.createElement('li');
@@ -580,6 +617,17 @@
                 currentEdit.type = 'number';
                 currentEdit.value = bsItem.currentValue;
                 currentEdit.max = 10000000;
+
+                currentEdit.addEventListener('focus', function (event) {
+                    currentEdit.value = '';
+                }, false);
+
+                currentEdit.addEventListener('blur', function (event) {
+                    if (currentEdit.value == '') {
+                        currentEdit.value = bsItem.currentValue;
+                    }
+                }, false);
+
 
                 currentList.appendChild(currentEdit);
 

@@ -1,12 +1,9 @@
 Known Bugs:
-Perspectives need composite keys with organisation.
-Goals need composite keys with perspectives and organisation.
-Measures need composite keys with goals, perspectives and organisation.
 
-CompletionScoreRatios need to be come out as string of values so as to be drawable from the first. Right now only one value at a time. The code is generally right, this just needs to be fixed when loading the item.
+CompletionScoreRatios need to be come out as string of values so as to be drawable from the first. Right now only one value at a time. The code is generally right, this just needs to be fixed when loading the item. - Explain this as restarting your session in the mean time.
 
 Dates between goals and measures not synchronized. Dates in measures should only be valid between start and end date for goals. Dates in goals are unlimited 
 
 Bar graph doesn't look exactly right, need to move things up a bit and add x and y axis.
 
-Start and End dates start as null.
+Start and End dates and Current Value start as null. They need to start as their actual values.

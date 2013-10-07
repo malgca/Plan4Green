@@ -36,6 +36,8 @@ var drawingPane = (function () {
         goal: document.getElementById("goal"),
         // measure control in drawing pane
         measure: document.getElementById("measure"),
+        // area of the information pane
+        area: document.getElementById("area"),
         // flag representing whether or not pane is out
         isPaneOut: false
     },
@@ -64,24 +66,20 @@ var drawingPane = (function () {
 
     // add BS item information to the drawing pane.
     addBSItem = function (bsItem) {
-        // wrap item in anchor tag
-        var anchor = document.createElement('a');
-        anchor.href = '#' + bsItem.name;
-        anchor.innerHTML = bsItem.name;
-
-        anchorClick = function (event) {
-            main.viewItem(bsItem, true);
-        }
-
-        anchor.addEventListener("click", anchorClick, false);
-
         // create table row wrapper
         var tableRow = document.createElement('tr');
         // create name entry
         var entryName = document.createElement('td');
         entryName.id = bsItem.name;
-        entryName.appendChild(anchor);
+        entryName.innerHTML = bsItem.name;
         entryName.className = 'viewName';
+
+        entryName.addEventListener("click", function (event) {
+            main.viewItem(bsItem, true);
+            if (bsItem.type != 'perspective') {
+                redrawBSItems(bsItem.bsParent);
+            }
+        }, false);
 
         if (bsItem.isActive) {
             entryName.style.backgroundColor = '#666600'
@@ -107,6 +105,10 @@ var drawingPane = (function () {
                 entryID.innerHTML = 0 + '%';
             }
 
+            entryID.addEventListener("click", function (event) {
+                main.viewItem(bsItem, true);
+                redrawBSItems(bsItem.bsParent);
+            }, false);
             tableRow.appendChild(entryID);
         }
 
@@ -237,11 +239,13 @@ var drawingPane = (function () {
                     pane.infoTables.style.visibility = 'collapse';
                     pane.timeInfo.style.visibility = 'visible';
                     pane.timeLink.innerHTML = 'View Navigation';
+                    pane.area.innerHTML = 'Valid Time Frame';
                 }
                 else {
                     pane.infoTables.style.visibility = 'visible';
                     pane.timeInfo.style.visibility = 'collapse';
                     pane.timeLink.innerHTML = 'Select Valid Time Frame';
+                    pane.area.innerHTML = 'Navigation';
                 }
             }
 
@@ -272,7 +276,8 @@ var drawingPane = (function () {
                     pane.info.style.display = "none";
                     pane.tools.style.left = "0px";
 
-                    pane.controlarrow.src = "../../Images/controls/drawing-pane/dp-arrow-open.png"
+                    pane.controlarrow.src = "../../Images/controls/drawing-pane/dp-arrow-open.png";
+                    pane.controlarrow.title = "Show Information Pane";
                 }
                 else {
                     pane.isPaneOut = true;
@@ -282,6 +287,7 @@ var drawingPane = (function () {
                     pane.tools.style.left = "300px";
 
                     pane.controlarrow.src = "../../Images/controls/drawing-pane/dp-arrow-closed.png"
+                    pane.controlarrow.title = "Hide Information Pane";
                 }
             }
 
@@ -336,6 +342,7 @@ var drawingPane = (function () {
     window.addEventListener("load", init, false);
 
     return {
+        pane: pane,
         clearBSItems: clearBSItems,
         redrawBSItems:redrawBSItems
     }

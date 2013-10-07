@@ -110,7 +110,8 @@ namespace Plan4Green.Models.DB
         [ForeignKey("Assigned_Perspective")]
         public string Perspective_Name { get; set; }
 
-        [ForeignKey("Assigned_Perspective"), Column(Order = 2)]
+        [Key, Column(Order = 2)]
+        [ForeignKey("Assigned_Perspective")]
         public string Organisation_Name { get; set; }
 
         public virtual Perspective Assigned_Perspective { get; set; }
@@ -129,16 +130,19 @@ namespace Plan4Green.Models.DB
         public string Due_Date { get; set; }
 
         public string Target_Value { get; set; }
-        public string Organisation_Name { get; set; }
-
+        
         public int X_Position { get; set; }
         public int Y_Position { get; set; }
         
         [Key, Column(Order = 1)]
         [ForeignKey("Assigned_Goal")]
         public string Goal_Name { get; set; }
-        [ForeignKey("Assigned_Goal"), Column(Order = 2)]
+        [Key, Column(Order = 2)]
+        [ForeignKey("Assigned_Goal")]
         public string Perspective_Name { get; set; }
+        [Key, Column(Order = 3)]
+        [ForeignKey("Assigned_Goal")]
+        public string Organisation_Name { get; set; }
 
         public virtual Goal Assigned_Goal { get; set; }
         public virtual ICollection<Completion_Score> Completion_Score_Times { get; set; }
@@ -147,18 +151,26 @@ namespace Plan4Green.Models.DB
     [Table("Completion_Score")]
     public class Completion_Score
     {
-        [Key]
+        [Key, Column(Order = 0)]
         [DataType(DataType.DateTime)]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
         public string Completion_Score_Time { get; set; }
         public double Current_Value { get; set; }
 
-        [ForeignKey("Assigned_Measure"), Column(Order = 0)]
+        [Key, Column(Order = 1)]
+        [ForeignKey("Assigned_Measure")]
         public string Measure_Name { get; set; }
-        [ForeignKey("Assigned_Measure"), Column(Order = 1)]
+        
+        [Key, Column(Order = 2)]
+        [ForeignKey("Assigned_Measure")]
         public string Goal_Name { get; set; }
 
+        [Key, Column(Order = 3)]
+        [ForeignKey("Assigned_Measure")]
         public string Perspective_Name { get; set; }
+
+        [Key, Column(Order = 4)]
+        [ForeignKey("Assigned_Measure")]
         public string Organisation_Name { get; set; }
 
         public virtual Measure Assigned_Measure { get; set; }
@@ -172,17 +184,19 @@ namespace Plan4Green.Models.DB
     {
         [Required]
         [DataType(DataType.Password)]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [Display(Name = "Current Password")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New Password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm New Password")]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
@@ -190,10 +204,12 @@ namespace Plan4Green.Models.DB
     public class LoginModel
     {
         [Required]
+        [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -205,20 +221,23 @@ namespace Plan4Green.Models.DB
     public class SignupModel
     {
         [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [Display(Name = "Organisation")]
         public string Organisation { get; set; }
 
         [Required]
+        [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }

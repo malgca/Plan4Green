@@ -71,7 +71,7 @@ var bsType = (function () {
         // change the name of the object, keeping the old ref intact
         this.changeName = function (newName) {
             this.oldRef = this.name;
-            this.name = newName;
+            this.name = newName.slice(0, 30);
         }
 
         // set an item to be enabled for editing

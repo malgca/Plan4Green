@@ -82,6 +82,7 @@ main = (function () {
                 }
 
                 bsItem.isActive = false;
+                bsItem.bsParent.isActive = true;
                 drawingPane.redrawBSItems(bsItem);
                 drawingPane.clearBSItems('measure');
                 global.bsParent = bsItem.bsParent;
@@ -96,9 +97,11 @@ main = (function () {
                     canvasObject.create(bsItem.bsParent.children[i]);
                 }
 
+                bsItem.isActive = false;
+                bsItem.bsParent.isActive = true;
                 global.bsParent = bsItem.bsParent;
                 global.bsLevel = bsItem.bsParent.type;
-                bsCurrentView.innerHTML = bsItem.bsParent.name;
+                bsCurrentView.innerHTML = bsItem.bsParent.bsParent.name + ' >> ' + bsItem.bsParent.name;
                 page.style.backgroundImage = backgroundColors.goal;
             }
         }
@@ -111,22 +114,51 @@ main = (function () {
 
             if (bsItem.type == 'perspective') {
                 global.bsLevel = 'perspective';
+                bsCurrentView.innerHTML = bsItem.name;
                 page.style.backgroundImage = backgroundColors.perspective;
             }
             else if (bsItem.type == 'goal') {
                 global.bsLevel = 'goal';
+                bsItem.bsParent.isActive = true;
+                bsCurrentView.innerHTML = bsItem.bsParent.name + ' >> ' + bsItem.name;
                 page.style.backgroundImage = backgroundColors.goal;
             }
 
-            global.bsParent = bsItem;
-            bsCurrentView.innerHTML = bsItem.name;
+            global.bsParent = bsItem;          
 
             if (bsItem.type != 'measure') {
                 bsItem.isActive = true;
                 drawingPane.redrawBSItems(bsItem);
             }
-            else {
-            }
+        }
+
+        switch (global.bsLevel) {
+            case undefined:
+                drawingPane.pane.perspective.style.visibility = 'visible';
+                drawingPane.pane.goal.style.visibility = 'hidden';
+                drawingPane.pane.measure.style.visibility = 'hidden';
+                break;
+            case 'perspective':
+                drawingPane.pane.perspective.style.visibility = 'hidden';
+                drawingPane.pane.goal.style.visibility = 'visible';
+                drawingPane.pane.measure.style.visibility = 'hidden';
+                console.log('in pers');
+                break;
+            case 'goal':
+                drawingPane.pane.perspective.style.visibility = 'hidden';
+                drawingPane.pane.goal.style.visibility = 'hidden';
+                drawingPane.pane.measure.style.visibility = 'visible';
+                console.log('in goal');
+                break;
+        }
+
+        if (global.bsLevel == undefined) {
+            main.viewParentImage.title = '';
+            main.viewParentImage.style.display = 'none';
+        }
+        else {
+            main.viewParentImage.title = 'Drill out of ' + bsItem.name;
+            main.viewParentImage.style.display = 'inline-block';
         }
     },
 
