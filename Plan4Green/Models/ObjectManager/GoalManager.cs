@@ -173,7 +173,7 @@ namespace Plan4Green.Models.ObjectManager
             gvm.DueDate = goal.Due_Date;
             gvm.GoalName = goal.Goal_Name;
             gvm.OrganisationName = goal.Organisation_Name;
-            gvm.ParentName = goal.Goal_Name;
+            gvm.ParentName = goal.Perspective_Name;
             gvm.StartDate = goal.Start_Date;
             gvm.xPosition = goal.X_Position;
             gvm.yPosition = goal.Y_Position;
@@ -184,7 +184,6 @@ namespace Plan4Green.Models.ObjectManager
         // update a perspectives name.
         private void UpdateName(GoalViewModel gvm, Goal workingGoal)
         {
-            //TODO: Fix this method
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
                 MeasureManager mm = new MeasureManager();

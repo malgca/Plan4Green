@@ -98,6 +98,52 @@ namespace Plan4Green.Models.ObjectManager
             }
         }
 
+        /// <summary>
+        /// Deletes a perspective from the Database
+        /// </summary>
+        public void DeletePerspective(PerspectiveViewModel pvm, bool deleteByOldReference = false)
+        {
+            using (Plan4GreenDB context = new Plan4GreenDB())
+            {
+                Perspective deletePerspective;
+
+                if (deleteByOldReference)
+                {
+                    deletePerspective = (from perspective in context.Perspectives
+                                  where perspective.Perspective_Name == pvm.OldReference
+                                  && perspective.Organisation_Name == pvm.OrganisationName
+                                  select perspective).FirstOrDefault();
+                }
+                else
+                {
+                    deletePerspective = (from perspective in context.Perspectives
+                                  where perspective.Perspective_Name == pvm.PerspectiveName
+                                  && perspective.Organisation_Name == pvm.OrganisationName
+                                  select perspective).FirstOrDefault();
+                }
+
+                if (deletePerspective != default(Perspective))
+                {
+                    context.Perspectives.Remove(deletePerspective);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        // Extracts the view model from a given perspective in the Database
+        private PerspectiveViewModel ExtractViewModel(Perspective perspective)
+        {
+            PerspectiveViewModel pvm = new PerspectiveViewModel();
+
+            pvm.Description = perspective.Description;
+            pvm.OrganisationName = perspective.Organisation_Name;
+            pvm.PerspectiveName = perspective.Perspective_Name;
+            pvm.xPosition = perspective.X_Position;
+            pvm.yPosition = perspective.Y_Position;
+
+            return pvm;
+        }
+
         // update a perspectives name.
         private void UpdateName(PerspectiveViewModel pvm, Perspective workingPerspective)
         {
@@ -109,12 +155,17 @@ namespace Plan4Green.Models.ObjectManager
                 CompletionScoreManager csm = new CompletionScoreManager();
 
                 List<GoalViewModel> gvms = gm.GetGoalsByPerspective(pvm);
-
                 List<MeasureViewModel> mvms = new List<MeasureViewModel>();
+                List<CompletionScoreViewModel> csvms = csm.GetCompletionScoresByPerspective(pvm);
+
+                foreach (CompletionScoreViewModel csvm in csvms)
+                {
+                    csm.DeleteCompletionScore(csvm);
+                }
 
                 foreach (GoalViewModel gvm in gvms)
                 {
-                    List<MeasureViewModel> measures = mm.GetMeasuresByGoal(gvm);
+                    List<MeasureViewModel> measures = mm.GetMeasuresByGoal(gvm, false);
 
                     foreach (MeasureViewModel measure in measures)
                     {
@@ -125,7 +176,7 @@ namespace Plan4Green.Models.ObjectManager
                     gm.DeleteGoal(gvm);                    
                 }
 
-                context.Perspectives.Remove(workingPerspective);
+                DeletePerspective(pvm, true);
                 AddPerspective(pvm);
 
                 foreach (GoalViewModel gvm in gvms)
@@ -138,6 +189,12 @@ namespace Plan4Green.Models.ObjectManager
                 {
                     mvm.GrandparentName = pvm.PerspectiveName;
                     mm.AddMeasure(mvm);
+                }
+
+                foreach (CompletionScoreViewModel csvm in csvms)
+                {
+                    csvm.GreatGrandparentName = pvm.PerspectiveName;
+                    csm.AddCompletionScore(csvm);
                 }
 
                 context.SaveChanges();

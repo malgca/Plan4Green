@@ -26,17 +26,29 @@ namespace Plan4Green.Models.ObjectManager
         /// <summary>
         /// Get the List of Measures belonging to a single Goal.
         /// </summary>
-        public List<MeasureViewModel> GetMeasuresByGoal(GoalViewModel gvm)
+        public List<MeasureViewModel> GetMeasuresByGoal(GoalViewModel gvm, bool useOldReference = true)
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                List<Measure> measures = (from measure in context.Measures
-                                          where measure.Goal_Name == gvm.OldReference
-                                          && measure.Perspective_Name == gvm.ParentName
-                                          && measure.Organisation_Name == gvm.OrganisationName
-                                          select measure).ToList();
-
+                List<Measure> measures;
                 List<MeasureViewModel> mvms = new List<MeasureViewModel>();
+
+                if (useOldReference)
+                {
+                    measures = (from measure in context.Measures
+                                where measure.Goal_Name == gvm.OldReference
+                                && measure.Perspective_Name == gvm.ParentName
+                                && measure.Organisation_Name == gvm.OrganisationName
+                                select measure).ToList();
+                }
+                else
+                {
+                    measures = (from measure in context.Measures
+                                where measure.Goal_Name == gvm.GoalName
+                                && measure.Perspective_Name == gvm.ParentName
+                                && measure.Organisation_Name == gvm.OrganisationName
+                                select measure).ToList();
+                }
 
                 foreach (Measure measure in measures)
                 {

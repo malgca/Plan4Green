@@ -390,7 +390,7 @@ main = (function () {
 
                             if (success) {
                                 bsItem.organisationName = document.getElementById('organisation-name').innerHTML;
-                                //ajax.measure('/JSON/AddMeasure', bsItem);
+                                ajax.measure('/JSON/AddMeasure', bsItem);
                             }
                         }
                         break;
