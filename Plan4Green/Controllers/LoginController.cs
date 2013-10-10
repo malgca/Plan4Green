@@ -77,8 +77,8 @@ namespace Plan4Green.Controllers
                 // Try to register the user.
                 try
                 {
-                    OrganisationManager orgManager = new OrganisationManager();
-                    orgManager.AddOrganisation(model.SignupModel.Organisation);
+                    OrganisationManager om = new OrganisationManager();
+                    om.AddOrganisation(model.SignupModel.Organisation);
                     WebSecurity.CreateUserAndAccount(model.SignupModel.UserName, model.SignupModel.Password, new { UserPassword = model.SignupModel.Password, Organisation_Name = model.SignupModel.Organisation });
 
                     WebSecurity.Login(model.SignupModel.UserName, model.SignupModel.Password);

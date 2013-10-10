@@ -7,3 +7,7 @@ Dates between goals and measures not synchronized. Dates in measures should only
 Bar graph doesn't look exactly right, need to move things up a bit and add x and y axis.
 
 Start and End dates and Current Value start as null. They need to start as their actual values.
+
+App will crash if the database operations on the log in page aren't just right. Need to pay more attention to those.
+
+Adding same person twice from any organisation will make it so the signup page isn't found. Need to fail more gracefully.

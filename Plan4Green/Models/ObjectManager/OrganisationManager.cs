@@ -18,10 +18,10 @@ namespace Plan4Green.Models.ObjectManager
                 if (!OrganisationExists(context, organisationName))
                 {
                     newOrg.Organisation_Name = organisationName;
-                }
+                    context.Organisations.Add(newOrg);
+                    context.SaveChanges();
 
-                context.Organisations.Add(newOrg);
-                context.SaveChanges();
+                }
             }
         }
 
