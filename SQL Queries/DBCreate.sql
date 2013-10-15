@@ -1,8 +1,8 @@
 --DROP DATABASE Plan4GreenDB
 --GO
 
---CREATE DATABASE Plan4GreenDB
---GO
+CREATE DATABASE Plan4GreenDB
+GO
 
 USE Plan4GreenDB
 GO

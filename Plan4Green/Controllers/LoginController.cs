@@ -72,28 +72,27 @@ namespace Plan4Green.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Signup(AuthenticationViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                // Try to register the user.
-                try
+                if (ModelState.IsValid)
                 {
-                    OrganisationManager orgManager = new OrganisationManager();
-                    orgManager.AddOrganisation(model.SignupModel.Organisation);
+                    // Try to register the user.
+                    OrganisationManager om = new OrganisationManager();
+                    om.AddOrganisation(model.SignupModel.Organisation);
                     WebSecurity.CreateUserAndAccount(model.SignupModel.UserName, model.SignupModel.Password, new { UserPassword = model.SignupModel.Password, Organisation_Name = model.SignupModel.Organisation });
 
                     WebSecurity.Login(model.SignupModel.UserName, model.SignupModel.Password);
-                    
-                    
                     return RedirectToAction("CanvasView", "BSObject");
                 }
-                catch (MembershipCreateUserException exception)
-                {
-                    ModelState.AddModelError("", exception.Message);
-                }
-            }
 
-            ModelState.AddModelError("unknownSignupError", "Unable to sign on. If this problem persists, please contact your system administrator.");
-            return View(model);
+                ModelState.AddModelError("unknownSignupError", "Unable to sign on. If this problem persists, please contact your system administrator.");
+                return View("Login");
+            }
+            catch (MembershipCreateUserException exception)
+            {
+                ModelState.AddModelError("", exception.Message);
+                return View("Login");
+            }
         }
 
         #region Login Helpers
@@ -112,16 +111,6 @@ namespace Plan4Green.Controllers
             {
                 return RedirectToAction("Login", "Login");
             }
-        }
-
-        /// <summary>
-        /// Message ID for managing user data.
-        /// </summary>
-        public enum ManageMessageID
-        {
-            ChangePasswordSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
         }
 
         /// <summary>

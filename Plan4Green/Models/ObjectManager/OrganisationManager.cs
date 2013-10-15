@@ -13,15 +13,13 @@ namespace Plan4Green.Models.ObjectManager
         {
             using (Plan4GreenDB context = new Plan4GreenDB())
             {
-                Organisation newOrg = new Organisation();
-
                 if (!OrganisationExists(context, organisationName))
                 {
+                    Organisation newOrg = new Organisation();
                     newOrg.Organisation_Name = organisationName;
+                    context.Organisations.Add(newOrg);
+                    context.SaveChanges();
                 }
-
-                context.Organisations.Add(newOrg);
-                context.SaveChanges();
             }
         }
 

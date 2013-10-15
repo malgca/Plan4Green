@@ -139,7 +139,7 @@ var graph = (function () {
 
                         if (that.xAxisLabelArr.length > 3) {
                             if (label.length > 6) {
-                                label = label.slice(-10);
+                                label = label.slice(-11);
                             }
                         }
 
