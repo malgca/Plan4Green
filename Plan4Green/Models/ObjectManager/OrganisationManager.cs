@@ -19,10 +19,6 @@ namespace Plan4Green.Models.ObjectManager
                     newOrg.Organisation_Name = organisationName;
                     context.Organisations.Add(newOrg);
                     context.SaveChanges();
-<<<<<<< HEAD
-=======
-
->>>>>>> 01b264d6711509acab373c51532719122c558c81
                 }
             }
         }
